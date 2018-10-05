@@ -8,10 +8,10 @@
 <div class="_main">
     <div class="_title">Danh sách thẻ bảo hiểm</div>
     <div class="_search_form">
-        <form action="showUser" method="POST" th:object="${searchForm}">
+        <form action="dashboard" method="POST" th:object="${searchForm}">
             <div class="_pull_down">
                 <label>Tên công ty</label>
-                <select>
+                <select th:field="*{searchByIdCompany}">
                     <option
                             th:each="company : ${tblCompanyList}"
                             th:text="${company.nameCompany}"
@@ -27,7 +27,7 @@
                     </tr>
                     <tr>
                         <td>Mã số thẻ bảo hiểm</td>
-                        <td><input type="text" th:field="*{searchByInsurranceNumber}" name="insurance_number"/></td>
+                        <td><input type="text" th:field="*{searchByInsuranceNumber}" name="insurance_number"/></td>
                     </tr>
                     <tr>
                         <td>Nơi đăng ký</td>
@@ -45,33 +45,63 @@
     <div class="_table_data">
         <table>
             <tr>
-                <th>Tên người sử dụng</th>
+                <th>
+                    Tên người sử dụng
+                    <div th:remove="tag">
+                        <a th:href="@{/dashboard(type_sort=ASC)}">▲</a>
+                    </div>
+                    <div th:remove="tag">
+                        <a th:href="@{/dashboard(type_sort=DESC)}">▼</a>
+                    </div>
+                </th>
                 <th>Giới tính</th>
                 <th>Ngày sinh</th>
                 <th>Mã số thẻ bảo hiểm</th>
                 <th>Kỳ hạn</th>
                 <th>Nơi đăng ký KCB</th>
             </tr>
-            <tr>
-                <td>Nguyễn Văn Phong</td>
-                <td>Nam</td>
-                <td>18/09/1993</td>
-                <td>1234587964</td>
-                <td>01/01/2015 ~ 30/12/2015</td>
-                <td>Bệnh Viện E</td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn Phong</td>
-                <td>Nam</td>
-                <td>18/09/1993</td>
-                <td>1234587964</td>
-                <td>01/01/2015 ~ 30/12/2015</td>
-                <td>Bệnh Viện E</td>
-            </tr>
+            <th:block th:each="user : ${tblUserList}">
+                <tr>
+                    <td align="left">
+                        <a><span th:text="${user.userFullName}"></span></a>
+                    </td>
+                    <td align="center">
+                        <div th:with="condition=${user.sexDivision eq '1'}">
+                            <span th:if="${condition}" th:text="Nam"></span>
+                            <span th:unless="${condition}" th:text="Nữ"></span>
+                        </div>
+                    </td>
+                    <td align="center">
+                        <div th:if="${user.birthDate!=null}">
+                            <span th:text="${#dates.format(user.birthDate, 'dd/MM/YYYY')}"></span>
+                        </div>
+                    </td>
+                    <td align="center"><span th:text="${user.tblInsurance.insuranceNumber}"></span></td>
+                    <td align="center">
+                        <span th:text="${#dates.format(user.tblInsurance.startDate, 'dd/MM/YYYY')}"></span>
+                        ~
+                        <span th:text="${#dates.format(user.tblInsurance.endDate, 'dd/MM/YYYY')}"></span>
+                    </td>
+                    <td align="left"><span th:text="${user.tblInsurance.place}"></span></td>
+                </tr>
+            </th:block>
         </table>
     </div>
     <div class="_pagination">
-
+        <span th:if="${currentPage &gt; 1}">
+            <a th:href="@{/dashboard(page=${currentPage-1})}">&lt;&lt; </a>
+        </span>
+        <span th:if="${endRange &gt; 1 }">
+            <span th:each="i : ${listPaging}">
+                <span th:with="condition=${currentPage == i}" th:remove="tag">
+                    <span th:if="${condition}" class="paging-select" th:text="${i}"></span>
+                    <a th:unless="${condition}" th:href="@{/dashboard(page=${i})}" th:text="${i}"></a>
+                </span>
+            </span>
+        </span>
+        <span th:if="${currentPage &lt; totalPage}">
+            <a th:href="@{/listUser(page=${currentPage+1})}">&gt;&gt;</a>
+        </span>
     </div>
 </div>
 </body>

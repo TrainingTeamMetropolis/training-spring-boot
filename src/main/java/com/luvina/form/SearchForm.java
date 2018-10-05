@@ -6,7 +6,7 @@ public class SearchForm {
 	
 	private String searchByNameUser;
 	
-	private String searchByInsurranceNumber;
+	private String searchByInsuranceNumber;
 	
 	private String searchByPlaceOfRegister;
 	
@@ -18,11 +18,11 @@ public class SearchForm {
 	public SearchForm() {
 	}
 	
-	public SearchForm(int searchByIdCompany, String searchByNameUser, String searchByInsurranceNumber,
+	public SearchForm(int searchByIdCompany, String searchByNameUser, String searchByInsuranceNumber,
 			String searchByPlaceOfRegister, String typeSort, int page) {
 		this.searchByIdCompany = searchByIdCompany;
 		this.searchByNameUser = searchByNameUser;
-		this.searchByInsurranceNumber = searchByInsurranceNumber;
+		this.searchByInsuranceNumber = searchByInsuranceNumber;
 		this.searchByPlaceOfRegister = searchByPlaceOfRegister;
 		this.typeSort = typeSort;
 		this.page = page;
@@ -44,12 +44,12 @@ public class SearchForm {
 		this.searchByNameUser = searchByNameUser;
 	}
 	
-	public String getSearchByInsurranceNumber() {
-		return searchByInsurranceNumber;
+	public String getSearchByInsuranceNumber() {
+		return searchByInsuranceNumber;
 	}
 	
-	public void setSearchByInsurranceNumber(String searchByInsurranceNumber) {
-		this.searchByInsurranceNumber = searchByInsurranceNumber;
+	public void setSearchByInsuranceNumber(String searchByInsuranceNumber) {
+		this.searchByInsuranceNumber = searchByInsuranceNumber;
 	}
 	
 	public String getSearchByPlaceOfRegister() {

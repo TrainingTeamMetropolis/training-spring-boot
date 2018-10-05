@@ -4,7 +4,7 @@ import com.luvina.entities.TblCompany;
 
 import java.util.List;
 
-public interface ICompanyService {
+public interface ITblCompanyService {
 
     /**
      * method get list company from data base

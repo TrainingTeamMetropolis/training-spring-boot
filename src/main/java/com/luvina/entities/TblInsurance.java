@@ -1,13 +1,17 @@
 package com.luvina.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
 
+@Entity
+@Table(name = "tbl_insurance")
 public class TblInsurance implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -18,7 +22,7 @@ public class TblInsurance implements Serializable {
 	private int idInsurrance;
 	
 	@Column(name = "insurance_number")
-	private String numberInsurance;
+	private String insuranceNumber;
 	
 	@Column(name = "insurance_start_date")
 	private Date startDate;
@@ -33,14 +37,15 @@ public class TblInsurance implements Serializable {
 	@PrimaryKeyJoinColumn
 	private TblUser tblUser;
 	
+	
 	public TblInsurance() {
 		
 	}
 	
-	public TblInsurance(int idInsurrance, String numberInsurance, Date startDate, Date endDate, String place,
+	public TblInsurance(int idInsurrance, String insuranceNumber, Date startDate, Date endDate, String place,
 			TblUser tblUser) {
 		this.idInsurrance = idInsurrance;
-		this.numberInsurance = numberInsurance;
+		this.insuranceNumber = insuranceNumber;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.place = place;
@@ -55,12 +60,12 @@ public class TblInsurance implements Serializable {
 		this.idInsurrance = idInsurrance;
 	}
 	
-	public String getNumberInsurance() {
-		return numberInsurance;
+	public String getInsuranceNumber() {
+		return insuranceNumber;
 	}
 	
-	public void setNumberInsurance(String numberInsurance) {
-		this.numberInsurance = numberInsurance;
+	public void setInsuranceNumber(String insuranceNumber) {
+		this.insuranceNumber = insuranceNumber;
 	}
 	
 	public Date getStartDate() {
