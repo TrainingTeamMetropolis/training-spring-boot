@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>DashBroad</title>
+</head>
+<body>
+<div class="_main">
+    <div class="_title">Danh sách thẻ bảo hiểm</div>
+    <div class="_search_form">
+        <form action="showUser" method="POST" th:object="${searchForm}">
+            <div class="_pull_down">
+                <label>Tên công ty</label>
+                <select>
+                    <option
+                            th:each="company : ${tblCompanyList}"
+                            th:text="${company.nameCompany}"
+                            th:value="${company.idCompany}">
+                    </option>
+                </select>
+            </div>
+            <div class="_search_form">
+                <table>
+                    <tr>
+                        <td>Tên người sử dụng</td>
+                        <td><input type="text" th:field="*{searchByNameUser}" name="user_full_name"/></td>
+                    </tr>
+                    <tr>
+                        <td>Mã số thẻ bảo hiểm</td>
+                        <td><input type="text" th:field="*{searchByInsurranceNumber}" name="insurance_number"/></td>
+                    </tr>
+                    <tr>
+                        <td>Nơi đăng ký</td>
+                        <td><input type="text" th:field="*{searchByPlaceOfRegister}" name="place_of_register"/></td>
+                    </tr>
+                </table>
+                <div><input class="btn_search" type="submit" value="Tìm kiếm"/></div>
+            </div>
+        </form>
+    </div>
+    <div class="_action">
+        <span><input class="btn_register" type="button" value="Đăng ký"/></span>
+        <span><input class="btn_export" type="button" value="Export CSV"/></span>
+    </div>
+    <div class="_table_data">
+        <table>
+            <tr>
+                <th>Tên người sử dụng</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>Mã số thẻ bảo hiểm</th>
+                <th>Kỳ hạn</th>
+                <th>Nơi đăng ký KCB</th>
+            </tr>
+            <tr>
+                <td>Nguyễn Văn Phong</td>
+                <td>Nam</td>
+                <td>18/09/1993</td>
+                <td>1234587964</td>
+                <td>01/01/2015 ~ 30/12/2015</td>
+                <td>Bệnh Viện E</td>
+            </tr>
+            <tr>
+                <td>Nguyễn Văn Phong</td>
+                <td>Nam</td>
+                <td>18/09/1993</td>
+                <td>1234587964</td>
+                <td>01/01/2015 ~ 30/12/2015</td>
+                <td>Bệnh Viện E</td>
+            </tr>
+        </table>
+    </div>
+    <div class="_pagination">
+
+    </div>
+</div>
+</body>
+</html>

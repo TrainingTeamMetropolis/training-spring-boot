@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Register</title>
+</head>
+<body>
+<div class="_main">
+    <div class="_title">Thêm mới thông tin thẻ bảo hiểm</div>
+    <div class="_content">
+        <table>
+            <tr>
+                <td class="_label">Mã số thẻ bảo hiểm</td>
+                <td class="_input"><input type="text" name=""/></td>
+                <td class="_subtitles">(format: 10 chữ số)</td>
+            </tr>
+            <tr>
+                <td class="_label">Họ và Tên</td>
+                <td class="_input"><input type="text" name=""/></td>
+            </tr>
+            <tr>
+                <td class="_label">Tài khoản</td>
+                <td class="_input"><input type="text" name=""/></td>
+            </tr>
+            <tr>
+                <td class="_label">Mật khẩu</td>
+                <td class="_input"><input type="password" name=""/></td>
+            </tr>
+            <tr>
+                <td class="_label">Giới tính</td>
+                <td class="_input">
+                    <input type="radio" name="sex" value="Nam"/><label>Nam</label>
+                    <input type="radio" name="sex" value="Nữ"/><label>Nữ</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="_label">Ngày sinh</td>
+                <td class="_input"><input type="text" name=""/></td>
+                <td class="_subtitles">(format: dd/MM/yyyy)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="_input">
+                    <div><input type="radio" name="company" checked="checked"/><label>Công ty đã có</label></div>
+                    <div>
+                        <table>
+                            <tr><td>Tên công ty</td><td>Luvina JSC</td></tr>
+                            <tr><td>Địa chỉ</td><td>106 Hoàng Quốc Việt</td></tr>
+                            <tr><td>Email</td><td>info@luvina.net</td></tr>
+                            <tr><td>Điện thoại</td><td>042656579455</td></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="_label">Công ty</td>
+                <td class="_input">
+                    <div><input type="radio" name="company"/><label>Đăng ký theo công ty mới</label></div>
+                    <div>
+                        <table>
+                            <tr><td>Tên công ty</td><td><input type="text" name=""/></td></tr>
+                            <tr><td>Địa chỉ</td><td><input type="text" name=""/></td></tr>
+                            <tr><td>Email</td><td><input type="text" name=""/></td></tr>
+                            <tr><td>Điện thoại</td><td><input type="text" name=""/></td></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="_label">Nơi đăng ký KCB</td>
+                <td class="_input"><input type="text" name=""/></td>
+            </tr>
+            <tr>
+                <td class="_label">Ngày bắt đầu thẻ BH</td>
+                <td class="_input"><input type="text" name=""/></td>
+                <td class="_subtitles">(format: dd/MM/yyyy)</td>
+            </tr>
+            <tr>
+                <td class="_label">Ngày kết thúc thẻ BH</td>
+                <td class="_input"><input type="text" name=""/></td>
+                <td class="_subtitles">(format: dd/MM/yyyy)</td>
+            </tr>
+        </table>
+    </div>
+    <div class="_btn_action">
+        <span><input type="button" value="Hủy"/></span>
+        <span><input type="button" value="Đăng ký"/></span>
+    </div>
+</div>
+</body>
+</html>
