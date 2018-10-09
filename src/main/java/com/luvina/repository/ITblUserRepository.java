@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ITblUserRepository extends JpaRepository<TblUser, Long> {
 	
+	TblUser findByUserInternalId(int userInternalId);
+	
 }

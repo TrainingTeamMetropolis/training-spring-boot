@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "tbl_user")
@@ -20,7 +20,7 @@ public class TblUser implements Serializable {
 	@Id
 	@Column(name = "user_internal_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private int userInternalId;
 	
 	@Column(name = "username")
 	private String userName;
@@ -38,7 +38,7 @@ public class TblUser implements Serializable {
 	private String userFullName;
 	
 	@Column(name = "user_sex_division")
-	private String sexDivision;
+	private String userSexDivision;
 	
 	@Column(name = "birthdate")
 	private Date birthDate;
@@ -51,21 +51,31 @@ public class TblUser implements Serializable {
 	@JoinColumn(name = "company_internal_id", insertable = false, updatable = false)
 	private TblCompany tblCompany;
 	
+	
 	public TblUser() {
 		
 	}
 	
 	public TblUser(String userName, String passWord, int companyInternalId, int insuranceInternalId,
-			String userFullName, String sexDivision, Date birthDate, TblInsurance tblInsurance, TblCompany tblCompany) {
+			String userFullName, String userSexDivision, Date birthDate, TblInsurance tblInsurance,
+			TblCompany tblCompany) {
 		this.userName = userName;
 		this.passWord = passWord;
 		this.companyInternalId = companyInternalId;
 		this.insuranceInternalId = insuranceInternalId;
 		this.userFullName = userFullName;
-		this.sexDivision = sexDivision;
+		this.userSexDivision = userSexDivision;
 		this.birthDate = birthDate;
 		this.tblInsurance = tblInsurance;
 		this.tblCompany = tblCompany;
+	}
+	
+	public int getUserInternalId() {
+		return userInternalId;
+	}
+	
+	public void setUserInternalId(int userInternalId) {
+		this.userInternalId = userInternalId;
 	}
 	
 	public int getCompanyInternalId() {
@@ -92,14 +102,6 @@ public class TblUser implements Serializable {
 		this.userFullName = userFullName;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -116,12 +118,12 @@ public class TblUser implements Serializable {
 		this.passWord = passWord;
 	}
 	
-	public String getSexDivision() {
-		return sexDivision;
+	public String getUserSexDivision() {
+		return userSexDivision;
 	}
 	
-	public void setSexDivision(String sexDivision) {
-		this.sexDivision = sexDivision;
+	public void setUserSexDivision(String userSexDivision) {
+		this.userSexDivision = userSexDivision;
 	}
 	
 	public Date getBirthDate() {

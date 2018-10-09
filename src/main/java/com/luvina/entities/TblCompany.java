@@ -15,10 +15,10 @@ public class TblCompany implements Serializable {
 	@Id
 	@Column(name = "company_internal_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int idCompany;
+	private int companyInternalId;
 	
 	@Column(name = "company_name")
-	private String nameCompany;
+	private String companyName;
 	
 	@Column(name = "address")
 	private String addressCompany;
@@ -28,24 +28,23 @@ public class TblCompany implements Serializable {
 	
 	@Column(name = "telephone")
 	private String phoneCompany;
-	
-	
-	public int getIdCompany() {
-		return idCompany;
+
+	public int getCompanyInternalId() {
+		return companyInternalId;
 	}
-	
-	public void setIdCompany(int idCompany) {
-		this.idCompany = idCompany;
+
+	public void setCompanyInternalId(int companyInternalId) {
+		this.companyInternalId = companyInternalId;
 	}
-	
-	public String getNameCompany() {
-		return nameCompany;
+
+	public String getCompanyName() {
+		return companyName;
 	}
-	
-	public void setNameCompany(String nameCompany) {
-		this.nameCompany = nameCompany;
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
-	
+
 	public String getAddressCompany() {
 		return addressCompany;
 	}

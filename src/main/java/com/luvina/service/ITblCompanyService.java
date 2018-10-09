@@ -11,13 +11,13 @@ public interface ITblCompanyService {
      *
      * @return
      */
-    List<TblCompany> findAllDataTblCompanyAndOrder();
+    List<TblCompany> findAllByOrderByCompanyNameAsc();
 
     /**
      *
-     * @param idCompany id company
+     * @param companyInternalId id companyInternalId
      * @return
      */
-    TblCompany findCompanyById(int idCompany);
+    TblCompany findByCompanyInternalId(int companyInternalId);
 
 }

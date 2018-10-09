@@ -8,5 +8,8 @@ import java.util.List;
 @Repository
 public interface ITblCompanyRepository extends JpaRepository<TblCompany, Integer> {
 
-    List<TblCompany> findAllByOrderByNameCompanyAsc();
+    List<TblCompany> findAllByOrderByCompanyNameAsc();
+
+    TblCompany findByCompanyInternalId(int companyInternalId);
+
 }

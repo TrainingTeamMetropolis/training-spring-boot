@@ -11,4 +11,6 @@ public interface ITblUserService {
 	
 	Integer findTotalRecords(int offset, int limit, String typeSort, int companyInternalId, String userFullName,
 			String insuranceNumber, String placeOfRegister);
+
+	TblUser findByUserInternalId(int userInternalId);
 }

@@ -30,7 +30,7 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 			hqlCommand.append("AND u.tblInsurance.insuranceNumber= :insuranceNumber ");
 		}
 		if (placeOfRegister.length() > 0) {
-			hqlCommand.append("AND u.tblInsurance.place LIKE :place ");
+			hqlCommand.append("AND u.tblInsurance.placeOfRegister LIKE :placeOfRegister ");
 		}
 		hqlCommand.append("ORDER BY u.userFullName " + typeSort);
 		
@@ -45,7 +45,7 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 			query.setParameter("insuranceNumber", insuranceNumber);
 		}
 		if (placeOfRegister.length() > 0) {
-			query.setParameter("place", "%" + placeOfRegister + "%");
+			query.setParameter("placeOfRegister", "%" + placeOfRegister + "%");
 		}
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);

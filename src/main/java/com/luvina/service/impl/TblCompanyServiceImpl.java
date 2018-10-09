@@ -13,12 +13,14 @@ public class TblCompanyServiceImpl implements ITblCompanyService {
     @Autowired
     ITblCompanyRepository iTblCompanyRepository;
     @Override
-    public List<TblCompany> findAllDataTblCompanyAndOrder() {
-        return iTblCompanyRepository.findAllByOrderByNameCompanyAsc();
+    public List<TblCompany> findAllByOrderByCompanyNameAsc() {
+        return iTblCompanyRepository.findAllByOrderByCompanyNameAsc();
     }
 
     @Override
-    public TblCompany findCompanyById(int idCompany) {
-        return null;
+    public TblCompany findByCompanyInternalId(int companyInternalId) {
+        return iTblCompanyRepository.findByCompanyInternalId(companyInternalId);
     }
+
+
 }

@@ -3,89 +3,125 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Register</title>
+    <link href="css/register.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/register.js"></script>
 </head>
 <body>
 <div class="_main">
     <div class="_title">Thêm mới thông tin thẻ bảo hiểm</div>
+    <form action="register" method="POST" th:object="${registerInsuranceForm}">
     <div class="_content">
-        <table>
-            <tr>
-                <td class="_label">Mã số thẻ bảo hiểm</td>
-                <td class="_input"><input type="text" name=""/></td>
-                <td class="_subtitles">(format: 10 chữ số)</td>
-            </tr>
-            <tr>
-                <td class="_label">Họ và Tên</td>
-                <td class="_input"><input type="text" name=""/></td>
-            </tr>
-            <tr>
-                <td class="_label">Tài khoản</td>
-                <td class="_input"><input type="text" name=""/></td>
-            </tr>
-            <tr>
-                <td class="_label">Mật khẩu</td>
-                <td class="_input"><input type="password" name=""/></td>
-            </tr>
-            <tr>
-                <td class="_label">Giới tính</td>
-                <td class="_input">
-                    <input type="radio" name="sex" value="Nam"/><label>Nam</label>
-                    <input type="radio" name="sex" value="Nữ"/><label>Nữ</label>
-                </td>
-            </tr>
-            <tr>
-                <td class="_label">Ngày sinh</td>
-                <td class="_input"><input type="text" name=""/></td>
-                <td class="_subtitles">(format: dd/MM/yyyy)</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="_input">
-                    <div><input type="radio" name="company" checked="checked"/><label>Công ty đã có</label></div>
-                    <div>
-                        <table>
-                            <tr><td>Tên công ty</td><td>Luvina JSC</td></tr>
-                            <tr><td>Địa chỉ</td><td>106 Hoàng Quốc Việt</td></tr>
-                            <tr><td>Email</td><td>info@luvina.net</td></tr>
-                            <tr><td>Điện thoại</td><td>042656579455</td></tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="_label">Công ty</td>
-                <td class="_input">
-                    <div><input type="radio" name="company"/><label>Đăng ký theo công ty mới</label></div>
-                    <div>
-                        <table>
-                            <tr><td>Tên công ty</td><td><input type="text" name=""/></td></tr>
-                            <tr><td>Địa chỉ</td><td><input type="text" name=""/></td></tr>
-                            <tr><td>Email</td><td><input type="text" name=""/></td></tr>
-                            <tr><td>Điện thoại</td><td><input type="text" name=""/></td></tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="_label">Nơi đăng ký KCB</td>
-                <td class="_input"><input type="text" name=""/></td>
-            </tr>
-            <tr>
-                <td class="_label">Ngày bắt đầu thẻ BH</td>
-                <td class="_input"><input type="text" name=""/></td>
-                <td class="_subtitles">(format: dd/MM/yyyy)</td>
-            </tr>
-            <tr>
-                <td class="_label">Ngày kết thúc thẻ BH</td>
-                <td class="_input"><input type="text" name=""/></td>
-                <td class="_subtitles">(format: dd/MM/yyyy)</td>
-            </tr>
-        </table>
+            <table>
+                <tr>
+                    <td class="_label">Mã số thẻ bảo hiểm</td>
+                    <td class="_input"><input th:field="*{numberInsurance}" maxlength="10"/></td>
+                    <td class="_subtitles">(format: 10 chữ số)</td>
+                </tr>
+                <tr>
+                    <td class="_label">Họ và Tên</td>
+                    <td class="_input"><input th:field="*{userFullName}"/></td>
+                </tr>
+                <tr>
+                    <td class="_label">Tài khoản</td>
+                    <td class="_input"><input th:field="*{userName}"/></td>
+                </tr>
+                <tr>
+                    <td class="_label">Mật khẩu</td>
+                    <td class="_input"><input th:field="*{passWord}"/></td>
+                </tr>
+                <tr>
+                    <td class="_label">Xác nhận</td>
+                    <td class="_input"><input type="password" name=""/></td>
+                </tr>
+                <tr>
+                    <td class="_label">Giới tính</td>
+                    <td class="_input">
+                        <input th:field="*{userSexDivision}" type="radio" value="1"/><label>Nam</label>
+                        <input th:field="*{userSexDivision}" type="radio" value="0"/><label>Nữ</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="_label">Ngày sinh</td>
+                    <td class="_input"><input class="date-time-picker" th:field="*{dateBirth}"/></td>
+                    <td class="_subtitles">(format: dd/MM/yyyy)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="_input">
+                        <div><input id="radio-company-old" value="old" type="radio" name="company"
+                                    checked="checked"/><label>Công ty đã
+                            có</label></div>
+                        <div class="area-old-company">
+                            <select th:field="*{companyInternalId}">
+                                <option
+                                    th:each="company : ${tblCompanyList}"
+                                    th:text="${company.companyName}"
+                                    th:value="${company.companyInternalId}">
+                                </option>
+                            </select>
+                            <div id="form-ajax">
+                                <table>
+                                    <tr>
+                                        <td>Tên công ty</td>
+                                        <td><span class="companyName"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Địa chỉ</td>
+                                        <td><span class="addressCompany"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><a href="#" class="emailCompany"></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Điện thoại</td>
+                                        <td><span class="phoneCompany"></span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="_label">Công ty</td>
+                    <td class="_input">
+                        <div><input id="radio-company-new" type="radio" value="new" name="company"/><label>Đăng ký theo công ty
+                            mới</label></div>
+                        <div class="area-new-company">
+                            <table>
+                                <tr><td>Tên công ty</td><td><input th:field="*{companyName}"/></td></tr>
+                                <tr><td>Địa chỉ</td><td><input th:field="*{address}"/></td></tr>
+                                <tr><td>Email</td><td><input th:field="*{email}"/></td></tr>
+                                <tr><td>Điện thoại</td><td><input th:field="*{telephone}"/></td></tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="_label">Nơi đăng ký KCB</td>
+                    <td class="_input"><input th:field="*{placeOfRegister}"/></td>
+                </tr>
+                <tr>
+                    <td class="_label">Ngày bắt đầu thẻ BH</td>
+                    <td class="_input"><input class="date-time-picker" th:field="*{insuranceStartDate}"/></td>
+                    <td class="_subtitles">(format: dd/MM/yyyy)</td>
+                </tr>
+                <tr>
+                    <td class="_label">Ngày kết thúc thẻ BH</td>
+                    <td class="_input"><input class="date-time-picker" th:field="*{insuranceEndDate}"/></td>
+                    <td class="_subtitles">(format: dd/MM/yyyy)</td>
+                </tr>
+            </table>
+
     </div>
     <div class="_btn_action">
         <span><input type="button" value="Hủy"/></span>
         <span><input type="button" value="Đăng ký"/></span>
     </div>
+    </form>
 </div>
 </body>
 </html>

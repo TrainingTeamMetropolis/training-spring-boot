@@ -30,64 +30,100 @@ public class DashBroadController {
 	@Autowired
 	private ITblUserService iTblUserService;
 	
-	
 	@RequestMapping(value = "/dashboard", method = GET)
 	public ModelAndView dashboard(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("searchForm") SearchForm searchForm, HttpSession session) {
 		showDataUser(modelAndView, requestParam, searchForm, session);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/dashboard", method = POST)
 	public ModelAndView showDataUser(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("searchForm") SearchForm searchForm, HttpSession session) {
 		int offset = 0;
-		int limit = Constant.LIMIT;
+		int limit = Common.getLimit();
 		int companyInternalId = 0;
 		int endRange = 0;
+        int totalPage = 0;
+        long id;
 		Integer currentPage = 0;
 		String typeSort = "ASC";
 		String userFullName = "";
 		String insuranceNumber = "";
 		String placeOfRegister = "";
-		
-		companyInternalId = searchForm.getSearchByIdCompany();
-		
-		if (searchForm.getSearchByNameUser() != null) {
-			userFullName = searchForm.getSearchByNameUser();
+        String searchFormId = "";
+
+        if (requestParam.get("searchFormId") != null) {
+            searchFormId = requestParam.get("searchFormId");
+        } else {
+            id = Common.getMiniSecondRandom();
+            searchFormId = Long.toString(id);
+        }
+		companyInternalId = searchForm.getSearchByCompanyInternalId();
+
+		if (Common.checkNullAndEmpty(searchForm.getSearchByUserFullName())) {
+			userFullName = searchForm.getSearchByUserFullName();
 		}
-		if (searchForm.getSearchByInsuranceNumber() != null) {
+		if (Common.checkNullAndEmpty(searchForm.getSearchByInsuranceNumber())) {
 			insuranceNumber = searchForm.getSearchByInsuranceNumber();
 		}
-		if (searchForm.getSearchByPlaceOfRegister() != null) {
+		if (Common.checkNullAndEmpty(searchForm.getSearchByPlaceOfRegister())) {
 			placeOfRegister = searchForm.getSearchByPlaceOfRegister();
 		}
-		if (requestParam.get("type_sort") != null) {
-			typeSort = requestParam.get("type_sort");
-		}
-		if (requestParam.get("current_page") != null) {
-			currentPage = Integer.parseInt(requestParam.get("current_page"));
-		}
-		// Anti SQL Injection for order
-		if (typeSort.equals("ASC")) {
-			typeSort = "ASC";
-		} else {
-			typeSort = "DESC";
-		}
-		Integer totalRecord = iTblUserService.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullName,
-				insuranceNumber, placeOfRegister);
-		List<TblCompany> tblCompanyList = iTblCompanyService.findAllDataTblCompanyAndOrder();
+        if (Common.checkNullAndEmpty(requestParam.get("typeSort"))) {
+            typeSort = requestParam.get("typeSort");
+        }
+        if (Common.checkNullAndEmpty(requestParam.get("page"))) {
+            currentPage = Integer.parseInt(requestParam.get("page"));
+        }
+        if (session.getAttribute(searchFormId) != null) {
+            SearchForm form = (SearchForm) session.getAttribute(searchFormId);
+            session.removeAttribute(searchFormId);
+            userFullName = form.getSearchByUserFullName();
+            insuranceNumber = form.getSearchByInsuranceNumber();
+            placeOfRegister = form.getSearchByPlaceOfRegister();
+            companyInternalId = form.getSearchByCompanyInternalId();
+        }
+        if (currentPage == 0) {
+            currentPage = 1;
+        }
+        String userFullNameEscape = Common.escapeInjection(userFullName);
+		String insuranceNumberEscape = Common.escapeInjection(insuranceNumber);
+		String placeOfRegisterEscape = Common.escapeInjection(placeOfRegister);
+		typeSort = Common.handleSortType(typeSort);
+
+        Integer totalRecord = iTblUserService.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullNameEscape,
+                insuranceNumberEscape, placeOfRegisterEscape);
+        List<Integer> listPaging = Common.getListPaging(totalRecord, currentPage);
+        if (listPaging.size() != 0) {
+            endRange = listPaging.get(listPaging.size() - 1);
+        }
+        totalPage = Common.getTotalPage(totalRecord, limit);
+        offset = Common.getOffsetPaging(currentPage, limit);
+		List<TblCompany> tblCompanyList = iTblCompanyService.findAllByOrderByCompanyNameAsc();
 		List<TblUser> tblUserList = iTblUserService.findAndSearchListData(offset, limit, typeSort, companyInternalId,
-				userFullName, insuranceNumber, placeOfRegister);
-		List<Integer> listPaging = Common.getListPaging(totalRecord, currentPage);
-		if (listPaging.size() != 0) {
-			endRange = listPaging.get(listPaging.size() - 1);
-		}
+				userFullNameEscape, insuranceNumberEscape, placeOfRegisterEscape);
+        if (tblUserList.size() == 0) {
+            modelAndView.addObject("error", "ERROR");
+        }
+        session.setAttribute("typeSort", typeSort);
 		modelAndView.addObject("tblCompanyList", tblCompanyList);
 		modelAndView.addObject("listPaging", listPaging);
 		modelAndView.addObject("tblUserList", tblUserList);
 		modelAndView.addObject("endRange", endRange);
-		modelAndView.setViewName("dashboard");
+        modelAndView.addObject("totalPage", totalPage);
+        modelAndView.addObject("currentPage", currentPage);
+        modelAndView.addObject("searchFormId", searchFormId);
+
+        searchForm.setSearchByCompanyInternalId(companyInternalId);
+        searchForm.setSearchByInsuranceNumber(insuranceNumber);
+        searchForm.setSearchByUserFullName(userFullName);
+        searchForm.setSearchByPlaceOfRegister(placeOfRegister);
+        searchForm.setTypeSort(typeSort);
+        searchForm.setPage(currentPage);
+        session.setAttribute(searchFormId, searchForm);
+        // set view
+        modelAndView.setViewName("dashboard");
 		return modelAndView;
 	}
 }

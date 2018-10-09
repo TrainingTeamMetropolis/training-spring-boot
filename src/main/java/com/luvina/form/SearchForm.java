@@ -2,9 +2,9 @@ package com.luvina.form;
 
 public class SearchForm {
 	
-	private int searchByIdCompany;
+	private int searchByCompanyInternalId;
 	
-	private String searchByNameUser;
+	private String searchByUserFullName;
 	
 	private String searchByInsuranceNumber;
 	
@@ -13,35 +13,21 @@ public class SearchForm {
 	private String typeSort;
 	
 	private int page;
-	
-	
-	public SearchForm() {
+
+	public int getSearchByCompanyInternalId() {
+		return searchByCompanyInternalId;
+	}
+
+	public void setSearchByCompanyInternalId(int searchByCompanyInternalId) {
+		this.searchByCompanyInternalId = searchByCompanyInternalId;
+	}
+
+	public String getSearchByUserFullName() {
+		return searchByUserFullName;
 	}
 	
-	public SearchForm(int searchByIdCompany, String searchByNameUser, String searchByInsuranceNumber,
-			String searchByPlaceOfRegister, String typeSort, int page) {
-		this.searchByIdCompany = searchByIdCompany;
-		this.searchByNameUser = searchByNameUser;
-		this.searchByInsuranceNumber = searchByInsuranceNumber;
-		this.searchByPlaceOfRegister = searchByPlaceOfRegister;
-		this.typeSort = typeSort;
-		this.page = page;
-	}
-	
-	public int getSearchByIdCompany() {
-		return searchByIdCompany;
-	}
-	
-	public void setSearchByIdCompany(int searchByIdCompany) {
-		this.searchByIdCompany = searchByIdCompany;
-	}
-	
-	public String getSearchByNameUser() {
-		return searchByNameUser;
-	}
-	
-	public void setSearchByNameUser(String searchByNameUser) {
-		this.searchByNameUser = searchByNameUser;
+	public void setSearchByUserFullName(String searchByUserFullName) {
+		this.searchByUserFullName = searchByUserFullName;
 	}
 	
 	public String getSearchByInsuranceNumber() {

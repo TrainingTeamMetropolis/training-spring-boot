@@ -19,19 +19,19 @@ public class TblInsurance implements Serializable {
 	@Id
 	@Column(name = "insurance_internal_id")
 	@JoinColumn(name = "insurance_internal_id")
-	private int idInsurrance;
+	private int insuranceInternalId;
 	
 	@Column(name = "insurance_number")
 	private String insuranceNumber;
 	
 	@Column(name = "insurance_start_date")
-	private Date startDate;
+	private Date insuranceStartDate;
 	
 	@Column(name = "insurance_end_date")
-	private Date endDate;
+	private Date insuranceEndDate;
 	
 	@Column(name = "place_of_register")
-	private String place;
+	private String placeOfRegister;
 	
 	@OneToOne
 	@PrimaryKeyJoinColumn
@@ -42,24 +42,25 @@ public class TblInsurance implements Serializable {
 		
 	}
 	
-	public TblInsurance(int idInsurrance, String insuranceNumber, Date startDate, Date endDate, String place,
+	public TblInsurance(int insuranceInternalId, String insuranceNumber, Date insuranceStartDate, Date insuranceEndDate,
+			String placeOfRegister,
 			TblUser tblUser) {
-		this.idInsurrance = idInsurrance;
+		this.insuranceInternalId = insuranceInternalId;
 		this.insuranceNumber = insuranceNumber;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.place = place;
+		this.insuranceStartDate = insuranceStartDate;
+		this.insuranceEndDate = insuranceEndDate;
+		this.placeOfRegister = placeOfRegister;
 		this.tblUser = tblUser;
 	}
-	
-	public int getIdInsurrance() {
-		return idInsurrance;
+
+	public int getInsuranceInternalId() {
+		return insuranceInternalId;
 	}
-	
-	public void setIdInsurrance(int idInsurrance) {
-		this.idInsurrance = idInsurrance;
+
+	public void setInsuranceInternalId(int insuranceInternalId) {
+		this.insuranceInternalId = insuranceInternalId;
 	}
-	
+
 	public String getInsuranceNumber() {
 		return insuranceNumber;
 	}
@@ -68,28 +69,28 @@ public class TblInsurance implements Serializable {
 		this.insuranceNumber = insuranceNumber;
 	}
 	
-	public Date getStartDate() {
-		return startDate;
+	public Date getInsuranceStartDate() {
+		return insuranceStartDate;
 	}
 	
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setInsuranceStartDate(Date insuranceStartDate) {
+		this.insuranceStartDate = insuranceStartDate;
 	}
 	
-	public Date getEndDate() {
-		return endDate;
+	public Date getInsuranceEndDate() {
+		return insuranceEndDate;
 	}
 	
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setInsuranceEndDate(Date insuranceEndDate) {
+		this.insuranceEndDate = insuranceEndDate;
 	}
 	
-	public String getPlace() {
-		return place;
+	public String getPlaceOfRegister() {
+		return placeOfRegister;
 	}
 	
-	public void setPlace(String place) {
-		this.place = place;
+	public void setPlaceOfRegister(String placeOfRegister) {
+		this.placeOfRegister = placeOfRegister;
 	}
 	
 	public TblUser getTblUser() {

@@ -30,4 +30,9 @@ public class TblUserServiceImpl implements ITblUserService {
 		return iTblUserRepositoryCustom.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullName,
 				insuranceNumber, placeOfRegister);
 	}
+
+	@Override
+	public TblUser findByUserInternalId(int userInternalId) {
+		return iTblUserRepository.findByUserInternalId(userInternalId);
+	}
 }
