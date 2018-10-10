@@ -39,7 +39,7 @@
                         <td><input type="text" th:field="*{searchByPlaceOfRegister}" name="place_of_register"/></td>
                     </tr>
                 </table>
-                <div class="btn_search"><input  type="submit" value="Tìm kiếm"/></div>
+                <div class="btn_search"><input class="submit" type="submit" value="Tìm kiếm"/></div>
             </div>
         </form>
     </div>
@@ -62,9 +62,7 @@
                                     th:href="@{/dashboard(typeSort=ASC,searchFormId=${searchFormId})}">
                                 ▲ </a>
                             </div>
-                            <div th:with="condition=${session.typeSort eq 'DESC'}"
-                                 th:remove="tag">
-
+                            <div th:with="condition=${session.typeSort eq 'DESC'}" th:remove="tag">
                                 <span th:if="${condition}">▼</span> <a
                                     th:unless="${condition}"
                                     th:href="@{/dashboard(typeSort=DESC,searchFormId=${searchFormId})}">

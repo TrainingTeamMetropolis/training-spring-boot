@@ -13,11 +13,13 @@
 <div class="_main">
     <div class="_title">Thêm mới thông tin thẻ bảo hiểm</div>
     <form action="register" method="POST" th:object="${registerInsuranceForm}">
-    <div class="_content">
+        <input th:name="searchFormId" th:value="${searchFormId}" type="hidden" />
+        <p style="color: red;" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <div class="_content">
             <table>
                 <tr>
                     <td class="_label">Mã số thẻ bảo hiểm</td>
-                    <td class="_input"><input th:field="*{numberInsurance}" maxlength="10"/></td>
+                    <td class="_input"><input th:field="*{insuranceNumber}" maxlength="10"/></td>
                     <td class="_subtitles">(format: 10 chữ số)</td>
                 </tr>
                 <tr>
@@ -30,17 +32,19 @@
                 </tr>
                 <tr>
                     <td class="_label">Mật khẩu</td>
-                    <td class="_input"><input th:field="*{passWord}"/></td>
+                    <td class="_input"><input th:field="*{passWord}" type="password"/></td>
                 </tr>
                 <tr>
                     <td class="_label">Xác nhận</td>
-                    <td class="_input"><input type="password" name=""/></td>
+                    <td class="_input"><input th:field="*{confirmPassWord}" type="password" name=""/></td>
                 </tr>
                 <tr>
                     <td class="_label">Giới tính</td>
                     <td class="_input">
-                        <input th:field="*{userSexDivision}" type="radio" value="1"/><label>Nam</label>
-                        <input th:field="*{userSexDivision}" type="radio" value="0"/><label>Nữ</label>
+                        <input th:field="*{userSexDivision}" type="radio" value="1"/>
+                        <label>Nam</label>
+                        <input data-id="${userSexDivision}" th:field="*{userSexDivision}" type="radio" value="0"/><label>Nữ
+                    </label>
                     </td>
                 </tr>
                 <tr>
@@ -51,9 +55,10 @@
                 <tr>
                     <td></td>
                     <td class="_input">
-                        <div><input id="radio-company-old" value="old" type="radio" name="company"
-                                    checked="checked"/><label>Công ty đã
-                            có</label></div>
+                        <div><input id="radio-company-old" th:field="*{check}" th:checked="${check=='old'}" value="old"
+                                    type="radio" name="company"/>
+                            <label>Công ty đã có</label>
+                        </div>
                         <div class="area-old-company">
                             <select th:field="*{companyInternalId}">
                                 <option
@@ -88,14 +93,16 @@
                 <tr>
                     <td class="_label">Công ty</td>
                     <td class="_input">
-                        <div><input id="radio-company-new" type="radio" value="new" name="company"/><label>Đăng ký theo công ty
-                            mới</label></div>
+                        <div><input id="radio-company-new" th:field="*{check}" th:checked="${check=='new'}" type="radio"
+                                    value="new" name="company"/>
+                            <label>Đăng ký theo công ty mới</label>
+                        </div>
                         <div class="area-new-company">
                             <table>
                                 <tr><td>Tên công ty</td><td><input th:field="*{companyName}"/></td></tr>
                                 <tr><td>Địa chỉ</td><td><input th:field="*{address}"/></td></tr>
                                 <tr><td>Email</td><td><input th:field="*{email}"/></td></tr>
-                                <tr><td>Điện thoại</td><td><input th:field="*{telephone}"/></td></tr>
+                                <tr><td>Điện thoại</td><td><input maxlength="10" th:field="*{telephone}"/></td></tr>
                             </table>
                         </div>
                     </td>
@@ -115,12 +122,11 @@
                     <td class="_subtitles">(format: dd/MM/yyyy)</td>
                 </tr>
             </table>
-
-    </div>
-    <div class="_btn_action">
-        <span><input type="button" value="Hủy"/></span>
-        <span><input type="button" value="Đăng ký"/></span>
-    </div>
+        </div>
+        <div class="_btn_action">
+            <span><input type="button" value="Hủy"/></span>
+            <span><input type="submit" value="Đăng ký"/></span>
+        </div>
     </form>
 </div>
 </body>

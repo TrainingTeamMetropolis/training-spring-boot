@@ -3,10 +3,12 @@ package com.luvina.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Common {
@@ -164,19 +166,223 @@ public class Common {
 	public static long getMiniSecondRandom() {
 		return new Date().getTime();
 	}
+
+	public static boolean isNullOrEmpty(String stringBeforeCheck) {
+		if (stringBeforeCheck == null || stringBeforeCheck.trim().isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
-	public static boolean checkNullAndEmpty(String stringBeforeCheck) {
-		if (stringBeforeCheck != null && !stringBeforeCheck.isEmpty()) {
+	public static boolean isRightFormatInsuranceNumber(String insuranceNumber) {
+		if (isNullOrEmpty(insuranceNumber) == false) {
+			Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_NUMBER_INSURANCE);
+			if ((pattern.matcher(insuranceNumber).matches())) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	public static boolean isRightFormatDate(String date) {
+
+		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_DATE);
+		if ((pattern.matcher(date).matches())) {
 			return true;
 		}
 		return false;
 	}
-	public static boolean checkNumberFormatNumberInsurance(String numberInsurance) {
-		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_NUMBER_INSURANCE);
-		if (!(pattern.matcher(numberInsurance).matches())) {
+
+	public static boolean isDateExists(String date) {
+		DateFormat df = new SimpleDateFormat(Constant.FOMAT_DATE);
+		df.setLenient(false);
+		try {
+			df.parse(date);
+		} catch (ParseException e) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean checkFormatEmail(String email) {
+		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_EMAIL);
+		if (!(pattern.matcher(email).matches())) {
 			return true;
 		}
 		return false;
+	}
+
+	public static boolean isFormatPhone(String phone) {
+		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_PHONE);
+		if ((pattern.matcher(phone).matches())) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isEndDateThanStartDate(String startDate, String endDate) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FOMAT_DATE);
+		Date start = new Date();
+		Date end = new Date();
+		double diff;
+		try {
+			start = dateFormat.parse(startDate);
+			end = dateFormat.parse(endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		diff = (end.getTime() - start.getTime());
+		if (diff <= 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	public static java.sql.Date convertStringToDateSQL(String dateString) {
+		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FOMAT_DATE);
+		Date date = null;
+		try {
+			date = formatter.parse(dateString);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new java.sql.Date(date.getTime());
+	}
+
+	public static String ramdomString() {
+		char[] chars = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		for (int i = 0; i < 10; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		String output = sb.toString();
+		return output;
+	}
+
+	public static String decomposeString(String s) {
+		StringBuilder stringBuilder = new StringBuilder();
+		// ký tự a
+		String[] aUp = { "A", "Â", "Ă",
+				"Á", "Ấ", "Ắ",
+				"À", "Ầ", "Ằ",
+				"Ả", "Ẩ", "Ẳ",
+				"Ã", "Ẫ", "Ẵ",
+				"Ạ", "Ậ", "Ặ" };
+		String[] iUp = { "I",
+				"Í",
+				"Ì",
+				"Ỉ",
+				"Ĩ",
+				"Ị" };
+		String[] uUp = { "U", "Ư",
+				"Ú", "Ứ",
+				"Ù", "Ừ",
+				"Ũ", "Ữ",
+				"Ủ", "Ử",
+				"Ụ", "Ự" };
+		String[] eUp = { "E", "Ê",
+				"É", "Ế",
+				"È", "Ề",
+				"Ẽ", "Ễ",
+				"Ẻ", "Ể",
+				"Ẹ", "Ệ" };
+		String[] oUp = { "O", "Ô", "Ơ",
+				"Ó", "Ố", "Ớ",
+				"Ò", "Ồ", "Ờ",
+				"Õ", "Ỗ", "Ỡ",
+				"Ỏ", "Ổ", "Ở",
+				"Ọ", "Ộ", "Ợ" };
+		// ký tự d
+		String[] dUp = { "D", "Đ" };
+		String[] dLow = { "d", "đ" };
+
+		String[] aLow = new String[aUp.length];
+		aLow = convertUpcateToLowcase(aUp);
+
+		String[] uLow = new String[uUp.length];
+		uLow = convertUpcateToLowcase(uUp);
+
+		String[] iLow = new String[iUp.length];
+		iLow = convertUpcateToLowcase(iUp);
+
+		String[] eLow = new String[eUp.length];
+		eLow = convertUpcateToLowcase(eUp);
+
+		String[] oLow = new String[oUp.length];
+		oLow = convertUpcateToLowcase(oUp);
+
+		String result[] = s.split("");
+
+		replaceString(result, aUp, aLow, "a");
+		replaceString(result, iUp, iLow, "i");
+		replaceString(result, uUp, uLow, "u");
+		replaceString(result, eUp, eLow, "e");
+		replaceString(result, oUp, oLow, "o");
+		replaceString(result, dUp, dLow, "d");
+
+		for (String string : result) {
+			stringBuilder.append(string);
+		}
+
+		return stringBuilder.toString();
+	}
+	public static String handleString(String s) {
+
+		s = decomposeString(s);
+		s = capitalizeString(s);
+		s = formatFullName(s);
+		return s;
+	}
+
+	public static String formatFullName(String s) {
+		s = s.replaceAll("[^a-zA-Z ]", "");
+		s = s.replaceAll(" +", " ");
+		return s;
+	}
+
+
+	public static String capitalizeString(String s) {
+		char[] chars = s.toLowerCase().toCharArray();
+		boolean found = false;
+		for (int i = 0; i < chars.length; i++) {
+			if (!found && Character.isLetter(chars[i])) {
+				chars[i] = Character.toUpperCase(chars[i]);
+				found = true;
+			} else if (Character.isWhitespace(chars[i]) || chars[i] == '.' || chars[i] == '\'') {
+				found = false;
+			}
+		}
+		return String.valueOf(chars);
+	}
+
+	public static String[] convertUpcateToLowcase(String[] up) {
+		String[] low = new String[up.length];
+		for (int i = 0; i < up.length; i++) {
+			String s1 = up[i];
+
+			low[i] = s1.toLowerCase();
+		}
+		return low;
+	}
+	public static void replaceString(String[] result, String[] up, String[] low, String flag) {
+		for (int j = 0; j < result.length; j++) {
+			for (int i = 0; i < up.length; i++) {
+				if (result[j].equals(up[i])) {
+					result[j] = flag;
+				}
+			}
+			for (int i = 0; i < low.length; i++) {
+				if (result[j].equals(low[i])) {
+					result[j] = flag;
+				}
+
+			}
+		}
 
 	}
+
 }

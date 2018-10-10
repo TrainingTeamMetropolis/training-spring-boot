@@ -1,7 +1,11 @@
 package com.luvina.service;
 
+import com.luvina.entities.TblInsurance;
+
 public interface ITblInsuranceService {
 	
-	boolean checkInsuranceIfNotExists(int insuranceInternalId, String insuranceNumber);
+	boolean isExistsTblInsurance(int insuranceInternalId, String insuranceNumber);
+
+	TblInsurance findTblInsuranceByInsuranceNumber(String insuranceNumber);
 	
 }

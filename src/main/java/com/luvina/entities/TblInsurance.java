@@ -52,15 +52,15 @@ public class TblInsurance implements Serializable {
 		this.placeOfRegister = placeOfRegister;
 		this.tblUser = tblUser;
 	}
-
+	
 	public int getInsuranceInternalId() {
 		return insuranceInternalId;
 	}
-
+	
 	public void setInsuranceInternalId(int insuranceInternalId) {
 		this.insuranceInternalId = insuranceInternalId;
 	}
-
+	
 	public String getInsuranceNumber() {
 		return insuranceNumber;
 	}

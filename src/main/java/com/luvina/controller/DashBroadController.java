@@ -61,19 +61,19 @@ public class DashBroadController {
         }
 		companyInternalId = searchForm.getSearchByCompanyInternalId();
 
-		if (Common.checkNullAndEmpty(searchForm.getSearchByUserFullName())) {
+		if (Common.isNullOrEmpty(searchForm.getSearchByUserFullName()) == false) {
 			userFullName = searchForm.getSearchByUserFullName();
 		}
-		if (Common.checkNullAndEmpty(searchForm.getSearchByInsuranceNumber())) {
+		if (Common.isNullOrEmpty(searchForm.getSearchByInsuranceNumber()) == false) {
 			insuranceNumber = searchForm.getSearchByInsuranceNumber();
 		}
-		if (Common.checkNullAndEmpty(searchForm.getSearchByPlaceOfRegister())) {
+		if (Common.isNullOrEmpty(searchForm.getSearchByPlaceOfRegister()) == false) {
 			placeOfRegister = searchForm.getSearchByPlaceOfRegister();
 		}
-        if (Common.checkNullAndEmpty(requestParam.get("typeSort"))) {
+        if (Common.isNullOrEmpty(requestParam.get("typeSort")) == false) {
             typeSort = requestParam.get("typeSort");
         }
-        if (Common.checkNullAndEmpty(requestParam.get("page"))) {
+        if (Common.isNullOrEmpty(requestParam.get("page")) == false) {
             currentPage = Integer.parseInt(requestParam.get("page"));
         }
         if (session.getAttribute(searchFormId) != null) {

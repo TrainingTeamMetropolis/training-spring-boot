@@ -1,6 +1,10 @@
 // ready function
 $(document).ready(function () {
     $("#userSexDivision1").attr("checked", "true");
+    $("#radio-company-old").attr("checked", "true");
+    setTimeout(function () {
+        jQuery(".submit").trigger('click');
+    }, 1000);
     $(".date-time-picker").datepicker({
         showOn: "button",
         buttonImage: "img/calendar_icon.gif",
@@ -10,7 +14,7 @@ $(document).ready(function () {
         dateFormat: "dd/mm/yy",
     });
     showOrHideCompany("old");
-    $('input[type=radio][name=company]').change(function () {
+    $('input[type=radio][name=check]').change(function () {
         showOrHideCompany(this.value);
     });
     $("#companyInternalId").change(function () {
@@ -33,7 +37,7 @@ var showOrHideCompany = function (value) {
 var showInformationCompany = function (companyInternalId) {
     var url = "/loadCompany?companyInternalId=" + companyInternalId;
     $.ajax({
-        type: "POST",
+        type: "GET",
         contentType: "application/json",
         url: url,
         data: JSON.stringify(companyInternalId),
@@ -46,8 +50,6 @@ var showInformationCompany = function (companyInternalId) {
             $(".emailCompany").html(data.emailCompany);
             $(".phoneCompany").html(data.phoneCompany);
         },
-        error: function (e) {
-
-        }
+        error: function (e) {}
     });
 }

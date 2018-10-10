@@ -15,7 +15,8 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
+	
 	@Override
 	public List<TblUser> findAndSearchListData(int offset, int limit, String typeSort, int companyInternalId,
 			String userFullName, String insuranceNumber, String placeOfRegister) {
@@ -67,7 +68,7 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 			hqlCommand.append("AND u.userFullName LIKE :userFullName ");
 		}
 		if (insuranceNumber.length() > 0) {
-			hqlCommand.append("AND u.tblInsurance.numberInsurance= :numberInsurance ");
+			hqlCommand.append("AND u.tblInsurance.insuranceNumber= :insuranceNumber ");
 		}
 		if (placeOfRegister.length() > 0) {
 			hqlCommand.append("AND u.tblInsurance.placeOfRegister LIKE :placeOfRegister ");
@@ -82,7 +83,7 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 			query.setParameter("userFullName", "%" + userFullName + "%");
 		}
 		if (insuranceNumber.length() > 0) {
-			query.setParameter("numberInsurance", insuranceNumber);
+			query.setParameter("insuranceNumber", insuranceNumber);
 		}
 		if (placeOfRegister.length() > 0) {
 			query.setParameter("placeOfRegister", "%" + placeOfRegister + "%");
