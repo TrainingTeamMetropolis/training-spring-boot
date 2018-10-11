@@ -1,0 +1,15 @@
+<!DOCTYPE html >
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SYSTEM_ERROR</title>
+</head>
+<body>
+<div class="erorr_form" align="center">
+    <span class="text-error">Hệ thống xảy ra lỗi </span>
+    <span class="text-error" th:text="${msg} +' click vào '"> </span>
+    <a class="text-error" th:text="đây" th:href="@{/dashboard}"> </a>
+    <span class="text-error"> để quay lại</span>
+</div>
+</body>
+</html>

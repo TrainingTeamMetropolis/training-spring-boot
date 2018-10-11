@@ -23,7 +23,7 @@ public class CSVFile {
 		StringBuilder informationCompany = new StringBuilder();
 		informationCompany.append(environment.getProperty("NameCompany") + "," + tblCompany.getCompanyName() + "\n");
 		informationCompany.append(
-				environment.getProperty("Address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany()) + "\n");
+				environment.getProperty("Address") + "," + "\""+tblCompany.getAddressCompany() +"\"" + "\n");
 		informationCompany.append(environment.getProperty("Email") + "," + tblCompany.getEmailCompany() + "\n");
 		informationCompany.append(environment.getProperty("Phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
 		return informationCompany.toString();
@@ -38,7 +38,7 @@ public class CSVFile {
 		if (tblUsers.size() != 0) {
 			for (TblUser tblUser : tblUsers) {
 				body.append(tblUser.getUserFullName() + ", ");
-				if (tblUser.getUserSexDivision().equals("1")) {
+				if (tblUser.getUserSexDivision().equals("01")) {
 					body.append("Nam" + ", ");
 				} else {
 					body.append("Nữ" + ", ");
@@ -65,7 +65,7 @@ public class CSVFile {
 		
 		response.setHeader("Content-type", "application/csv");
 		response.setHeader("Content-disposition", "inline; filename=listUser.csv");
-		content.append(environment.getProperty("title") + " " + "\n");
+		content.append(environment.getProperty("Title") + " " + "\n");
 		content.append(infoCompany + "\n");
 		content.append(header + "\n");
 		content.append(body);

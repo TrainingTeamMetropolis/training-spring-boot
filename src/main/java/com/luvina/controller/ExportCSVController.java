@@ -45,7 +45,7 @@ public class ExportCSVController {
 		
 		List<TblUser> tblUserList;
 		TblCompany tblCompany;
-		if (requestParam.get("searchFormId") != null && !requestParam.get("searchFormId").isEmpty()) {
+		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
 			searchFormId = requestParam.get("searchFormId");
 			SearchForm searchForm = (SearchForm) session.getAttribute(searchFormId);
             companyInternalId = searchForm.getSearchByCompanyInternalId();

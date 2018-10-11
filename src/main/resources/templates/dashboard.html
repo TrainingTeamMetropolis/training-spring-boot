@@ -81,7 +81,7 @@
                                 <a><span th:text="${user.userFullName}"></span></a>
                             </td>
                             <td align="center">
-                                <div th:with="condition=${user.userSexDivision eq '1'}">
+                                <div th:with="condition=${user.userSexDivision eq '01'}">
                                     <span th:if="${condition}" th:text="Nam"></span>
                                     <span th:unless="${condition}" th:text="Nữ"></span>
                                 </div>

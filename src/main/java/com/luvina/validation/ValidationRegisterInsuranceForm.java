@@ -120,22 +120,18 @@ public class ValidationRegisterInsuranceForm implements Validator {
 	}
 	
 	private void validateUserSexDivision(Errors errors, String userSexDivision) {
-		if ((userSexDivision.equals("0") == false) && (userSexDivision.equals("1") == false)) {
+		if ((userSexDivision.equals("01") == false) && (userSexDivision.equals("02") == false)) {
 			errors.rejectValue("userSexDivision", "Format.RegisterInsuranceForm.userSexDivision");
 		}
 	}
 	
 	private void validateBirthDate(Errors errors, String dateBirth) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(dateBirth)) {
-			hasErrorFlag = true;
-			errors.rejectValue("dateBirth", "NotEmpty.RegisterInsuranceForm.dateBirth");
-		}
-		if (hasErrorFlag == false && Common.isRightFormatDate(dateBirth) == false) {
+		if (Common.isNullOrEmpty(dateBirth) == false && Common.isRightFormatDate(dateBirth) == false) {
 			hasErrorFlag = true;
 			errors.rejectValue("dateBirth", "Format.RegisterInsuranceForm.dateBirth");
 		}
-		if (hasErrorFlag == false && Common.isDateExists(dateBirth) == false) {
+		if (Common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false && Common.isDateExists(dateBirth) == false) {
 			errors.rejectValue("dateBirth", "ExistsDate.RegisterInsuranceForm.dateBirth");
 		}
 	}

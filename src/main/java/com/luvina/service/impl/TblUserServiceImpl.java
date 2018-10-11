@@ -56,14 +56,11 @@ public class TblUserServiceImpl implements ITblUserService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void insertInformationInsuranceOfUser(RegisterInsuranceForm registerInsuranceForm) {
 		String checkRadioCompany = registerInsuranceForm.getRadioCompany();
-		
 		String userFullName = registerInsuranceForm.getUserFullName();
 		String userName = registerInsuranceForm.getUserName();
 		String passWord = registerInsuranceForm.getPassWord();
 		String userSexDivision = registerInsuranceForm.getRadioUserSexDivision();
-		
 		String dateBirth = registerInsuranceForm.getDateBirth();
-		
 		String placeOfRegister = registerInsuranceForm.getPlaceOfRegister();
 		String insuranceStartDate = registerInsuranceForm.getInsuranceStartDate();
 		String insuranceEndDate = registerInsuranceForm.getInsuranceEndDate();
@@ -95,7 +92,6 @@ public class TblUserServiceImpl implements ITblUserService {
 			int insuranceInternalIdInsert = tblInsuranceInsert.getInsuranceInternalId();
 			
 			TblUser tblUser = new TblUser();
-			
 			tblUser.setUserFullName(Common.handleString(userFullName));
 			tblUser.setUserName(userName);
 			tblUser.setPassWord(Common.encodePassword(passWord));
@@ -103,12 +99,9 @@ public class TblUserServiceImpl implements ITblUserService {
 			if (dateBirth.length() > 0) {
 				tblUser.setBirthDate(Common.convertStringToDateSQL(dateBirth));
 			}
-			
 			tblUser.setCompanyInternalId(companyInternalIdInsert);
 			tblUser.setInsuranceInternalId(insuranceInternalIdInsert);
-			
 			iTblUserRepository.save(tblUser);
-			
 		} else {
 			iTblInsuranceRepository.save(tblInsurance);
 			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findByInsuranceNumber(insuranceNumber);

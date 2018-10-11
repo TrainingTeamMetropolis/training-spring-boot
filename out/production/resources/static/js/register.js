@@ -19,11 +19,11 @@ $(document).ready(function () {
         $("#radio-company-old").removeAttr("checked");
         $("#radio-company-new").attr("checked", "true");
     }
-    var userSexDivision = "1";
+    var userSexDivision = "01";
     if ($("input[name=radioUserSexDivisionHidden]").val()) {
         userSexDivision = $("input[name=radioUserSexDivisionHidden]").val();
     }
-    if (userSexDivision == '1') {
+    if (userSexDivision == '01') {
         $("#radioUserSexDivision1").attr("checked", "true");
         $("#radioUserSexDivision2").removeAttr("checked");
     } else {

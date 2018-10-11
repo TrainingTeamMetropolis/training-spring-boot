@@ -1,5 +1,6 @@
 package com.luvina.controller;
 
+import com.luvina.TrainingSpringbootApplication;
 import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblUser;
 import com.luvina.form.SearchForm;
@@ -123,7 +124,7 @@ public class DashBroadController {
 		searchForm.setTypeSort(typeSort);
 		searchForm.setPage(currentPage);
 		session.setAttribute(searchFormId, searchForm);
-
+		
 		modelAndView.setViewName("dashboard");
 		return modelAndView;
 	}
