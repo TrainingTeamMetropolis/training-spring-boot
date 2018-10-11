@@ -1,8 +1,8 @@
 package com.luvina.repository.customize;
 
-import com.luvina.entities.TblUser;
-
 import java.util.List;
+
+import com.luvina.entities.TblUser;
 
 public interface ITblUserRepositoryCustom {
 	

@@ -8,7 +8,6 @@ import com.luvina.repository.ITblCompanyRepository;
 import com.luvina.repository.ITblInsuranceRepository;
 import com.luvina.repository.ITblUserRepository;
 import com.luvina.repository.customize.ITblUserRepositoryCustom;
-import com.luvina.service.ITblCompanyService;
 import com.luvina.service.ITblUserService;
 import com.luvina.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +58,8 @@ public class TblUserServiceImpl implements ITblUserService {
 		String checkRadioCompany = registerInsuranceForm.getCheck();
 		
 		String userFullName = registerInsuranceForm.getUserFullName();
+		String userName = registerInsuranceForm.getUserName();
+		String passWord = registerInsuranceForm.getPassWord();
 		String userSexDivision = registerInsuranceForm.getUserSexDivision();
 		
 		String dateBirth = registerInsuranceForm.getDateBirth();
@@ -90,14 +91,14 @@ public class TblUserServiceImpl implements ITblUserService {
 			int companyInternalIdInsert = tblCompany.getCompanyInternalId();
 			iTblInsuranceRepository.save(tblInsurance);
 
-			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findTblInsuranceByInsuranceNumber(insuranceNumber);
+			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findByInsuranceNumber(insuranceNumber);
 			int insuranceInternalIdInsert = tblInsuranceInsert.getInsuranceInternalId();
 			
 			TblUser tblUser = new TblUser();
 			
 			tblUser.setUserFullName(Common.handleString(userFullName));
-			tblUser.setUserName(Common.ramdomString());
-			tblUser.setPassWord(Common.encodePassword(Common.ramdomString()));
+			tblUser.setUserName(userName);
+			tblUser.setPassWord(Common.encodePassword(passWord));
 			tblUser.setUserSexDivision(userSexDivision);
 			if (dateBirth.length() > 0) {
 				tblUser.setBirthDate(Common.convertStringToDateSQL(dateBirth));
@@ -110,12 +111,12 @@ public class TblUserServiceImpl implements ITblUserService {
 			
 		} else {
 			iTblInsuranceRepository.save(tblInsurance);
-			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findTblInsuranceByInsuranceNumber(insuranceNumber);
+			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findByInsuranceNumber(insuranceNumber);
 			int insuranceInternalId = tblInsuranceInsert.getInsuranceInternalId();
 			TblUser tblUser = new TblUser();
 			tblUser.setUserFullName(Common.handleString(userFullName));
-			tblUser.setUserName(Common.ramdomString());
-			tblUser.setPassWord(Common.encodePassword(Common.ramdomString()));
+			tblUser.setUserName(userName);
+			tblUser.setPassWord(Common.encodePassword(passWord));
 			
 			tblUser.setUserSexDivision(userSexDivision);
 			if (dateBirth.length() > 0) {

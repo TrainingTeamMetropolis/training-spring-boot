@@ -4,6 +4,7 @@ import com.luvina.entities.TblCompany;
 import com.luvina.form.RegisterInsuranceForm;
 import com.luvina.service.ITblCompanyService;
 import com.luvina.service.ITblUserService;
+import com.luvina.util.Common;
 import com.luvina.validation.ValidationRegisterInsuranceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,26 +36,30 @@ public class RegisterInsuranceController {
 	
 	@RequestMapping(value = "/register", method = GET)
 	public ModelAndView registration(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
-			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm, BindingResult result,
-			HttpSession session) {
+			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm) {
 		setDataToView(modelAndView);
+		String searchFormId = "";
+		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
+			searchFormId = requestParam.get("searchFormId");
+		}
+		modelAndView.addObject("searchFormId", searchFormId);
 		modelAndView.setViewName("register");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/register", method = POST)
 	public ModelAndView register(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
-			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm, BindingResult result,
-			HttpSession session) {
+			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm,
+			BindingResult result) {
 		String searchFormId = "";
 		setDataToView(modelAndView);
 		validationRegisterInsuranceForm.validate(registerInsuranceForm, result);
-		if (requestParam.get("searchFormId") != null) {
+		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
 			searchFormId = requestParam.get("searchFormId");
 		}
 		if (result.hasErrors()) {
 			modelAndView.addObject("searchFormId", searchFormId);
-            modelAndView.setViewName("register");
+			modelAndView.setViewName("register");
 		} else {
 			iTblUserService.insertInformationInsuranceOfUser(registerInsuranceForm);
 			modelAndView.setViewName("redirect:dashboard");

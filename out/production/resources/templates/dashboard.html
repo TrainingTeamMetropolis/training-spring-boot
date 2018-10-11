@@ -48,8 +48,8 @@
         <span><input class="btn_export" type="button" value="Export CSV"/></span>
     </div>
     <div class="_table_data">
-        <div class="_data" th:with="condition=${error != null}" th:remove="tag">
-            <div class="_error_empty" th:text="${@environment.getProperty('noneRecord')}" th:if="${condition}"></div>
+        <div class="_data" th:with="condition=${tblUserList.size() == 0}" th:remove="tag">
+            <div class="_error_empty" th:text="${@environment.getProperty('NoneRecord')}" th:if="${condition}"></div>
             <div th:unless="${condition}" class="tbl-list">
                 <table>
                     <tr>
@@ -117,7 +117,7 @@
             </span>
         </span>
         <span th:if="${currentPage &lt; totalPage}">
-            <a th:href="@{/listUser(page=${currentPage+1},searchFormId=${searchFormId})}">&gt;&gt;</a>
+            <a th:href="@{/dashboard(page=${currentPage+1},searchFormId=${searchFormId})}">&gt;&gt;</a>
         </span>
     </div>
 </div>

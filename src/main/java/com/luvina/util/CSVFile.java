@@ -21,39 +21,41 @@ public class CSVFile {
 	
 	public String createCompany(TblCompany tblCompany) {
 		StringBuilder informationCompany = new StringBuilder();
-		informationCompany.append(environment.getProperty("nameCompany") + "," + tblCompany.getCompanyName() + "\n");
+		informationCompany.append(environment.getProperty("NameCompany") + "," + tblCompany.getCompanyName() + "\n");
 		informationCompany.append(
-				environment.getProperty("address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany()) + "\n");
-		informationCompany.append(environment.getProperty("email") + "," + tblCompany.getEmailCompany() + "\n");
-		informationCompany.append(environment.getProperty("phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
+				environment.getProperty("Address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany()) + "\n");
+		informationCompany.append(environment.getProperty("Email") + "," + tblCompany.getEmailCompany() + "\n");
+		informationCompany.append(environment.getProperty("Phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
 		return informationCompany.toString();
 	}
 	
 	public String createHeader() {
-		return environment.getProperty("header");
+		return environment.getProperty("Header");
 	}
 	
 	public String createBody(List<TblUser> tblUsers) {
-		
 		StringBuilder body = new StringBuilder();
-		for (TblUser tblUser : tblUsers) {
-			body.append(tblUser.getUserFullName() + ", ");
-			if (tblUser.getUserSexDivision().equals("1")) {
-				body.append("Nam" + ", ");
-			} else {
-				body.append("Nữ" + ", ");
+		if (tblUsers.size() != 0) {
+			for (TblUser tblUser : tblUsers) {
+				body.append(tblUser.getUserFullName() + ", ");
+				if (tblUser.getUserSexDivision().equals("1")) {
+					body.append("Nam" + ", ");
+				} else {
+					body.append("Nữ" + ", ");
+				}
+				if (tblUser.getBirthDate() != null) {
+					body.append(Common.convertDateToString(tblUser.getBirthDate()) + ", ");
+				} else {
+					body.append(", ");
+				}
+				body.append("\t" + tblUser.getTblInsurance().getInsuranceNumber() + ", ");
+				body.append(Common.convertDateToString(tblUser.getTblInsurance().getInsuranceStartDate()) + ", ");
+				body.append(Common.convertDateToString(tblUser.getTblInsurance().getInsuranceEndDate()) + ", ");
+				body.append(tblUser.getTblInsurance().getPlaceOfRegister() + ", " + "\n ");
 			}
-			if (tblUser.getBirthDate() != null) {
-				body.append(Common.convertDateToString(tblUser.getBirthDate()) + ", ");
-			} else {
-				body.append(", ");
-			}
-			body.append("\t" + tblUser.getTblInsurance().getInsuranceNumber() + ", ");
-			body.append(Common.convertDateToString(tblUser.getTblInsurance().getInsuranceStartDate()) + ", ");
-			body.append(Common.convertDateToString(tblUser.getTblInsurance().getInsuranceEndDate()) + ", ");
-			body.append(tblUser.getTblInsurance().getPlaceOfRegister() + ", " + "\n ");
+		} else {
+			body.append("");
 		}
-		
 		return body.toString();
 		
 	}

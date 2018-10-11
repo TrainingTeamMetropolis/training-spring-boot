@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Register</title>
-    <link href="css/register.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="js/register.js"></script>
+    <link href="css/register.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div class="_main">
     <div class="_title">Thêm mới thông tin thẻ bảo hiểm</div>
     <form action="register" method="POST" th:object="${registerInsuranceForm}">
         <input th:name="searchFormId" th:value="${searchFormId}" type="hidden" />
-        <p style="color: red;" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <input th:name="userSexDivision" th:value="${userSexDivision}" type="hidden" />
+        <input th:name="check" th:value="${check}" type="hidden" />
+        <p class="error_message" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         <div class="_content">
             <table>
                 <tr>
@@ -43,8 +45,8 @@
                     <td class="_input">
                         <input th:field="*{userSexDivision}" type="radio" value="1"/>
                         <label>Nam</label>
-                        <input data-id="${userSexDivision}" th:field="*{userSexDivision}" type="radio" value="0"/><label>Nữ
-                    </label>
+                        <input th:field="*{userSexDivision}" type="radio" value="0"/>
+                        <label>Nữ</label>
                     </td>
                 </tr>
                 <tr>
@@ -124,8 +126,8 @@
             </table>
         </div>
         <div class="_btn_action">
-            <span><input type="button" value="Hủy"/></span>
-            <span><input type="submit" value="Đăng ký"/></span>
+            <span><input class="_cancel" type="button" value="Hủy"/></span>
+            <span><input class="_register" type="submit" value="Đăng ký"/></span>
         </div>
     </form>
 </div>

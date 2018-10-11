@@ -6,7 +6,7 @@ public class Constant {
 	// paging limit
 	public static final int LIMIT = 5;
 
-    public static final String FOMAT_DATE = "dd/MM/yyyy";
+    public static final String FORMAT_DATE = "dd/MM/yyyy";
 
 	public static final String REGEX_FORMAT_NUMBER_INSURANCE = "^[0-9]{10}$";
 	

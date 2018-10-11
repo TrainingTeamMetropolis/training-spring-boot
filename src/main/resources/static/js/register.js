@@ -2,12 +2,9 @@
 $(document).ready(function () {
     $("#userSexDivision1").attr("checked", "true");
     $("#radio-company-old").attr("checked", "true");
-    setTimeout(function () {
-        jQuery(".submit").trigger('click');
-    }, 1000);
     $(".date-time-picker").datepicker({
         showOn: "button",
-        buttonImage: "img/calendar_icon.gif",
+        buttonImage: "img/calendar.png",
         buttonImageOnly: true,
         changeMonth: true,
         changeYear: true,
@@ -19,6 +16,14 @@ $(document).ready(function () {
     });
     $("#companyInternalId").change(function () {
         showInformationCompany($("#companyInternalId").val());
+    });
+    $("._cancel").click(function () {
+        var searchFormId = $("input[name=searchFormId]").val();
+        var url = "dashboard";
+        if (searchFormId) {
+            url = "dashboard?searchFormId=" + searchFormId;
+        }
+        location.href = url;
     });
 });
 
@@ -40,7 +45,6 @@ var showInformationCompany = function (companyInternalId) {
         type: "GET",
         contentType: "application/json",
         url: url,
-        data: JSON.stringify(companyInternalId),
         dataType: 'json',
         cache: false,
         timeout: 10000,

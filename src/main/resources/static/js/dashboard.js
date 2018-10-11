@@ -11,9 +11,9 @@ $(document).ready(function() {
     });
     // Event change select box company in dashboard
     $("#searchByCompanyInternalId").change(function () {
-        document.getElementById("searchByUserFullName").value = '';
-        document.getElementById("searchByInsuranceNumber").value = '';
-        document.getElementById("searchByPlaceOfRegister").value = '';
+        $("#searchByUserFullName").attr("value", "");
+        $("#searchByInsuranceNumber").attr("value", "");
+        $("#searchByPlaceOfRegister").attr("value", "");
     });
 });
 /**

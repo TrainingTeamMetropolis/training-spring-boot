@@ -5,11 +5,9 @@ import com.luvina.form.RegisterInsuranceForm;
 import com.luvina.service.ITblInsuranceService;
 import com.luvina.service.ITblUserService;
 import com.luvina.util.Common;
-import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -36,7 +34,6 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			TblUser tblUser = iTblUserService.findByUserInternalId(userInternalId);
 			insuranceInternalId = tblUser.getInsuranceInternalId();
 		}
-		int userInternalId = registerInsuranceForm.getUserInternalId();
 		String insuranceNumber = registerInsuranceForm.getInsuranceNumber();
 		String userFullName = registerInsuranceForm.getUserFullName();
 		String userName = registerInsuranceForm.getUserName();
@@ -44,7 +41,6 @@ public class ValidationRegisterInsuranceForm implements Validator {
 		String confirmPassWord = registerInsuranceForm.getConfirmPassWord();
 		String userSexDivision = registerInsuranceForm.getUserSexDivision();
 		String dateBirth = registerInsuranceForm.getDateBirth();
-		int companyInternalId = registerInsuranceForm.getCompanyInternalId();
 		String companyName = registerInsuranceForm.getCompanyName();
 		String address = registerInsuranceForm.getAddress();
 		String email = registerInsuranceForm.getEmail();
@@ -53,14 +49,14 @@ public class ValidationRegisterInsuranceForm implements Validator {
 		String insuranceStartDate = registerInsuranceForm.getInsuranceEndDate();
 		String insuranceEndDate = registerInsuranceForm.getInsuranceEndDate();
 		String checkRadioCompany = registerInsuranceForm.getCheck();
-
+		
 		validateInsuranceNumber(errors, insuranceInternalId, insuranceNumber);
 		validateUserFullName(errors, userFullName);
 		validateUserName(errors, userName);
 		validatePassWord(errors, passWord, confirmPassWord);
 		validateUserSexDivision(errors, userSexDivision);
 		validateBirthDate(errors, dateBirth);
-		if (!checkRadioCompany.equals("old")) {
+		if (checkRadioCompany.equals("old") == false) {
 			validateCompanyName(errors, companyName);
 			validateAddressCompany(errors, address);
 			validateEmailCompany(errors, email);
@@ -78,7 +74,11 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			errors.rejectValue("insuranceNumber", "NotEmpty.RegisterInsuranceForm.insuranceNumber");
 		}
 		if (hasErrorFlag == false && Common.isRightFormatInsuranceNumber(insuranceNumber) == false) {
+			hasErrorFlag = true;
 			errors.rejectValue("insuranceNumber", "Format.RegisterInsuranceForm.insuranceNumber");
+		}
+		if (hasErrorFlag == false && iTblInsuranceService.isExistsTblInsurance(insuranceInternalId, insuranceNumber)) {
+			errors.rejectValue("insuranceNumber", "Exists.RegisterInsuranceForm.insuranceNumber");
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			hasErrorFlag = true;
 			errors.rejectValue("dateBirth", "Format.RegisterInsuranceForm.dateBirth");
 		}
-		if (hasErrorFlag = false && Common.isDateExists(dateBirth) == false) {
+		if (hasErrorFlag == false && Common.isDateExists(dateBirth) == false) {
 			errors.rejectValue("dateBirth", "ExistsDate.RegisterInsuranceForm.dateBirth");
 		}
 	}
@@ -207,7 +207,7 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			errors.rejectValue("insuranceStartDate", "NotEmpty.RegisterInsuranceForm.insuranceStartDate");
 		}
 		if (hasErrorFlag == false && Common.isRightFormatDate(startDate) == false) {
-            hasErrorFlag = true;
+			hasErrorFlag = true;
 			errors.rejectValue("insuranceStartDate", "Format.RegisterInsuranceForm.insuranceStartDate");
 		}
 		if (hasErrorFlag == false && Common.isDateExists(startDate) == false) {
@@ -222,12 +222,12 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			errors.rejectValue("insuranceEndDate", "NotEmpty.RegisterInsuranceForm.insuranceEndDate");
 		}
 		if (hasErrorFlag == false && Common.isRightFormatDate(endDate) == false) {
-            hasErrorFlag = true;
+			hasErrorFlag = true;
 			errors.rejectValue("insuranceEndDate", "Format.RegisterInsuranceForm.insuranceEndDate");
 		}
 		if (hasErrorFlag == false && Common.isDateExists(endDate) == false) {
-
-            hasErrorFlag = true;
+			
+			hasErrorFlag = true;
 			errors.rejectValue("insuranceEndDate", "ExistsDate.RegisterInsuranceForm.insuranceEndDate");
 		}
 		if (hasErrorFlag == false && Common.isEndDateThanStartDate(startDate, endDate) == true) {

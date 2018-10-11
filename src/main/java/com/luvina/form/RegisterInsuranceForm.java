@@ -35,8 +35,7 @@ public class RegisterInsuranceForm {
 	private String insuranceEndDate;
 	
 	private String check;
-	
-	
+
 	public int getUserInternalId() {
 		return userInternalId;
 	}
@@ -168,11 +167,11 @@ public class RegisterInsuranceForm {
 	public void setInsuranceEndDate(String insuranceEndDate) {
 		this.insuranceEndDate = insuranceEndDate;
 	}
-
+	
 	public String getCheck() {
 		return check;
 	}
-
+	
 	public void setCheck(String check) {
 		this.check = check;
 	}

@@ -28,7 +28,7 @@ public class Common {
 	}
 	
 	/**
-	 * getLimit
+	 * getLimit get limit in Constant file
 	 * @return
 	 */
 	public static int getLimit() {
@@ -151,7 +151,7 @@ public class Common {
 	
 	public static String convertDateToString(java.sql.Date dateSql) {
 		java.util.Date utilDate = convertFromSQLDateToJAVADate(dateSql);
-		DateFormat df = new SimpleDateFormat(Constant.FOMAT_DATE);
+		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		return df.format(utilDate);
 	}
 	
@@ -166,7 +166,7 @@ public class Common {
 	public static long getMiniSecondRandom() {
 		return new Date().getTime();
 	}
-
+	
 	public static boolean isNullOrEmpty(String stringBeforeCheck) {
 		if (stringBeforeCheck == null || stringBeforeCheck.trim().isEmpty()) {
 			return true;
@@ -185,17 +185,18 @@ public class Common {
 		return false;
 		
 	}
+	
 	public static boolean isRightFormatDate(String date) {
-
+		
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_DATE);
 		if ((pattern.matcher(date).matches())) {
 			return true;
 		}
 		return false;
 	}
-
+	
 	public static boolean isDateExists(String date) {
-		DateFormat df = new SimpleDateFormat(Constant.FOMAT_DATE);
+		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		df.setLenient(false);
 		try {
 			df.parse(date);
@@ -204,7 +205,7 @@ public class Common {
 		}
 		return true;
 	}
-
+	
 	public static boolean checkFormatEmail(String email) {
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_EMAIL);
 		if (!(pattern.matcher(email).matches())) {
@@ -212,7 +213,7 @@ public class Common {
 		}
 		return false;
 	}
-
+	
 	public static boolean isFormatPhone(String phone) {
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_PHONE);
 		if ((pattern.matcher(phone).matches())) {
@@ -220,9 +221,9 @@ public class Common {
 		}
 		return false;
 	}
-
+	
 	public static boolean isEndDateThanStartDate(String startDate, String endDate) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FOMAT_DATE);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date start = new Date();
 		Date end = new Date();
 		double diff;
@@ -239,112 +240,145 @@ public class Common {
 			return true;
 		}
 	}
+	
 	public static java.sql.Date convertStringToDateSQL(String dateString) {
-		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FOMAT_DATE);
+		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date date = null;
 		try {
 			date = formatter.parse(dateString);
-
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return new java.sql.Date(date.getTime());
 	}
 
-	public static String ramdomString() {
-		char[] chars = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < 10; i++) {
-			char c = chars[random.nextInt(chars.length)];
-			sb.append(c);
-		}
-		String output = sb.toString();
-		return output;
-	}
-
 	public static String decomposeString(String s) {
 		StringBuilder stringBuilder = new StringBuilder();
-		// ký tự a
-		String[] aUp = { "A", "Â", "Ă",
-				"Á", "Ấ", "Ắ",
-				"À", "Ầ", "Ằ",
-				"Ả", "Ẩ", "Ẳ",
-				"Ã", "Ẫ", "Ẵ",
-				"Ạ", "Ậ", "Ặ" };
-		String[] iUp = { "I",
-				"Í",
-				"Ì",
-				"Ỉ",
-				"Ĩ",
-				"Ị" };
-		String[] uUp = { "U", "Ư",
-				"Ú", "Ứ",
-				"Ù", "Ừ",
-				"Ũ", "Ữ",
-				"Ủ", "Ử",
-				"Ụ", "Ự" };
-		String[] eUp = { "E", "Ê",
-				"É", "Ế",
-				"È", "Ề",
-				"Ẽ", "Ễ",
-				"Ẻ", "Ể",
-				"Ẹ", "Ệ" };
-		String[] oUp = { "O", "Ô", "Ơ",
-				"Ó", "Ố", "Ớ",
-				"Ò", "Ồ", "Ờ",
-				"Õ", "Ỗ", "Ỡ",
-				"Ỏ", "Ổ", "Ở",
-				"Ọ", "Ộ", "Ợ" };
-		// ký tự d
-		String[] dUp = { "D", "Đ" };
-		String[] dLow = { "d", "đ" };
-
-		String[] aLow = new String[aUp.length];
-		aLow = convertUpcateToLowcase(aUp);
-
-		String[] uLow = new String[uUp.length];
-		uLow = convertUpcateToLowcase(uUp);
-
-		String[] iLow = new String[iUp.length];
-		iLow = convertUpcateToLowcase(iUp);
-
-		String[] eLow = new String[eUp.length];
-		eLow = convertUpcateToLowcase(eUp);
-
-		String[] oLow = new String[oUp.length];
-		oLow = convertUpcateToLowcase(oUp);
-
+		String[] aUp = {
+			"A",
+			"Â",
+			"Ă",
+			"Á",
+			"Ấ",
+			"Ắ",
+			"À",
+			"Ầ",
+			"Ằ",
+			"Ả",
+			"Ẩ",
+			"Ẳ",
+			"Ã",
+			"Ẫ",
+			"Ẵ",
+			"Ạ",
+			"Ậ",
+			"Ặ"
+		};
+		String[] iUp = {
+			"I",
+			"Í",
+			"Ì",
+			"Ỉ",
+			"Ĩ",
+			"Ị"
+		};
+		String[] uUp = {
+			"U",
+			"Ư",
+			"Ú",
+			"Ứ",
+			"Ù",
+			"Ừ",
+			"Ũ",
+			"Ữ",
+			"Ủ",
+			"Ử",
+			"Ụ",
+			"Ự"
+		};
+		String[] eUp = {
+			"E",
+			"Ê",
+			"É",
+			"Ế",
+			"È",
+			"Ề",
+			"Ẽ",
+			"Ễ",
+			"Ẻ",
+			"Ể",
+			"Ẹ",
+			"Ệ"
+		};
+		String[] oUp = {
+			"O",
+			"Ô",
+			"Ơ",
+			"Ó",
+			"Ố",
+			"Ớ",
+			"Ò",
+			"Ồ",
+			"Ờ",
+			"Õ",
+			"Ỗ",
+			"Ỡ",
+			"Ỏ",
+			"Ổ",
+			"Ở",
+			"Ọ",
+			"Ộ",
+			"Ợ"
+		};
+		
+		String[] dUp = {
+			"D",
+			"Đ"
+		};
+		String[] dLow = {
+			"d",
+			"đ"
+		};
+		
+		String[] aLow = convertUpCaseToLowCase(aUp);
+		
+		String[] uLow = convertUpCaseToLowCase(uUp);
+		
+		String[] iLow = convertUpCaseToLowCase(iUp);
+		
+		String[] eLow = convertUpCaseToLowCase(eUp);
+		
+		String[] oLow = convertUpCaseToLowCase(oUp);
+		
 		String result[] = s.split("");
-
+		
 		replaceString(result, aUp, aLow, "a");
 		replaceString(result, iUp, iLow, "i");
 		replaceString(result, uUp, uLow, "u");
 		replaceString(result, eUp, eLow, "e");
 		replaceString(result, oUp, oLow, "o");
 		replaceString(result, dUp, dLow, "d");
-
+		
 		for (String string : result) {
 			stringBuilder.append(string);
 		}
-
 		return stringBuilder.toString();
 	}
+	
 	public static String handleString(String s) {
-
 		s = decomposeString(s);
 		s = capitalizeString(s);
 		s = formatFullName(s);
 		return s;
 	}
-
+	
 	public static String formatFullName(String s) {
 		s = s.replaceAll("[^a-zA-Z ]", "");
 		s = s.replaceAll(" +", " ");
 		return s;
 	}
-
-
+	
 	public static String capitalizeString(String s) {
 		char[] chars = s.toLowerCase().toCharArray();
 		boolean found = false;
@@ -358,16 +392,17 @@ public class Common {
 		}
 		return String.valueOf(chars);
 	}
-
-	public static String[] convertUpcateToLowcase(String[] up) {
+	
+	public static String[] convertUpCaseToLowCase(String[] up) {
 		String[] low = new String[up.length];
 		for (int i = 0; i < up.length; i++) {
 			String s1 = up[i];
-
+			
 			low[i] = s1.toLowerCase();
 		}
 		return low;
 	}
+	
 	public static void replaceString(String[] result, String[] up, String[] low, String flag) {
 		for (int j = 0; j < result.length; j++) {
 			for (int i = 0; i < up.length; i++) {
@@ -379,10 +414,10 @@ public class Common {
 				if (result[j].equals(low[i])) {
 					result[j] = flag;
 				}
-
+				
 			}
 		}
-
+		
 	}
-
+	
 }

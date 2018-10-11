@@ -1,0 +1,58 @@
+._main {
+    margin: auto;
+    border: solid black thin;
+    alignment: center;
+    width: 600px;
+    height: 100%;
+    border-radius: 5px;
+}
+
+._main form {
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+._title {
+    margin: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.error_message {
+    color: red;
+}
+
+._btn_action {
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+._register {
+    margin-left: 100px;
+}
+
+#form-ajax {
+    margin-top: 5px;
+    border: solid black thin;
+    border-radius: 5px;
+}
+
+.ui-datepicker-trigger {
+    float: right;
+    margin-right: 35px;
+}
+
+._input img {
+    height: 80%;
+    float: right;
+    margin-right: 35px;
+}
+
+._input {
+    width: 45%;
+}
+
+._label {
+    font-weight: bold;
+}
+

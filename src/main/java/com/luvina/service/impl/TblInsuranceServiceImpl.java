@@ -16,16 +16,11 @@ public class TblInsuranceServiceImpl implements ITblInsuranceService {
 	@Override
 	public boolean isExistsTblInsurance(int insuranceInternalId, String insuranceNumber) {
 		TblInsurance tblInsurance =
-				iTblInsuranceRepository.findByInsuranceInternalIdAndInsuranceNumberCustom(insuranceInternalId,
+				iTblInsuranceRepository.findByInsuranceInternalIdNotAndInsuranceNumber(insuranceInternalId,
 						insuranceNumber);
 		if (tblInsurance != null) {
 			return true;
 		}
 		return false;
 	}
-
-    @Override
-    public TblInsurance findTblInsuranceByInsuranceNumber(String insuranceNumber) {
-        return iTblInsuranceRepository.findTblInsuranceByInsuranceNumber(insuranceNumber);
-    }
 }
