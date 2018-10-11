@@ -39,7 +39,7 @@ public class ValidationRegisterInsuranceForm implements Validator {
 		String userName = registerInsuranceForm.getUserName();
 		String passWord = registerInsuranceForm.getPassWord();
 		String confirmPassWord = registerInsuranceForm.getConfirmPassWord();
-		String userSexDivision = registerInsuranceForm.getUserSexDivision();
+		String userSexDivision = registerInsuranceForm.getRadioUserSexDivision();
 		String dateBirth = registerInsuranceForm.getDateBirth();
 		String companyName = registerInsuranceForm.getCompanyName();
 		String address = registerInsuranceForm.getAddress();
@@ -48,7 +48,7 @@ public class ValidationRegisterInsuranceForm implements Validator {
 		String placeOfRegister = registerInsuranceForm.getPlaceOfRegister();
 		String insuranceStartDate = registerInsuranceForm.getInsuranceEndDate();
 		String insuranceEndDate = registerInsuranceForm.getInsuranceEndDate();
-		String checkRadioCompany = registerInsuranceForm.getCheck();
+		String checkRadioCompany = registerInsuranceForm.getRadioCompany();
 		
 		validateInsuranceNumber(errors, insuranceInternalId, insuranceNumber);
 		validateUserFullName(errors, userFullName);

@@ -1,7 +1,5 @@
 // ready function
 $(document).ready(function () {
-    $("#userSexDivision1").attr("checked", "true");
-    $("#radio-company-old").attr("checked", "true");
     $(".date-time-picker").datepicker({
         showOn: "button",
         buttonImage: "img/calendar.png",
@@ -10,8 +8,30 @@ $(document).ready(function () {
         changeYear: true,
         dateFormat: "dd/mm/yy",
     });
-    showOrHideCompany("old");
-    $('input[type=radio][name=check]').change(function () {
+    var radioCompany = "old";
+    if ($("input[name=radioCompanyHidden]").val()) {
+        radioCompany = $("input[name=radioCompanyHidden]").val();
+    }
+    if (radioCompany == "old") {
+        $("#radio-company-old").attr("checked", "true");
+        $("#radio-company-new").removeAttr('checked');
+    } else {
+        $("#radio-company-old").removeAttr("checked");
+        $("#radio-company-new").attr("checked", "true");
+    }
+    var userSexDivision = "1";
+    if ($("input[name=radioUserSexDivisionHidden]").val()) {
+        userSexDivision = $("input[name=radioUserSexDivisionHidden]").val();
+    }
+    if (userSexDivision == '1') {
+        $("#radioUserSexDivision1").attr("checked", "true");
+        $("#radioUserSexDivision2").removeAttr("checked");
+    } else {
+        $("#radioUserSexDivision1").removeAttr("checked");
+        $("#radioUserSexDivision2").attr("checked", "true");
+    }
+    showOrHideCompany(radioCompany);
+    $('input[type=radio][name=radioCompany]').change(function () {
         showOrHideCompany(this.value);
     });
     $("#companyInternalId").change(function () {
@@ -32,10 +52,12 @@ var showOrHideCompany = function (value) {
     if (value == 'old') {
         $(".area-old-company").show();
         $(".area-new-company").hide();
+        $(".ui-datepicker-trigger").css("margin-right", "50px");
         showInformationCompany(companyInternalId);
     } else if (value == 'new') {
         $(".area-old-company").hide();
         $(".area-new-company").show();
+        $(".ui-datepicker-trigger").css("margin-right", "65px");
     }
 }
 

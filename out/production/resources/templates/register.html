@@ -14,8 +14,8 @@
     <div class="_title">Thêm mới thông tin thẻ bảo hiểm</div>
     <form action="register" method="POST" th:object="${registerInsuranceForm}">
         <input th:name="searchFormId" th:value="${searchFormId}" type="hidden" />
-        <input th:name="userSexDivision" th:value="${userSexDivision}" type="hidden" />
-        <input th:name="check" th:value="${check}" type="hidden" />
+        <input th:name="radioCompanyHidden" th:value="*{radioCompany}" type="hidden" />
+        <input th:name="radioUserSexDivisionHidden" th:value="*{radioUserSexDivision}" type="hidden" />
         <p class="error_message" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         <div class="_content">
             <table>
@@ -43,9 +43,9 @@
                 <tr>
                     <td class="_label">Giới tính</td>
                     <td class="_input">
-                        <input th:field="*{userSexDivision}" type="radio" value="1"/>
+                        <input th:field="*{radioUserSexDivision}" type="radio" value="1"/>
                         <label>Nam</label>
-                        <input th:field="*{userSexDivision}" type="radio" value="0"/>
+                        <input th:field="*{radioUserSexDivision}" type="radio" value="0"/>
                         <label>Nữ</label>
                     </td>
                 </tr>
@@ -55,9 +55,9 @@
                     <td class="_subtitles">(format: dd/MM/yyyy)</td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td class="_label">Công ty</td>
                     <td class="_input">
-                        <div><input id="radio-company-old" th:field="*{check}" th:checked="${check=='old'}" value="old"
+                        <div><input id="radio-company-old" th:field="*{radioCompany}" value="old"
                                     type="radio" name="company"/>
                             <label>Công ty đã có</label>
                         </div>
@@ -93,9 +93,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="_label">Công ty</td>
+                    <td class="_label"></td>
                     <td class="_input">
-                        <div><input id="radio-company-new" th:field="*{check}" th:checked="${check=='new'}" type="radio"
+                        <div><input id="radio-company-new" th:field="*{radioCompany}" type="radio"
                                     value="new" name="company"/>
                             <label>Đăng ký theo công ty mới</label>
                         </div>

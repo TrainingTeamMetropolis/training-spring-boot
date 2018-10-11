@@ -55,12 +55,12 @@ public class TblUserServiceImpl implements ITblUserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void insertInformationInsuranceOfUser(RegisterInsuranceForm registerInsuranceForm) {
-		String checkRadioCompany = registerInsuranceForm.getCheck();
+		String checkRadioCompany = registerInsuranceForm.getRadioCompany();
 		
 		String userFullName = registerInsuranceForm.getUserFullName();
 		String userName = registerInsuranceForm.getUserName();
 		String passWord = registerInsuranceForm.getPassWord();
-		String userSexDivision = registerInsuranceForm.getUserSexDivision();
+		String userSexDivision = registerInsuranceForm.getRadioUserSexDivision();
 		
 		String dateBirth = registerInsuranceForm.getDateBirth();
 		

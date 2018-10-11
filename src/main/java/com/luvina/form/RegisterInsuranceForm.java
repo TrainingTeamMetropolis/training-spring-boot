@@ -14,7 +14,7 @@ public class RegisterInsuranceForm {
 	
 	private String confirmPassWord;
 	
-	private String userSexDivision;
+	private String radioUserSexDivision;
 	
 	private String dateBirth;
 	
@@ -34,8 +34,9 @@ public class RegisterInsuranceForm {
 	
 	private String insuranceEndDate;
 	
-	private String check;
-
+	private String radioCompany;
+	
+	
 	public int getUserInternalId() {
 		return userInternalId;
 	}
@@ -87,16 +88,16 @@ public class RegisterInsuranceForm {
 	public void setConfirmPassWord(String confirmPassWord) {
 		this.confirmPassWord = confirmPassWord;
 	}
-	
-	public String getUserSexDivision() {
-		return userSexDivision;
-	}
-	
-	public void setUserSexDivision(String userSexDivision) {
-		this.userSexDivision = userSexDivision;
-	}
-	
-	public String getDateBirth() {
+
+    public String getRadioUserSexDivision() {
+        return radioUserSexDivision;
+    }
+
+    public void setRadioUserSexDivision(String radioUserSexDivision) {
+        this.radioUserSexDivision = radioUserSexDivision;
+    }
+
+    public String getDateBirth() {
 		return dateBirth;
 	}
 	
@@ -168,11 +169,11 @@ public class RegisterInsuranceForm {
 		this.insuranceEndDate = insuranceEndDate;
 	}
 	
-	public String getCheck() {
-		return check;
+	public String getRadioCompany() {
+		return radioCompany;
 	}
 	
-	public void setCheck(String check) {
-		this.check = check;
+	public void setRadioCompany(String radioCompany) {
+		this.radioCompany = radioCompany;
 	}
 }
