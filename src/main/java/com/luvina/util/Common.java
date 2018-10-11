@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Common {
@@ -226,19 +225,13 @@ public class Common {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date start = new Date();
 		Date end = new Date();
-		double diff;
 		try {
 			start = dateFormat.parse(startDate);
 			end = dateFormat.parse(endDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		diff = (end.getTime() - start.getTime());
-		if (diff <= 0) {
-			return false;
-		} else {
-			return true;
-		}
+		return end.after(start);
 	}
 	
 	public static java.sql.Date convertStringToDateSQL(String dateString) {

@@ -226,7 +226,7 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceEndDate", "ExistsDate.RegisterInsuranceForm.insuranceEndDate");
 		}
-		if (hasErrorFlag == false && Common.isEndDateThanStartDate(startDate, endDate) == true) {
+		if (hasErrorFlag == false && Common.isEndDateThanStartDate(startDate, endDate) == false) {
 			errors.rejectValue("insuranceEndDate",
 					"CompareDate.RegisterInsuranceForm.insuranceStartDate_insuranceEndDate");
 		}
