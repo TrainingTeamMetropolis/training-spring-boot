@@ -56,68 +56,52 @@ public class TblUserServiceImpl implements ITblUserService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void insertInformationInsuranceOfUser(RegisterInsuranceForm registerInsuranceForm) {
 		String checkRadioCompany = registerInsuranceForm.getRadioCompany();
-		String userFullName = registerInsuranceForm.getUserFullName();
-		String userName = registerInsuranceForm.getUserName();
-		String passWord = registerInsuranceForm.getPassWord();
-		String userSexDivision = registerInsuranceForm.getRadioUserSexDivision();
-		String dateBirth = registerInsuranceForm.getDateBirth();
-		String placeOfRegister = registerInsuranceForm.getPlaceOfRegister();
-		String insuranceStartDate = registerInsuranceForm.getInsuranceStartDate();
-		String insuranceEndDate = registerInsuranceForm.getInsuranceEndDate();
-		String insuranceNumber = registerInsuranceForm.getInsuranceNumber();
-		int companyInternalId = registerInsuranceForm.getCompanyInternalId();
-		String address = registerInsuranceForm.getAddress();
-		String companyName = registerInsuranceForm.getCompanyName();
-		String email = registerInsuranceForm.getEmail();
-		String telephone = registerInsuranceForm.getTelephone();
-		
-		TblInsurance tblInsurance = new TblInsurance();
-		tblInsurance.setInsuranceStartDate(Common.convertStringToDateSQL(insuranceStartDate));
-		tblInsurance.setInsuranceEndDate(Common.convertStringToDateSQL(insuranceEndDate));
-		tblInsurance.setPlaceOfRegister(placeOfRegister);
-		tblInsurance.setInsuranceNumber(insuranceNumber);
-		
 		if (checkRadioCompany.equals("new")) {
-			TblCompany tblCompany = new TblCompany();
-			tblCompany.setAddressCompany(address);
-			tblCompany.setEmailCompany(email);
-			tblCompany.setPhoneCompany(telephone);
-			tblCompany.setCompanyName(companyName);
-			iTblCompanyRepository.save(tblCompany);
-
+			TblCompany tblCompany = saveTblCompany(registerInsuranceForm);
 			int companyInternalIdInsert = tblCompany.getCompanyInternalId();
-			iTblInsuranceRepository.save(tblInsurance);
-
-			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findByInsuranceNumber(insuranceNumber);
-			int insuranceInternalIdInsert = tblInsuranceInsert.getInsuranceInternalId();
-			
-			TblUser tblUser = new TblUser();
-			tblUser.setUserFullName(Common.handleString(userFullName));
-			tblUser.setUserName(userName);
-			tblUser.setPassWord(Common.encodePassword(passWord));
-			tblUser.setUserSexDivision(userSexDivision);
-			if (dateBirth.length() > 0) {
-				tblUser.setBirthDate(Common.convertStringToDateSQL(dateBirth));
-			}
-			tblUser.setCompanyInternalId(companyInternalIdInsert);
-			tblUser.setInsuranceInternalId(insuranceInternalIdInsert);
-			iTblUserRepository.save(tblUser);
+			TblInsurance tblInsurance = saveTblInsurance(registerInsuranceForm);
+			int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
+			saveTblUser(registerInsuranceForm, companyInternalIdInsert, insuranceInternalIdInsert);
 		} else {
-			iTblInsuranceRepository.save(tblInsurance);
-			TblInsurance tblInsuranceInsert = iTblInsuranceRepository.findByInsuranceNumber(insuranceNumber);
-			int insuranceInternalId = tblInsuranceInsert.getInsuranceInternalId();
-			TblUser tblUser = new TblUser();
-			tblUser.setUserFullName(Common.handleString(userFullName));
-			tblUser.setUserName(userName);
-			tblUser.setPassWord(Common.encodePassword(passWord));
-			
-			tblUser.setUserSexDivision(userSexDivision);
-			if (dateBirth.length() > 0) {
-				tblUser.setBirthDate(Common.convertStringToDateSQL(dateBirth));
-			}
-			tblUser.setCompanyInternalId(companyInternalId);
-			tblUser.setInsuranceInternalId(insuranceInternalId);
-            iTblUserRepository.save(tblUser);
+			TblInsurance tblInsurance = saveTblInsurance(registerInsuranceForm);
+			int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
+			saveTblUser(registerInsuranceForm, registerInsuranceForm.getCompanyInternalId(), insuranceInternalIdInsert);
 		}
 	}
+	
+	private TblCompany saveTblCompany(RegisterInsuranceForm registerInsuranceForm) {
+		TblCompany tblCompany = new TblCompany();
+		tblCompany.setAddressCompany(registerInsuranceForm.getAddress());
+		tblCompany.setEmailCompany(registerInsuranceForm.getEmail());
+		tblCompany.setPhoneCompany(registerInsuranceForm.getTelephone());
+		tblCompany.setCompanyName(registerInsuranceForm.getCompanyName());
+		iTblCompanyRepository.save(tblCompany);
+		return tblCompany;
+	}
+	
+	private TblInsurance saveTblInsurance(RegisterInsuranceForm registerInsuranceForm) {
+		TblInsurance tblInsurance = new TblInsurance();
+		tblInsurance
+			.setInsuranceStartDate(Common.convertStringToDateSQL(registerInsuranceForm.getInsuranceStartDate()));
+		tblInsurance.setInsuranceEndDate(Common.convertStringToDateSQL(registerInsuranceForm.getInsuranceEndDate()));
+		tblInsurance.setPlaceOfRegister(registerInsuranceForm.getPlaceOfRegister());
+		tblInsurance.setInsuranceNumber(registerInsuranceForm.getInsuranceNumber());
+		return tblInsurance;
+	}
+	
+	private void saveTblUser(RegisterInsuranceForm registerInsuranceForm, int companyInternalIdInsert,
+			int insuranceInternalIdInsert) {
+		TblUser tblUser = new TblUser();
+		tblUser.setUserFullName(Common.handleString(registerInsuranceForm.getUserFullName()));
+		tblUser.setUserName(registerInsuranceForm.getUserName());
+		tblUser.setPassWord(Common.encodePassword(registerInsuranceForm.getPassWord()));
+		tblUser.setUserSexDivision(registerInsuranceForm.getRadioUserSexDivision());
+		if (registerInsuranceForm.getDateBirth().length() > 0) {
+			tblUser.setBirthDate(Common.convertStringToDateSQL(registerInsuranceForm.getDateBirth()));
+		}
+		tblUser.setCompanyInternalId(companyInternalIdInsert);
+		tblUser.setInsuranceInternalId(insuranceInternalIdInsert);
+		iTblUserRepository.save(tblUser);
+	}
+	
 }

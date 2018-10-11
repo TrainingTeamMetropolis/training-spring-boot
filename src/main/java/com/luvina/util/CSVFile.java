@@ -23,7 +23,7 @@ public class CSVFile {
 		StringBuilder informationCompany = new StringBuilder();
 		informationCompany.append(environment.getProperty("NameCompany") + "," + tblCompany.getCompanyName() + "\n");
 		informationCompany.append(
-				environment.getProperty("Address") + "," + "\""+tblCompany.getAddressCompany() +"\"" + "\n");
+				environment.getProperty("Address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany())  + "\n");
 		informationCompany.append(environment.getProperty("Email") + "," + tblCompany.getEmailCompany() + "\n");
 		informationCompany.append(environment.getProperty("Phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
 		return informationCompany.toString();
