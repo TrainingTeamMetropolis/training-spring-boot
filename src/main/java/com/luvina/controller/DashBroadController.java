@@ -1,6 +1,5 @@
 package com.luvina.controller;
 
-import com.luvina.TrainingSpringbootApplication;
 import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblUser;
 import com.luvina.form.SearchForm;
@@ -29,15 +28,30 @@ public class DashBroadController {
 	
 	@Autowired
 	private ITblUserService iTblUserService;
-	
-	
+
+    /**
+     * method get handle search when load url dashboard
+     * @param modelAndView model and view
+     * @param requestParam param get field
+     * @param searchForm object form
+     * @param session session
+     * @return modelAndView
+     */
 	@RequestMapping(value = "/dashboard", method = GET)
 	public ModelAndView dashboard(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("searchForm") SearchForm searchForm, HttpSession session) {
 		showDataUser(modelAndView, requestParam, searchForm, session);
 		return modelAndView;
 	}
-	
+
+    /**
+     * method post handle search when load url dashboard
+     * @param modelAndView model and view
+     * @param requestParam param get field
+     * @param searchForm object form
+     * @param session session
+     * @return modelAndView
+     */
 	@RequestMapping(value = "/dashboard", method = POST)
 	public ModelAndView showDataUser(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("searchForm") SearchForm searchForm, HttpSession session) {

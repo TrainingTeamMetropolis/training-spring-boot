@@ -18,7 +18,12 @@ public class CSVFile {
 	
 	@Autowired
 	private Environment environment;
-	
+
+	/**
+	 * create data {@Link TblCompany} csv file
+	 * @param tblCompany
+	 * @return String data {@Link TblCompany}
+	 */
 	public String createCompany(TblCompany tblCompany) {
 		StringBuilder informationCompany = new StringBuilder();
 		informationCompany.append(environment.getProperty("NameCompany") + "," + tblCompany.getCompanyName() + "\n");
@@ -28,11 +33,20 @@ public class CSVFile {
 		informationCompany.append(environment.getProperty("Phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
 		return informationCompany.toString();
 	}
-	
+
+	/**
+	 * create deader get from property file
+	 * @return String Header
+	 */
 	public String createHeader() {
 		return environment.getProperty("Header");
 	}
-	
+
+	/**
+	 * create body List of {@Link TblUser}
+	 * @param tblUsers {@Link TblUser}
+	 * @return List of {@Link TblUser}
+	 */
 	public String createBody(List<TblUser> tblUsers) {
 		StringBuilder body = new StringBuilder();
 		if (tblUsers.size() != 0) {
@@ -59,7 +73,16 @@ public class CSVFile {
 		return body.toString();
 		
 	}
-	
+
+	/**
+	 * function export csv file
+	 * <p>add header file is csv file<p/>
+	 * <p>append data and convert to string<p/>
+	 * @param response response data string
+	 * @param header header data string
+	 * @param body body data string
+	 * @param infoCompany company data string
+	 */
 	public void exportCSV(HttpServletResponse response, String header, String body, String infoCompany) {
 		StringBuilder content = new StringBuilder();
 		

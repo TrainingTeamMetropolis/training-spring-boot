@@ -11,8 +11,13 @@ public class TblInsuranceServiceImpl implements ITblInsuranceService {
 	
 	@Autowired
 	private ITblInsuranceRepository iTblInsuranceRepository;
-	
-	
+
+    /**
+     * check true is exists {@Link TblInsurance}
+     * @param insuranceInternalId
+     * @param insuranceNumber
+     * @return boolean true when is exits and false when not exits
+     */
 	@Override
 	public boolean isExistsTblInsurance(int insuranceInternalId, String insuranceNumber) {
 		TblInsurance tblInsurance =

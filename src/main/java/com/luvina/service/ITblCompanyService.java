@@ -7,16 +7,15 @@ import java.util.List;
 public interface ITblCompanyService {
 
     /**
-     * method get list company from data base
-     *
-     * @return
+     * Find all data {@Link TblCompany} and order company name asc
+     * @return List of {@Link TblCompany} List data
      */
     List<TblCompany> findAllByOrderByCompanyNameAsc();
 
     /**
-     *
-     * @param companyInternalId id companyInternalId
-     * @return
+     * Find data {@Link TblCompany} by company internal id
+     * @param companyInternalId
+     * @return {@Link TblCompany} data company
      */
     TblCompany findByCompanyInternalId(int companyInternalId);
 

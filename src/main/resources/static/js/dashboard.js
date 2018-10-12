@@ -16,10 +16,7 @@ $(document).ready(function() {
         $("#searchByPlaceOfRegister").attr("value", "");
     });
 });
-/**
- * getSearchFormId: function get searchFormId from data-id attribute
- * @returns {string}
- */
+// function get search form id from url
 var getSearchFormId = function(){
     var searchFormId = "";
     if ($("._action").attr("data-id")) {

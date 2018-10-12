@@ -31,27 +31,57 @@ public class TblUserServiceImpl implements ITblUserService {
 	
 	@Autowired
 	ITblInsuranceRepository iTblInsuranceRepository;
-	
-	
+
+    /**
+     * Find all data {@link TblUser} by companyInternalId, userFullName, insuranceNumber, placeOfRegister
+     * <p>find data by companyInternalId, userFullName, insuranceNumber, placeOfRegister <p/>
+     * <p>after find then sort and paging</p>
+     * @param offset
+     * @param limit
+     * @param typeSort
+     * @param companyInternalId
+     * @param userFullName
+     * @param insuranceNumber
+     * @param placeOfRegister
+     * @return List of {@Link TblUser}
+     */
 	@Override
 	public List<TblUser> findAndSearchListData(int offset, int limit, String typeSort, int companyInternalId,
 			String userFullName, String insuranceNumber, String placeOfRegister) {
 		return iTblUserRepositoryCustom.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullName,
 				insuranceNumber, placeOfRegister);
 	}
-	
+    /**
+     * Find count data {@link TblUser} by companyInternalId, userFullName, insuranceNumber, placeOfRegister
+     * <p>find count by companyInternalId, userFullName, insuranceNumber, placeOfRegister <p/>
+     * @param offset
+     * @param limit
+     * @param typeSort
+     * @param companyInternalId
+     * @param userFullName
+     * @param insuranceNumber
+     * @param placeOfRegister
+     * @return number of record {@Link TblUser}
+     */
 	@Override
 	public Integer findTotalRecords(int offset, int limit, String typeSort, int companyInternalId, String userFullName,
 			String insuranceNumber, String placeOfRegister) {
 		return iTblUserRepositoryCustom.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullName,
 				insuranceNumber, placeOfRegister);
 	}
-	
+    /**
+     * find data {@Link TblUser}
+     * @param userInternalId
+     * @return {@Link TblUser}
+     */
 	@Override
 	public TblUser findByUserInternalId(int userInternalId) {
 		return iTblUserRepository.findByUserInternalId(userInternalId);
 	}
-	
+    /**
+     * insert request data to data base
+     * @param registerInsuranceForm
+     */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void insertInformationInsuranceOfUser(RegisterInsuranceForm registerInsuranceForm) {
@@ -68,7 +98,12 @@ public class TblUserServiceImpl implements ITblUserService {
 			saveTblUser(registerInsuranceForm, registerInsuranceForm.getCompanyInternalId(), insuranceInternalIdInsert);
 		}
 	}
-	
+
+    /**
+     * save data {@Link TblCompany} when check box new
+     * @param registerInsuranceForm
+     * @return {@Link TblCompany}
+     */
 	private TblCompany saveTblCompany(RegisterInsuranceForm registerInsuranceForm) {
 		TblCompany tblCompany = new TblCompany();
 		tblCompany.setAddressCompany(registerInsuranceForm.getAddress());
@@ -78,7 +113,12 @@ public class TblUserServiceImpl implements ITblUserService {
 		iTblCompanyRepository.save(tblCompany);
 		return tblCompany;
 	}
-	
+
+    /**
+     * save data {@Link TblInsurance}
+     * @param registerInsuranceForm
+     * @return {@Link TblInsurance}
+     */
 	private TblInsurance saveTblInsurance(RegisterInsuranceForm registerInsuranceForm) {
 		TblInsurance tblInsurance = new TblInsurance();
 		tblInsurance
@@ -88,7 +128,13 @@ public class TblUserServiceImpl implements ITblUserService {
 		tblInsurance.setInsuranceNumber(registerInsuranceForm.getInsuranceNumber());
 		return tblInsurance;
 	}
-	
+
+    /**
+     * save data {@Link TblUser}
+     * @param registerInsuranceForm
+     * @param companyInternalIdInsert id after insert
+     * @param insuranceInternalIdInsert
+     */
 	private void saveTblUser(RegisterInsuranceForm registerInsuranceForm, int companyInternalIdInsert,
 			int insuranceInternalIdInsert) {
 		TblUser tblUser = new TblUser();
@@ -103,5 +149,4 @@ public class TblUserServiceImpl implements ITblUserService {
 		tblUser.setInsuranceInternalId(insuranceInternalIdInsert);
 		iTblUserRepository.save(tblUser);
 	}
-	
 }

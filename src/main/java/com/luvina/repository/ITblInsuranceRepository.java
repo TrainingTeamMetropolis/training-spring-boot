@@ -6,8 +6,18 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITblInsuranceRepository extends JpaRepository<TblInsurance, Long> {
-
+    /**
+     * Find data {@Link TblInsurance} by not insurance internal id and insurance number
+     * @param insuranceInternalId
+     * @param insuranceNumber
+     * @return {@Link TblInsurance} data tbl_insurance
+     */
 	TblInsurance findByInsuranceInternalIdNotAndInsuranceNumber(int insuranceInternalId, String insuranceNumber);
 
+    /**
+     * find by insurance number
+     * @param insuranceNumber
+     * @return {@Link TblInsurance} data tbl_insurance
+     */
     TblInsurance findByInsuranceNumber(String insuranceNumber);
 }

@@ -32,8 +32,14 @@ public class RegisterInsuranceController {
 	
 	@Autowired
 	private ValidationRegisterInsuranceForm validationRegisterInsuranceForm;
-	
-	
+
+    /**
+     * registration data to data base method get
+     * @param modelAndView modelAndView
+     * @param requestParam param request
+     * @param registerInsuranceForm form get data
+     * @return modelAndView data set to view after handle
+     */
 	@RequestMapping(value = "/register", method = GET)
 	public ModelAndView registration(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm) {
@@ -46,7 +52,14 @@ public class RegisterInsuranceController {
 		modelAndView.setViewName("register");
 		return modelAndView;
 	}
-	
+
+    /**
+     * registration data to data base method post
+     * @param modelAndView modelAndView
+     * @param requestParam param request
+     * @param registerInsuranceForm form get data
+     * @return modelAndView data set to view after handle
+     */
 	@RequestMapping(value = "/register", method = POST)
 	public ModelAndView register(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm,
@@ -66,7 +79,12 @@ public class RegisterInsuranceController {
 		}
 		return modelAndView;
 	}
-	
+
+    /**
+     * set data to view
+     * <p>set data after load url register<p/>
+     * @param modelAndView
+     */
 	private void setDataToView(ModelAndView modelAndView) {
 		List<TblCompany> tblCompanyList = iTblCompanyService.findAllByOrderByCompanyNameAsc();
 		modelAndView.addObject("tblCompanyList", tblCompanyList);

@@ -15,8 +15,19 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	
+
+	/**
+	 * search for dashboard screen
+	 * <p>query data base and return result<p/>
+	 * @param offset offset
+	 * @param limit limit
+	 * @param typeSort type sort
+	 * @param companyInternalId company internal id
+	 * @param userFullName user full name
+	 * @param insuranceNumber insurance number
+	 * @param placeOfRegister place of register
+	 * @return List<TblUser> list data tbl_user
+	 */
 	@Override
 	public List<TblUser> findAndSearchListData(int offset, int limit, String typeSort, int companyInternalId,
 			String userFullName, String insuranceNumber, String placeOfRegister) {
@@ -55,7 +66,18 @@ public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
 		session.close();
 		return listUser;
 	}
-	
+	/**
+	 * get total record for dashboard screen
+	 * <p>query data base and return result<p/>
+	 * @param offset offset
+	 * @param limit limit
+	 * @param typeSort type sort
+	 * @param companyInternalId company internal id
+	 * @param userFullName user full name
+	 * @param insuranceNumber insurance number
+	 * @param placeOfRegister place of register
+	 * @return Integer number of records
+	 */
 	@Override
 	public Integer findTotalRecords(int offset, int limit, String typeSort, int companyInternalId, String userFullName,
 			String insuranceNumber, String placeOfRegister) {

@@ -45,8 +45,17 @@ $(document).ready(function () {
         }
         location.href = url;
     });
+    $("#userFullName").focusout(function () {
+        formatText("userFullName", $("#userFullName").val());
+    });
 });
-
+// function fomat text when change text user name
+var formatText = function(id, text){
+    $.get("/formatName",{"name":text}, function(rs){
+        $('#'+id).val(rs);
+    })
+}
+// function show and hide when area company
 var showOrHideCompany = function (value) {
     var companyInternalId = $("#companyInternalId").val();
     if (value == 'old') {
@@ -60,7 +69,7 @@ var showOrHideCompany = function (value) {
         $(".ui-datepicker-trigger").css("margin-right", "65px");
     }
 }
-
+// function ajax get data when change select box
 var showInformationCompany = function (companyInternalId) {
     var url = "/loadCompany?companyInternalId=" + companyInternalId;
     $.ajax({

@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITblUserRepository extends JpaRepository<TblUser, Long> {
-	
+	/**
+	 * Find {@Link TblUser} by userInternalId
+	 * @param userInternalId
+	 * @return data {@Link TblUser}
+	 */
 	TblUser findByUserInternalId(int userInternalId);
 	
 }

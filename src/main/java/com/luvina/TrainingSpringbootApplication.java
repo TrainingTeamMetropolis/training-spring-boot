@@ -7,6 +7,9 @@ import org.springframework.context.ApplicationContext;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * main method running spring boot application
+ */
 @SpringBootApplication
 public class TrainingSpringbootApplication {
 

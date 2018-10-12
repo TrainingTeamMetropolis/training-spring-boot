@@ -29,8 +29,13 @@ public class ExportCSVController {
 	
 	@Autowired
 	private CSVFile csvFile;
-	
-	
+
+    /**
+     *  handle export csv file after search
+     * @param requestParam param get from screen
+     * @param session session
+     * @param response response
+     */
 	@RequestMapping(value = "exportCSV", method = RequestMethod.GET)
 	public void exportCSVFile(@RequestParam Map<String, String> requestParam, HttpSession session,
 			HttpServletResponse response) {

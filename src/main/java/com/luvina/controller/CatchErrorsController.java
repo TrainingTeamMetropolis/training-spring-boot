@@ -18,6 +18,13 @@ public class CatchErrorsController {
     @Autowired
     private Environment environment;
 
+    /**
+     * handle error when has exception
+     * <p>handle exception and return view customize</>
+     * @param request parameter user input
+     * @param e exception when log
+     * @return modelAndView
+     */
     @ExceptionHandler({SQLGrammarException.class, SQLTimeoutException.class})
     public ModelAndView handleError(HttpServletRequest request, Exception e)   {
         Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Request: " + request.getRequestURL() + " raised " + e);
