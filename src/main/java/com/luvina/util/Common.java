@@ -231,6 +231,7 @@ public class Common {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+        System.out.println(startDate+"|"+endDate);
 		return end.after(start);
 	}
 	

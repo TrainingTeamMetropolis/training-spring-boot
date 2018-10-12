@@ -49,7 +49,7 @@
     </div>
     <div class="_table_data">
         <div class="_data" th:with="condition=${tblUserList.size() == 0}" th:remove="tag">
-            <div class="_error_empty" th:text="${@environment.getProperty('NoneRecord')}" th:if="${condition}"></div>
+            <div class="_error_empty" th:text="${@environment.getProperty('none_record')}" th:if="${condition}"></div>
             <div th:unless="${condition}" class="tbl-list">
                 <table>
                     <tr>

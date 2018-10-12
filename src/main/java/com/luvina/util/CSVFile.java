@@ -26,11 +26,11 @@ public class CSVFile {
 	 */
 	public String createCompany(TblCompany tblCompany) {
 		StringBuilder informationCompany = new StringBuilder();
-		informationCompany.append(environment.getProperty("NameCompany") + "," + tblCompany.getCompanyName() + "\n");
+		informationCompany.append(environment.getProperty("name_company") + "," + tblCompany.getCompanyName() + "\n");
 		informationCompany.append(
-				environment.getProperty("Address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany())  + "\n");
-		informationCompany.append(environment.getProperty("Email") + "," + tblCompany.getEmailCompany() + "\n");
-		informationCompany.append(environment.getProperty("Phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
+				environment.getProperty("address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany())  + "\n");
+		informationCompany.append(environment.getProperty("email") + "," + tblCompany.getEmailCompany() + "\n");
+		informationCompany.append(environment.getProperty("phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
 		return informationCompany.toString();
 	}
 
@@ -39,7 +39,7 @@ public class CSVFile {
 	 * @return String Header
 	 */
 	public String createHeader() {
-		return environment.getProperty("Header");
+		return environment.getProperty("header");
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class CSVFile {
 		
 		response.setHeader("Content-type", "application/csv");
 		response.setHeader("Content-disposition", "inline; filename=listUser.csv");
-		content.append(environment.getProperty("Title") + " " + "\n");
+		content.append(environment.getProperty("title") + " " + "\n");
 		content.append(infoCompany + "\n");
 		content.append(header + "\n");
 		content.append(body);

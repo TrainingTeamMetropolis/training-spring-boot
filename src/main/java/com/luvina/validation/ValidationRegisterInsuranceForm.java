@@ -18,22 +18,23 @@ public class ValidationRegisterInsuranceForm implements Validator {
 	
 	@Autowired
 	private ITblUserService iTblUserService;
-
-    /**
-     * method Override supports validate
-     * @param clazz
-     * @return RegisterInsuranceForm.class.isAssignableFrom(clazz);
-     */
+	
+	
+	/**
+	 * method Override supports validate
+	 * @param clazz
+	 * @return RegisterInsuranceForm.class.isAssignableFrom(clazz);
+	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return RegisterInsuranceForm.class.isAssignableFrom(clazz);
 	}
-
-    /**
-     * method Override validate method
-     * @param target target object validate
-     * @param errors all errors
-     */
+	
+	/**
+	 * method Override validate method
+	 * @param target target object validate
+	 * @param errors all errors
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		RegisterInsuranceForm registerInsuranceForm = (RegisterInsuranceForm) target;
@@ -43,269 +44,256 @@ public class ValidationRegisterInsuranceForm implements Validator {
 			TblUser tblUser = iTblUserService.findByUserInternalId(userInternalId);
 			insuranceInternalId = tblUser.getInsuranceInternalId();
 		}
-		String insuranceNumber = registerInsuranceForm.getInsuranceNumber();
-		String userFullName = registerInsuranceForm.getUserFullName();
-		String userName = registerInsuranceForm.getUserName();
-		String passWord = registerInsuranceForm.getPassWord();
-		String confirmPassWord = registerInsuranceForm.getConfirmPassWord();
-		String userSexDivision = registerInsuranceForm.getRadioUserSexDivision();
-		String dateBirth = registerInsuranceForm.getDateBirth();
-		String companyName = registerInsuranceForm.getCompanyName();
-		String address = registerInsuranceForm.getAddress();
-		String email = registerInsuranceForm.getEmail();
-		String telephone = registerInsuranceForm.getTelephone();
-		String placeOfRegister = registerInsuranceForm.getPlaceOfRegister();
-		String insuranceStartDate = registerInsuranceForm.getInsuranceEndDate();
-		String insuranceEndDate = registerInsuranceForm.getInsuranceEndDate();
 		String checkRadioCompany = registerInsuranceForm.getRadioCompany();
-		
-		validateInsuranceNumber(errors, insuranceInternalId, insuranceNumber);
-		validateUserFullName(errors, userFullName);
-		validateUserName(errors, userName);
-		validatePassWord(errors, passWord, confirmPassWord);
-		validateUserSexDivision(errors, userSexDivision);
-		validateBirthDate(errors, dateBirth);
+		validateInsuranceNumber(errors, insuranceInternalId, registerInsuranceForm.getInsuranceNumber());
+		validateUserFullName(errors, registerInsuranceForm.getUserFullName());
+		validateUserName(errors, registerInsuranceForm.getUserName());
+		validatePassWord(errors, registerInsuranceForm.getPassWord(), registerInsuranceForm.getConfirmPassWord());
+		validateUserSexDivision(errors, registerInsuranceForm.getRadioUserSexDivision());
+		validateBirthDate(errors, registerInsuranceForm.getDateBirth());
 		if (checkRadioCompany.equals("old") == false) {
-			validateCompanyName(errors, companyName);
-			validateAddressCompany(errors, address);
-			validateEmailCompany(errors, email);
-			validatePhoneCompany(errors, telephone);
+			validateCompanyName(errors, registerInsuranceForm.getCompanyName());
+			validateAddressCompany(errors, registerInsuranceForm.getAddress());
+			validateEmailCompany(errors, registerInsuranceForm.getEmail());
+			validatePhoneCompany(errors, registerInsuranceForm.getTelephone());
 		}
-		validatePlaceOfRegister(errors, placeOfRegister);
-		validateStartDate(errors, insuranceStartDate);
-		validateEndDate(errors, insuranceStartDate, insuranceEndDate);
+		validatePlaceOfRegister(errors, registerInsuranceForm.getPlaceOfRegister());
+		validateStartDate(errors, registerInsuranceForm.getInsuranceStartDate());
+		validateEndDate(errors, registerInsuranceForm.getInsuranceStartDate(),
+				registerInsuranceForm.getInsuranceEndDate());
 	}
-
-    /**
-     * validate insurance number
-     * @param errors all error
-     * @param insuranceInternalId
-     * @param insuranceNumber
-     */
+	
+	/**
+	 * validate insurance number
+	 * @param errors all error
+	 * @param insuranceInternalId
+	 * @param insuranceNumber
+	 */
 	private void validateInsuranceNumber(Errors errors, int insuranceInternalId, String insuranceNumber) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(insuranceNumber) == true) {
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceNumber", "NotEmpty.RegisterInsuranceForm.insuranceNumber");
+			errors.rejectValue("insuranceNumber", "not_empty.insurance_number");
 		}
 		if (hasErrorFlag == false && Common.isRightFormatInsuranceNumber(insuranceNumber) == false) {
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceNumber", "Format.RegisterInsuranceForm.insuranceNumber");
+			errors.rejectValue("insuranceNumber", "format.insurance_number");
 		}
 		if (hasErrorFlag == false && iTblInsuranceService.isExistsTblInsurance(insuranceInternalId, insuranceNumber)) {
-			errors.rejectValue("insuranceNumber", "Exists.RegisterInsuranceForm.insuranceNumber");
+			errors.rejectValue("insuranceNumber", "exists.insurance_number");
 		}
 	}
-
-    /**
-     * validate user full name
-     * @param errors all error
-     * @param userFullName
-     */
+	
+	/**
+	 * validate user full name
+	 * @param errors all error
+	 * @param userFullName
+	 */
 	private void validateUserFullName(Errors errors, String userFullName) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(userFullName)) {
 			hasErrorFlag = true;
-			errors.rejectValue("userFullName", "NotEmpty.RegisterInsuranceForm.userFullName");
+			errors.rejectValue("userFullName", "not_empty.user_full_name");
 		}
 		if (hasErrorFlag == false && userFullName.trim().length() > 50) {
-			errors.rejectValue("userFullName", "LengthMax.RegisterInsuranceForm.userFullName");
+			errors.rejectValue("userFullName", "length_max.user_full_name");
 		}
 	}
-
-    /**
-     * validate user name
-     * @param errors all error
-     * @param userName
-     */
+	
+	/**
+	 * validate user name
+	 * @param errors all error
+	 * @param userName
+	 */
 	private void validateUserName(Errors errors, String userName) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(userName)) {
 			hasErrorFlag = true;
-			errors.rejectValue("userFullName", "NotEmpty.RegisterInsuranceForm.userName");
+			errors.rejectValue("userFullName", "not_empty.user_name");
 		}
 		if (hasErrorFlag == false && userName.trim().length() > 16) {
-			errors.rejectValue("userFullName", "LengthMax.RegisterInsuranceForm.userName");
+			errors.rejectValue("userFullName", "length_max.user_name");
 		}
 	}
-
-    /**
-     * validate password
-     * @param errors all error
-     * @param passWord
-     * @param confirmPassWord
-     */
+	
+	/**
+	 * validate password
+	 * @param errors all error
+	 * @param passWord
+	 * @param confirmPassWord
+	 */
 	private void validatePassWord(Errors errors, String passWord, String confirmPassWord) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(passWord)) {
 			hasErrorFlag = true;
-			errors.rejectValue("passWord", "NotEmpty.RegisterInsuranceForm.passWord");
+			errors.rejectValue("passWord", "not_empty.password");
 		}
 		if (hasErrorFlag == false && passWord.trim().length() > 16) {
 			hasErrorFlag = true;
 			errors.rejectValue("passWord", "LengthMax.RegisterInsuranceForm.passWord");
 		}
 		if (hasErrorFlag == false && !confirmPassWord.equals(passWord)) {
-			errors.rejectValue("passWord", "ComparePassWord.RegisterInsuranceForm.passWord_confirmPassWord");
+			errors.rejectValue("passWord", "compare_password.password_confirm_password");
 		}
 	}
-
-    /**
-     * validate user sex division
-     * @param errors all errors
-     * @param userSexDivision
-     */
+	
+	/**
+	 * validate user sex division
+	 * @param errors all errors
+	 * @param userSexDivision
+	 */
 	private void validateUserSexDivision(Errors errors, String userSexDivision) {
 		if ((userSexDivision.equals("01") == false) && (userSexDivision.equals("02") == false)) {
-			errors.rejectValue("userSexDivision", "Format.RegisterInsuranceForm.userSexDivision");
+			errors.rejectValue("userSexDivision", "format.user_sex_division");
 		}
 	}
-
-    /**
-     * validate birth of date
-     * @param errors all errors
-     * @param dateBirth
-     */
+	
+	/**
+	 * validate birth of date
+	 * @param errors all errors
+	 * @param dateBirth
+	 */
 	private void validateBirthDate(Errors errors, String dateBirth) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(dateBirth) == false && Common.isRightFormatDate(dateBirth) == false) {
 			hasErrorFlag = true;
-			errors.rejectValue("dateBirth", "Format.RegisterInsuranceForm.dateBirth");
+			errors.rejectValue("dateBirth", "format.date_birth");
 		}
-		if (Common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false && Common.isDateExists(dateBirth) == false) {
-			errors.rejectValue("dateBirth", "ExistsDate.RegisterInsuranceForm.dateBirth");
+		if (Common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false
+				&& Common.isDateExists(dateBirth) == false) {
+			errors.rejectValue("dateBirth", "exists_date.date_birth");
 		}
 	}
-
-    /**
-     * validate company name
-     * @param errors all errors
-     * @param companyName
-     */
+	
+	/**
+	 * validate company name
+	 * @param errors all errors
+	 * @param companyName
+	 */
 	private void validateCompanyName(Errors errors, String companyName) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(companyName)) {
 			hasErrorFlag = true;
-			errors.rejectValue("companyName", "NotEmpty.RegisterInsuranceForm.companyName");
+			errors.rejectValue("companyName", "not_empty.company_name");
 		}
 		if (hasErrorFlag == false && companyName.trim().length() > 50) {
-			errors.rejectValue("companyName", "LengthMax.RegisterInsuranceForm.companyName");
+			errors.rejectValue("companyName", "length_max.company_name");
 		}
 	}
-
-    /**
-     * validate address company
-     * @param errors all errors
-     * @param address
-     */
+	
+	/**
+	 * validate address company
+	 * @param errors all errors
+	 * @param address
+	 */
 	private void validateAddressCompany(Errors errors, String address) {
 		if (Common.isNullOrEmpty(address)) {
-			errors.rejectValue("address", "NotEmpty.RegisterInsuranceForm.address");
+			errors.rejectValue("address", "not_empty.address");
 		} else if (address.trim().length() > 100) {
-			errors.rejectValue("address", "LengthMax.RegisterInsuranceForm.address");
+			errors.rejectValue("address", "length_max.address");
 		}
 	}
-
-    /**
-     * validate email company
-     * @param errors all errors
-     * @param email
-     */
+	
+	/**
+	 * validate email company
+	 * @param errors all errors
+	 * @param email
+	 */
 	private void validateEmailCompany(Errors errors, String email) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(email)) {
 			hasErrorFlag = true;
-			errors.rejectValue("email", "NotEmpty.RegisterInsuranceForm.email");
+			errors.rejectValue("email", "not_empty.email");
 		}
 		if (email.trim().length() > 50) {
 			hasErrorFlag = true;
-			errors.rejectValue("email", "LengthMax.RegisterInsuranceForm.email");
+			errors.rejectValue("email", "length_max.email");
 		}
 		if (hasErrorFlag == false && Common.checkFormatEmail(email)) {
-			errors.rejectValue("email", "Format.RegisterInsuranceForm.email");
+			errors.rejectValue("email", "format.email");
 		}
 	}
-
-    /**
-     * validate phone company
-     * @param errors all errors
-     * @param telephone
-     */
+	
+	/**
+	 * validate phone company
+	 * @param errors all errors
+	 * @param telephone
+	 */
 	private void validatePhoneCompany(Errors errors, String telephone) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(telephone)) {
 			hasErrorFlag = true;
-			errors.rejectValue("telephone", "NotEmpty.RegisterInsuranceForm.telephone");
+			errors.rejectValue("telephone", "not_empty.telephone");
 		}
 		if (telephone.trim().length() > 15) {
 			hasErrorFlag = true;
-			errors.rejectValue("telephone", "LengthMax.RegisterInsuranceForm.telephone");
+			errors.rejectValue("telephone", "length_max.telephone");
 		}
 		if (hasErrorFlag == false && Common.isFormatPhone(telephone) == false) {
-			errors.rejectValue("telephone", "Format.RegisterInsuranceForm.telephone");
+			errors.rejectValue("telephone", "format.telephone");
 		}
 	}
-
-    /**
-     * validate place of register
-     * @param errors all errors
-     * @param place
-     */
+	
+	/**
+	 * validate place of register
+	 * @param errors all errors
+	 * @param place
+	 */
 	private void validatePlaceOfRegister(Errors errors, String place) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(place)) {
 			hasErrorFlag = true;
-			errors.rejectValue("placeOfRegister", "NotEmpty.RegisterInsuranceForm.placeOfRegister");
+			errors.rejectValue("placeOfRegister", "not_empty.place_of_register");
 		}
 		if (hasErrorFlag == false && place.trim().length() > 50) {
-			errors.rejectValue("placeOfRegister", "LengthMax.RegisterInsuranceForm.placeOfRegister");
+			errors.rejectValue("placeOfRegister", "length_max.place_of_register");
 		}
 	}
-
-    /**
-     * validate start date
-     * @param errors all errors
-     * @param startDate
-     */
+	
+	/**
+	 * validate start date
+	 * @param errors all errors
+	 * @param startDate
+	 */
 	private void validateStartDate(Errors errors, String startDate) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(startDate)) {
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceStartDate", "NotEmpty.RegisterInsuranceForm.insuranceStartDate");
+			errors.rejectValue("insuranceStartDate", "not_empty.insurance_start_date");
 		}
 		if (hasErrorFlag == false && Common.isRightFormatDate(startDate) == false) {
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceStartDate", "Format.RegisterInsuranceForm.insuranceStartDate");
+			errors.rejectValue("insuranceStartDate", "format.insurance_start_date");
 		}
 		if (hasErrorFlag == false && Common.isDateExists(startDate) == false) {
-			errors.rejectValue("insuranceStartDate", "ExistsDate.RegisterInsuranceForm.insuranceStartDate");
+			errors.rejectValue("insuranceStartDate", "exists_date.insurance_start_date");
 		}
 	}
-
-    /**
-     * validate end date
-     * @param errors all errors
-     * @param startDate
-     * @param endDate
-     */
+	
+	/**
+	 * validate end date
+	 * @param errors all errors
+	 * @param startDate
+	 * @param endDate
+	 */
 	private void validateEndDate(Errors errors, String startDate, String endDate) {
 		boolean hasErrorFlag = false;
 		if (Common.isNullOrEmpty(endDate)) {
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceEndDate", "NotEmpty.RegisterInsuranceForm.insuranceEndDate");
+			errors.rejectValue("insuranceEndDate", "not_empty.insurance_end_date");
 		}
 		if (hasErrorFlag == false && Common.isRightFormatDate(endDate) == false) {
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceEndDate", "Format.RegisterInsuranceForm.insuranceEndDate");
+			errors.rejectValue("insuranceEndDate", "format.insurance_end_date");
 		}
 		if (hasErrorFlag == false && Common.isDateExists(endDate) == false) {
-
+			
 			hasErrorFlag = true;
-			errors.rejectValue("insuranceEndDate", "ExistsDate.RegisterInsuranceForm.insuranceEndDate");
+			errors.rejectValue("insuranceEndDate", "exists_date.insurance_end_date");
 		}
 		if (hasErrorFlag == false && Common.isEndDateThanStartDate(startDate, endDate) == false) {
 			errors.rejectValue("insuranceEndDate",
-					"CompareDate.RegisterInsuranceForm.insuranceStartDate_insuranceEndDate");
+					"compare_date.insurance_start_date_insurance_end_date");
 		}
 	}
 }
