@@ -20,4 +20,11 @@ public interface ITblCompanyRepository extends JpaRepository<TblCompany, Integer
      */
     TblCompany findByCompanyInternalId(int companyInternalId);
 
+    /**
+     * Find data {@Link TblCompany} by company name
+     * @param companyName
+     * @return data of {@Link TblCompany}
+     */
+    TblCompany findByCompanyName(String companyName);
+
 }

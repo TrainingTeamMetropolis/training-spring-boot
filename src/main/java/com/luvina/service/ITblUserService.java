@@ -1,7 +1,7 @@
 package com.luvina.service;
 
 import com.luvina.entities.TblUser;
-import com.luvina.form.RegisterInsuranceForm;
+import com.luvina.form.RegisterForm;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public interface ITblUserService {
 
 	/**
 	 * insert request data to data base
-	 * @param registerInsuranceForm data form from request
+	 * @param registerForm data form from request
 	 */
-	void insertInformationInsuranceOfUser(RegisterInsuranceForm registerInsuranceForm);
+	void insertInformationInsuranceOfUser(RegisterForm registerForm);
 }

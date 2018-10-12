@@ -13,11 +13,4 @@ public interface ITblInsuranceRepository extends JpaRepository<TblInsurance, Lon
      * @return {@Link TblInsurance} data tbl_insurance
      */
 	TblInsurance findByInsuranceInternalIdNotAndInsuranceNumber(int insuranceInternalId, String insuranceNumber);
-
-    /**
-     * find by insurance number
-     * @param insuranceNumber
-     * @return {@Link TblInsurance} data tbl_insurance
-     */
-    TblInsurance findByInsuranceNumber(String insuranceNumber);
 }

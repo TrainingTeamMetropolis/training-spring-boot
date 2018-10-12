@@ -1,6 +1,6 @@
 package com.luvina.form;
 
-public class RegisterInsuranceForm {
+public class RegisterForm {
 	
 	private int userInternalId;
 	

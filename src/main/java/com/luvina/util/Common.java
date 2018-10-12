@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class Common {
 	
 	/**
-	 * getOffsetPaging
+	 * get offset of paging
 	 * @param currentPage
 	 * @param limit
 	 * @return
@@ -35,7 +35,7 @@ public class Common {
 	}
 	
 	/**
-	 *
+	 * get range of page
 	 * @return
 	 */
 	public static int getRange() {
@@ -53,15 +53,15 @@ public class Common {
 	}
 	
 	/**
-	 *
-	 * @param totalUser
+	 * calculator List paging by total record and current page
+	 * @param totalRecord
 	 * @param currentPage
 	 * @return
 	 */
-	public static List<Integer> getListPaging(int totalUser, int currentPage) {
+	public static List<Integer> getListPaging(int totalRecord, int currentPage) {
 		List<Integer> listPage = new ArrayList<>();
 		int limit = getLimit();
-		int totalPage = getTotalPage(totalUser, limit);
+		int totalPage = getTotalPage(totalRecord, limit);
 		int range = getRange();
 		int start = currentPage - (range / 2);
 		int end = currentPage + (range / 2);
@@ -83,7 +83,7 @@ public class Common {
 	}
 	
 	/**
-	 * escapeInjection
+	 * escape Injection
 	 * @param str
 	 * @return
 	 */
@@ -93,7 +93,6 @@ public class Common {
 		if (str != null) {
 			tem = str.trim().replace("'", "\'");
 			tem = tem.replace("%", "\\%");
-			
 			tem = tem.replace("_", "\\_");
 		}
 		
@@ -101,7 +100,7 @@ public class Common {
 	}
 	
 	/**
-	 * encodePassword
+	 * encode password MD5
 	 * @param password
 	 * @return
 	 */
@@ -137,7 +136,7 @@ public class Common {
 	}
 	
 	/**
-	 *
+	 * handle String CSV file
 	 * @param str
 	 * @return
 	 */
@@ -147,13 +146,23 @@ public class Common {
 		stringBuilder.append("\"");
 		return stringBuilder.toString();
 	}
-	
+
+    /**
+     * convert date to string
+     * @param dateSql
+     * @return
+     */
 	public static String convertDateToString(java.sql.Date dateSql) {
 		java.util.Date utilDate = convertFromSQLDateToJAVADate(dateSql);
 		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		return df.format(utilDate);
 	}
-	
+
+    /**
+     * convert date SQL to JAVA date
+     * @param sqlDate
+     * @return
+     */
 	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
 		java.util.Date javaDate = null;
 		if (sqlDate != null) {
@@ -161,11 +170,20 @@ public class Common {
 		}
 		return javaDate;
 	}
-	
+
+    /**
+     * random mini second
+     * @return
+     */
 	public static long getMiniSecondRandom() {
 		return new Date().getTime();
 	}
-	
+
+    /**
+     * check null or empty
+     * @param stringBeforeCheck
+     * @return true when string null
+     */
 	public static boolean isNullOrEmpty(String stringBeforeCheck) {
 		if (stringBeforeCheck == null || stringBeforeCheck.trim().isEmpty()) {
 			return true;
@@ -173,7 +191,12 @@ public class Common {
 			return false;
 		}
 	}
-	
+
+    /**
+     * check right format number insurance
+     * @param insuranceNumber
+     * @return
+     */
 	public static boolean isRightFormatInsuranceNumber(String insuranceNumber) {
 		if (isNullOrEmpty(insuranceNumber) == false) {
 			Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_NUMBER_INSURANCE);
@@ -184,7 +207,12 @@ public class Common {
 		return false;
 		
 	}
-	
+
+    /**
+     * check right format date
+     * @param date
+     * @return
+     */
 	public static boolean isRightFormatDate(String date) {
 		
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_DATE);
@@ -193,7 +221,12 @@ public class Common {
 		}
 		return false;
 	}
-	
+
+    /**
+     * check date if exists
+     * @param date
+     * @return
+     */
 	public static boolean isDateExists(String date) {
 		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		df.setLenient(false);
@@ -204,7 +237,12 @@ public class Common {
 		}
 		return true;
 	}
-	
+
+    /**
+     * check fomat email
+     * @param email
+     * @return
+     */
 	public static boolean checkFormatEmail(String email) {
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_EMAIL);
 		if (!(pattern.matcher(email).matches())) {
@@ -212,29 +250,59 @@ public class Common {
 		}
 		return false;
 	}
-	
+
+    /**
+     * check format phone XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
+     * @param phone telephone
+     * @return true when match XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
+     */
 	public static boolean isFormatPhone(String phone) {
-		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_PHONE);
-		if ((pattern.matcher(phone).matches())) {
+		Pattern pattern1 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_1);
+		Pattern pattern2 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_2);
+		Pattern pattern3 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_3);
+		Pattern pattern4 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_4);
+		if ((pattern1.matcher(phone).matches()) || (pattern2.matcher(phone).matches())
+				|| (pattern3.matcher(phone).matches())
+				|| (pattern4.matcher(phone).matches())) {
 			return true;
 		}
 		return false;
 	}
-	
-	public static boolean isEndDateThanStartDate(String startDate, String endDate) {
+
+    /**
+     * check is param date2 great than param date1
+     * @param date1
+     * @param date2
+     * @return true when param date2 great than param date1
+     */
+	public static boolean isParamDate2GreatThanParamDate1(String date1, String date2) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date start = new Date();
 		Date end = new Date();
 		try {
-			start = dateFormat.parse(startDate);
-			end = dateFormat.parse(endDate);
+			start = dateFormat.parse(date1);
+			end = dateFormat.parse(date2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-        System.out.println(startDate+"|"+endDate);
 		return end.after(start);
 	}
 	
+	/**
+	 * get today and format to DDMMYYYY
+	 * @return String today format DDMMYYYY
+	 */
+	public static String getTodayDDMMYYYY() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+
+    /**
+     * convert string to date SQL
+     * @param dateString string date
+     * @return date SQL
+     */
 	public static java.sql.Date convertStringToDateSQL(String dateString) {
 		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date date = null;
@@ -247,6 +315,11 @@ public class Common {
 		return new java.sql.Date(date.getTime());
 	}
 
+    /**
+     * convert and format string replace vn character to latinh character
+     * @param s
+     * @return string after format
+     */
 	public static String decomposeString(String s) {
 		StringBuilder stringBuilder = new StringBuilder();
 		String[] aUp = {
@@ -359,20 +432,35 @@ public class Common {
 		}
 		return stringBuilder.toString();
 	}
-	
+
+    /**
+     * call methods handle string
+     * @param s
+     * @return String after handle
+     */
 	public static String handleString(String s) {
 		s = decomposeString(s);
 		s = capitalizeString(s);
 		s = formatFullName(s);
 		return s;
 	}
-	
+
+    /**
+     * format full name
+     * @param s
+     * @return string after format
+     */
 	public static String formatFullName(String s) {
 		s = s.replaceAll("[^a-zA-Z ]", "");
 		s = s.replaceAll(" +", " ");
 		return s;
 	}
-	
+
+    /**
+     * capitalize string
+     * @param s
+     * @return string after capitalize
+     */
 	public static String capitalizeString(String s) {
 		char[] chars = s.toLowerCase().toCharArray();
 		boolean found = false;
@@ -386,7 +474,12 @@ public class Common {
 		}
 		return String.valueOf(chars);
 	}
-	
+
+    /**
+     * convert up case to low case
+     * @param up
+     * @return String after convert
+     */
 	public static String[] convertUpCaseToLowCase(String[] up) {
 		String[] low = new String[up.length];
 		for (int i = 0; i < up.length; i++) {
@@ -396,7 +489,14 @@ public class Common {
 		}
 		return low;
 	}
-	
+
+    /**
+     * replace string
+     * @param result
+     * @param up
+     * @param low
+     * @param flag
+     */
 	public static void replaceString(String[] result, String[] up, String[] low, String flag) {
 		for (int j = 0; j < result.length; j++) {
 			for (int i = 0; i < up.length; i++) {
@@ -411,7 +511,5 @@ public class Common {
 				
 			}
 		}
-		
 	}
-	
 }

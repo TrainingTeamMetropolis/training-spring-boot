@@ -3,7 +3,7 @@ package com.luvina.service.impl;
 import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblInsurance;
 import com.luvina.entities.TblUser;
-import com.luvina.form.RegisterInsuranceForm;
+import com.luvina.form.RegisterForm;
 import com.luvina.repository.ITblCompanyRepository;
 import com.luvina.repository.ITblInsuranceRepository;
 import com.luvina.repository.ITblUserRepository;
@@ -80,70 +80,70 @@ public class TblUserServiceImpl implements ITblUserService {
 	}
     /**
      * insert request data to data base
-     * @param registerInsuranceForm
+     * @param registerForm
      */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void insertInformationInsuranceOfUser(RegisterInsuranceForm registerInsuranceForm) {
-		String checkRadioCompany = registerInsuranceForm.getRadioCompany();
+	public void insertInformationInsuranceOfUser(RegisterForm registerForm) {
+		String checkRadioCompany = registerForm.getRadioCompany();
 		if (checkRadioCompany.equals("new")) {
-			TblCompany tblCompany = saveTblCompany(registerInsuranceForm);
+			TblCompany tblCompany = saveTblCompany(registerForm);
 			int companyInternalIdInsert = tblCompany.getCompanyInternalId();
-			TblInsurance tblInsurance = saveTblInsurance(registerInsuranceForm);
+			TblInsurance tblInsurance = saveTblInsurance(registerForm);
 			int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
-			saveTblUser(registerInsuranceForm, companyInternalIdInsert, insuranceInternalIdInsert);
+			saveTblUser(registerForm, companyInternalIdInsert, insuranceInternalIdInsert);
 		} else {
-			TblInsurance tblInsurance = saveTblInsurance(registerInsuranceForm);
+			TblInsurance tblInsurance = saveTblInsurance(registerForm);
 			int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
-			saveTblUser(registerInsuranceForm, registerInsuranceForm.getCompanyInternalId(), insuranceInternalIdInsert);
+			saveTblUser(registerForm, registerForm.getCompanyInternalId(), insuranceInternalIdInsert);
 		}
 	}
 
     /**
      * save data {@Link TblCompany} when check box new
-     * @param registerInsuranceForm
+     * @param registerForm
      * @return {@Link TblCompany}
      */
-	private TblCompany saveTblCompany(RegisterInsuranceForm registerInsuranceForm) {
+	private TblCompany saveTblCompany(RegisterForm registerForm) {
 		TblCompany tblCompany = new TblCompany();
-		tblCompany.setAddressCompany(registerInsuranceForm.getAddress());
-		tblCompany.setEmailCompany(registerInsuranceForm.getEmail());
-		tblCompany.setPhoneCompany(registerInsuranceForm.getTelephone());
-		tblCompany.setCompanyName(registerInsuranceForm.getCompanyName());
+		tblCompany.setAddressCompany(registerForm.getAddress());
+		tblCompany.setEmailCompany(registerForm.getEmail());
+		tblCompany.setPhoneCompany(registerForm.getTelephone());
+		tblCompany.setCompanyName(registerForm.getCompanyName());
 		iTblCompanyRepository.save(tblCompany);
 		return tblCompany;
 	}
 
     /**
      * save data {@Link TblInsurance}
-     * @param registerInsuranceForm
+     * @param registerForm
      * @return {@Link TblInsurance}
      */
-	private TblInsurance saveTblInsurance(RegisterInsuranceForm registerInsuranceForm) {
+	private TblInsurance saveTblInsurance(RegisterForm registerForm) {
 		TblInsurance tblInsurance = new TblInsurance();
 		tblInsurance
-			.setInsuranceStartDate(Common.convertStringToDateSQL(registerInsuranceForm.getInsuranceStartDate()));
-		tblInsurance.setInsuranceEndDate(Common.convertStringToDateSQL(registerInsuranceForm.getInsuranceEndDate()));
-		tblInsurance.setPlaceOfRegister(registerInsuranceForm.getPlaceOfRegister());
-		tblInsurance.setInsuranceNumber(registerInsuranceForm.getInsuranceNumber());
+			.setInsuranceStartDate(Common.convertStringToDateSQL(registerForm.getInsuranceStartDate()));
+		tblInsurance.setInsuranceEndDate(Common.convertStringToDateSQL(registerForm.getInsuranceEndDate()));
+		tblInsurance.setPlaceOfRegister(registerForm.getPlaceOfRegister());
+		tblInsurance.setInsuranceNumber(registerForm.getInsuranceNumber());
 		return tblInsurance;
 	}
 
     /**
      * save data {@Link TblUser}
-     * @param registerInsuranceForm
+     * @param registerForm
      * @param companyInternalIdInsert id after insert
      * @param insuranceInternalIdInsert
      */
-	private void saveTblUser(RegisterInsuranceForm registerInsuranceForm, int companyInternalIdInsert,
-			int insuranceInternalIdInsert) {
+	private void saveTblUser(RegisterForm registerForm, int companyInternalIdInsert,
+                             int insuranceInternalIdInsert) {
 		TblUser tblUser = new TblUser();
-		tblUser.setUserFullName(Common.handleString(registerInsuranceForm.getUserFullName()));
-		tblUser.setUserName(registerInsuranceForm.getUserName());
-		tblUser.setPassWord(Common.encodePassword(registerInsuranceForm.getPassWord()));
-		tblUser.setUserSexDivision(registerInsuranceForm.getRadioUserSexDivision());
-		if (registerInsuranceForm.getDateBirth().length() > 0) {
-			tblUser.setBirthDate(Common.convertStringToDateSQL(registerInsuranceForm.getDateBirth()));
+		tblUser.setUserFullName(Common.handleString(registerForm.getUserFullName()));
+		tblUser.setUserName(registerForm.getUserName());
+		tblUser.setPassWord(Common.encodePassword(registerForm.getPassWord()));
+		tblUser.setUserSexDivision(registerForm.getRadioUserSexDivision());
+		if (registerForm.getDateBirth().length() > 0) {
+			tblUser.setBirthDate(Common.convertStringToDateSQL(registerForm.getDateBirth()));
 		}
 		tblUser.setCompanyInternalId(companyInternalIdInsert);
 		tblUser.setInsuranceInternalId(insuranceInternalIdInsert);

@@ -71,7 +71,6 @@ public class CSVFile {
 			body.append("");
 		}
 		return body.toString();
-		
 	}
 
 	/**
@@ -85,9 +84,8 @@ public class CSVFile {
 	 */
 	public void exportCSV(HttpServletResponse response, String header, String body, String infoCompany) {
 		StringBuilder content = new StringBuilder();
-		
 		response.setHeader("Content-type", "application/csv");
-		response.setHeader("Content-disposition", "inline; filename=listUser.csv");
+		response.setHeader("Content-disposition", "inline; filename=insuranceList.csv");
 		content.append(environment.getProperty("title") + " " + "\n");
 		content.append(infoCompany + "\n");
 		content.append(header + "\n");

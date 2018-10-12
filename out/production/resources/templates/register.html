@@ -12,7 +12,7 @@
 <body>
 <div class="_main">
     <div class="_title">Thêm mới thông tin thẻ bảo hiểm</div>
-    <form action="register" method="POST" th:object="${registerInsuranceForm}">
+    <form action="register" method="POST" th:object="${registerForm}">
         <input th:name="searchFormId" th:value="${searchFormId}" type="hidden" />
         <input th:name="radioCompanyHidden" th:value="*{radioCompany}" type="hidden" />
         <input th:name="radioUserSexDivisionHidden" th:value="*{radioUserSexDivision}" type="hidden" />
@@ -26,19 +26,19 @@
                 </tr>
                 <tr>
                     <td class="_label">Họ và Tên</td>
-                    <td class="_input"><input th:field="*{userFullName}"/></td>
+                    <td class="_input"><input th:field="*{userFullName}" onblur="myFunction()"/></td>
                 </tr>
                 <tr>
                     <td class="_label">Tài khoản</td>
-                    <td class="_input"><input th:field="*{userName}"/></td>
+                    <td class="_input"><input th:field="*{userName}" maxlength="16"/></td>
                 </tr>
                 <tr>
                     <td class="_label">Mật khẩu</td>
-                    <td class="_input"><input th:field="*{passWord}" type="password"/></td>
+                    <td class="_input"><input th:field="*{passWord}" type="password" maxlength="32"/></td>
                 </tr>
                 <tr>
                     <td class="_label">Xác nhận</td>
-                    <td class="_input"><input th:field="*{confirmPassWord}" type="password" name=""/></td>
+                    <td class="_input"><input th:field="*{confirmPassWord}" type="password" name="" maxlength="32"/></td>
                 </tr>
                 <tr>
                     <td class="_label">Giới tính</td>
@@ -104,7 +104,7 @@
                                 <tr><td>Tên công ty</td><td><input th:field="*{companyName}"/></td></tr>
                                 <tr><td>Địa chỉ</td><td><input th:field="*{address}"/></td></tr>
                                 <tr><td>Email</td><td><input th:field="*{email}"/></td></tr>
-                                <tr><td>Điện thoại</td><td><input maxlength="10" th:field="*{telephone}"/></td></tr>
+                                <tr><td>Điện thoại</td><td><input th:field="*{telephone}"/></td></tr>
                             </table>
                         </div>
                     </td>

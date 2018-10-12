@@ -45,10 +45,11 @@ $(document).ready(function () {
         }
         location.href = url;
     });
-    $("#userFullName").focusout(function () {
+    $("#userFullName").blur(function () {
         formatText("userFullName", $("#userFullName").val());
     });
 });
+
 // function fomat text when change text user name
 var formatText = function(id, text){
     $.get("/formatName",{"name":text}, function(rs){

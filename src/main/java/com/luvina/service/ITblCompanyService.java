@@ -19,4 +19,10 @@ public interface ITblCompanyService {
      */
     TblCompany findByCompanyInternalId(int companyInternalId);
 
+    /**
+     * Find data {@Link TblCompany} by company name
+     * @param companyName
+     * @return boolean
+     */
+    boolean isExistsCompanyName(String companyName);
 }

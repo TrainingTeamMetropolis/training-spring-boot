@@ -1,11 +1,11 @@
 package com.luvina.controller;
 
 import com.luvina.entities.TblCompany;
-import com.luvina.form.RegisterInsuranceForm;
+import com.luvina.form.RegisterForm;
 import com.luvina.service.ITblCompanyService;
 import com.luvina.service.ITblUserService;
 import com.luvina.util.Common;
-import com.luvina.validation.ValidationRegisterInsuranceForm;
+import com.luvina.validation.ValidationRegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-public class RegisterInsuranceController {
+public class RegisterController {
 	
 	@Autowired
 	private ITblCompanyService iTblCompanyService;
@@ -31,18 +30,18 @@ public class RegisterInsuranceController {
 	private ITblUserService iTblUserService;
 	
 	@Autowired
-	private ValidationRegisterInsuranceForm validationRegisterInsuranceForm;
+	private ValidationRegisterForm validationregisterForm;
 
     /**
      * registration data to data base method get
      * @param modelAndView modelAndView
      * @param requestParam param request
-     * @param registerInsuranceForm form get data
+     * @param registerForm form get data
      * @return modelAndView data set to view after handle
      */
 	@RequestMapping(value = "/register", method = GET)
 	public ModelAndView registration(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
-			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm) {
+			@ModelAttribute("registerForm") RegisterForm registerForm) {
 		setDataToView(modelAndView);
 		String searchFormId = "";
 		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
@@ -57,16 +56,16 @@ public class RegisterInsuranceController {
      * registration data to data base method post
      * @param modelAndView modelAndView
      * @param requestParam param request
-     * @param registerInsuranceForm form get data
+     * @param registerForm form get data
      * @return modelAndView data set to view after handle
      */
 	@RequestMapping(value = "/register", method = POST)
 	public ModelAndView register(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
-			@ModelAttribute("registerInsuranceForm") RegisterInsuranceForm registerInsuranceForm,
+			@ModelAttribute("registerForm") RegisterForm registerForm,
 			BindingResult result) {
 		String searchFormId = "";
 		setDataToView(modelAndView);
-		validationRegisterInsuranceForm.validate(registerInsuranceForm, result);
+		validationregisterForm.validate(registerForm, result);
 		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
 			searchFormId = requestParam.get("searchFormId");
 		}
@@ -74,7 +73,7 @@ public class RegisterInsuranceController {
 			modelAndView.addObject("searchFormId", searchFormId);
 			modelAndView.setViewName("register");
 		} else {
-			iTblUserService.insertInformationInsuranceOfUser(registerInsuranceForm);
+			iTblUserService.insertInformationInsuranceOfUser(registerForm);
 			modelAndView.setViewName("redirect:dashboard");
 		}
 		return modelAndView;
