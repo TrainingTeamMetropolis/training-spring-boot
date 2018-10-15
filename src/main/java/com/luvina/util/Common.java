@@ -257,13 +257,8 @@ public class Common {
      * @return true when match XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
      */
 	public static boolean isFormatPhone(String phone) {
-		Pattern pattern1 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_1);
-		Pattern pattern2 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_2);
-		Pattern pattern3 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_3);
-		Pattern pattern4 = Pattern.compile(Constant.REGEX_FORMAT_PHONE_4);
-		if ((pattern1.matcher(phone).matches()) || (pattern2.matcher(phone).matches())
-				|| (pattern3.matcher(phone).matches())
-				|| (pattern4.matcher(phone).matches())) {
+		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_PHONE);
+		if ((pattern.matcher(phone).matches())) {
 			return true;
 		}
 		return false;

@@ -15,9 +15,6 @@ public class Constant {
 	public static final String REGEX_FORMAT_EMAIL =
 			"^[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*(\\.[a-zA-Z]{2,})$";
 	// regex format phone
-	public static final String REGEX_FORMAT_PHONE_1 = "^[0-9]{2}-[0-9]{4}\\-[0-9]{4}$";
-    public static final String REGEX_FORMAT_PHONE_2 = "^[0-9]{3}-[0-9]{3}\\-[0-9]{4}$";
-    public static final String REGEX_FORMAT_PHONE_3 = "^[0-9]{3}-[0-9]{4}\\-[0-9]{3}$";
-    public static final String REGEX_FORMAT_PHONE_4 = "^[0-9]{4}-[0-9]{2}\\-[0-9]{4}$";
+	public static final String REGEX_FORMAT_PHONE = "^(?=(\\d{2,4}-)(\\d{2,4}-)(\\d{2,4})).{12}$";
 
 }
