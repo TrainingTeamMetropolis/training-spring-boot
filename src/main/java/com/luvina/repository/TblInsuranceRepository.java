@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ITblInsuranceRepository extends JpaRepository<TblInsurance, Long> {
+public interface TblInsuranceRepository extends JpaRepository<TblInsurance, Long> {
     /**
      * Find data {@Link TblInsurance} by not insurance internal id and insurance number
      * @param insuranceInternalId

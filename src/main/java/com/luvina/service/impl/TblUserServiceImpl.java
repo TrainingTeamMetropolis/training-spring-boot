@@ -4,11 +4,11 @@ import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblInsurance;
 import com.luvina.entities.TblUser;
 import com.luvina.form.RegisterForm;
-import com.luvina.repository.ITblCompanyRepository;
-import com.luvina.repository.ITblInsuranceRepository;
-import com.luvina.repository.ITblUserRepository;
-import com.luvina.repository.customize.ITblUserRepositoryCustom;
-import com.luvina.service.ITblUserService;
+import com.luvina.repository.TblCompanyRepository;
+import com.luvina.repository.TblInsuranceRepository;
+import com.luvina.repository.TblUserRepository;
+import com.luvina.repository.customize.TblUserRepositoryCustom;
+import com.luvina.service.TblUserService;
 import com.luvina.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +18,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class TblUserServiceImpl implements ITblUserService {
+public class TblUserServiceImpl implements TblUserService {
 	
 	@Autowired
-	ITblUserRepository iTblUserRepository;
+	TblUserRepository tblUserRepository;
 	
 	@Autowired
-	ITblUserRepositoryCustom iTblUserRepositoryCustom;
+	TblUserRepositoryCustom tblUserRepositoryCustom;
 	
 	@Autowired
-	ITblCompanyRepository iTblCompanyRepository;
+	TblCompanyRepository tblCompanyRepository;
 	
 	@Autowired
-	ITblInsuranceRepository iTblInsuranceRepository;
+	TblInsuranceRepository tblInsuranceRepository;
 
     /**
      * Find all data {@link TblUser} by companyInternalId, userFullName, insuranceNumber, placeOfRegister
@@ -48,7 +48,7 @@ public class TblUserServiceImpl implements ITblUserService {
 	@Override
 	public List<TblUser> findAndSearchListData(int offset, int limit, String typeSort, int companyInternalId,
 			String userFullName, String insuranceNumber, String placeOfRegister) {
-		return iTblUserRepositoryCustom.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullName,
+		return tblUserRepositoryCustom.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullName,
 				insuranceNumber, placeOfRegister);
 	}
     /**
@@ -66,7 +66,7 @@ public class TblUserServiceImpl implements ITblUserService {
 	@Override
 	public Integer findTotalRecords(int offset, int limit, String typeSort, int companyInternalId, String userFullName,
 			String insuranceNumber, String placeOfRegister) {
-		return iTblUserRepositoryCustom.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullName,
+		return tblUserRepositoryCustom.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullName,
 				insuranceNumber, placeOfRegister);
 	}
     /**
@@ -76,7 +76,7 @@ public class TblUserServiceImpl implements ITblUserService {
      */
 	@Override
 	public TblUser findByUserInternalId(int userInternalId) {
-		return iTblUserRepository.findByUserInternalId(userInternalId);
+		return tblUserRepository.findByUserInternalId(userInternalId);
 	}
     /**
      * insert request data to data base
@@ -110,7 +110,7 @@ public class TblUserServiceImpl implements ITblUserService {
 		tblCompany.setEmailCompany(registerForm.getEmail());
 		tblCompany.setPhoneCompany(registerForm.getTelephone());
 		tblCompany.setCompanyName(registerForm.getCompanyName());
-		iTblCompanyRepository.save(tblCompany);
+		tblCompanyRepository.save(tblCompany);
 		return tblCompany;
 	}
 
@@ -147,6 +147,6 @@ public class TblUserServiceImpl implements ITblUserService {
 		}
 		tblUser.setCompanyInternalId(companyInternalIdInsert);
 		tblUser.setInsuranceInternalId(insuranceInternalIdInsert);
-		iTblUserRepository.save(tblUser);
+		tblUserRepository.save(tblUser);
 	}
 }

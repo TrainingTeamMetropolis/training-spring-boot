@@ -3,7 +3,7 @@ package com.luvina.repository.customize.impl;
 import java.util.List;
 
 import com.luvina.entities.TblUser;
-import com.luvina.repository.customize.ITblUserRepositoryCustom;
+import com.luvina.repository.customize.TblUserRepositoryCustom;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ITblUserRepositoryCustomImpl implements ITblUserRepositoryCustom {
+public class TblUserRepositoryCustomImpl implements TblUserRepositoryCustom {
 	
 	@Autowired
 	private SessionFactory sessionFactory;

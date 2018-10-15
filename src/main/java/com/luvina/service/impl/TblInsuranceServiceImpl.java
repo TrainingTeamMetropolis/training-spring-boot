@@ -1,16 +1,16 @@
 package com.luvina.service.impl;
 
 import com.luvina.entities.TblInsurance;
-import com.luvina.repository.ITblInsuranceRepository;
-import com.luvina.service.ITblInsuranceService;
+import com.luvina.repository.TblInsuranceRepository;
+import com.luvina.service.TblInsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TblInsuranceServiceImpl implements ITblInsuranceService {
+public class TblInsuranceServiceImpl implements TblInsuranceService {
 	
 	@Autowired
-	private ITblInsuranceRepository iTblInsuranceRepository;
+	private TblInsuranceRepository tblInsuranceRepository;
 
     /**
      * check true is exists {@Link TblInsurance}
@@ -21,7 +21,7 @@ public class TblInsuranceServiceImpl implements ITblInsuranceService {
 	@Override
 	public boolean isExistsTblInsurance(int insuranceInternalId, String insuranceNumber) {
 		TblInsurance tblInsurance =
-				iTblInsuranceRepository.findByInsuranceInternalIdNotAndInsuranceNumber(insuranceInternalId,
+				tblInsuranceRepository.findByInsuranceInternalIdNotAndInsuranceNumber(insuranceInternalId,
 						insuranceNumber);
 		if (tblInsurance != null) {
 			return true;

@@ -2,8 +2,8 @@ package com.luvina.controller;
 
 import com.luvina.entities.TblCompany;
 import com.luvina.form.RegisterForm;
-import com.luvina.service.ITblCompanyService;
-import com.luvina.service.ITblUserService;
+import com.luvina.service.TblCompanyService;
+import com.luvina.service.TblUserService;
 import com.luvina.util.Common;
 import com.luvina.validation.ValidationRegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class RegisterController {
 	
 	@Autowired
-	private ITblCompanyService iTblCompanyService;
+	private TblCompanyService tblCompanyService;
 	
 	@Autowired
-	private ITblUserService iTblUserService;
+	private TblUserService tblUserService;
 	
 	@Autowired
 	private ValidationRegisterForm validationregisterForm;
@@ -73,7 +73,7 @@ public class RegisterController {
 			modelAndView.addObject("searchFormId", searchFormId);
 			modelAndView.setViewName("register");
 		} else {
-			iTblUserService.insertInformationInsuranceOfUser(registerForm);
+			tblUserService.insertInformationInsuranceOfUser(registerForm);
 			modelAndView.setViewName("redirect:dashboard");
 		}
 		return modelAndView;
@@ -85,7 +85,7 @@ public class RegisterController {
      * @param modelAndView
      */
 	private void setDataToView(ModelAndView modelAndView) {
-		List<TblCompany> tblCompanyList = iTblCompanyService.findAllByOrderByCompanyNameAsc();
+		List<TblCompany> tblCompanyList = tblCompanyService.findAllByOrderByCompanyNameAsc();
 		modelAndView.addObject("tblCompanyList", tblCompanyList);
 	}
 }

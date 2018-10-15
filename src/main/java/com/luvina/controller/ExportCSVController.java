@@ -3,8 +3,8 @@ package com.luvina.controller;
 import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblUser;
 import com.luvina.form.SearchForm;
-import com.luvina.service.ITblCompanyService;
-import com.luvina.service.ITblUserService;
+import com.luvina.service.TblCompanyService;
+import com.luvina.service.TblUserService;
 import com.luvina.util.CSVFile;
 import com.luvina.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import java.util.Map;
 public class ExportCSVController {
 	
 	@Autowired
-	private ITblUserService iTblUserService;
+	private TblUserService tblUserService;
 	
 	@Autowired
-	private ITblCompanyService iTblCompanyService;
+	private TblCompanyService tblCompanyService;
 	
 	@Autowired
 	private CSVFile csvFile;
@@ -61,8 +61,8 @@ public class ExportCSVController {
 		String userFullNameEscape = Common.escapeInjection(userFullName.trim());
 		String insuranceNumberEscape = Common.escapeInjection(insuranceNumber.trim());
 		String placeOfRegisterEscape = Common.escapeInjection(placeOfRegister.trim());
-		tblCompany = iTblCompanyService.findByCompanyInternalId(companyInternalId);
-		tblUserList = iTblUserService.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullNameEscape,
+		tblCompany = tblCompanyService.findByCompanyInternalId(companyInternalId);
+		tblUserList = tblUserService.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullNameEscape,
 						insuranceNumberEscape, placeOfRegisterEscape);
 		String header = csvFile.createHeader();
 		String body = csvFile.createBody(tblUserList);

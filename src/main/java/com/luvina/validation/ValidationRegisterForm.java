@@ -2,9 +2,9 @@ package com.luvina.validation;
 
 import com.luvina.entities.TblUser;
 import com.luvina.form.RegisterForm;
-import com.luvina.service.ITblCompanyService;
-import com.luvina.service.ITblInsuranceService;
-import com.luvina.service.ITblUserService;
+import com.luvina.service.TblCompanyService;
+import com.luvina.service.TblInsuranceService;
+import com.luvina.service.TblUserService;
 import com.luvina.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,13 +15,13 @@ import org.springframework.validation.Validator;
 public class ValidationRegisterForm implements Validator {
 	
 	@Autowired
-	private ITblInsuranceService iTblInsuranceService;
+	private TblInsuranceService tblInsuranceService;
 	
 	@Autowired
-	private ITblUserService iTblUserService;
+	private TblUserService tblUserService;
 
 	@Autowired
-	private ITblCompanyService iTblCompanyService;
+	private TblCompanyService tblCompanyService;
 	
 	
 	/**
@@ -45,7 +45,7 @@ public class ValidationRegisterForm implements Validator {
 		int insuranceInternalId = 0;
 		if (registerForm.getUserInternalId() != 0) {
 			Integer userInternalId = registerForm.getUserInternalId();
-			TblUser tblUser = iTblUserService.findByUserInternalId(userInternalId);
+			TblUser tblUser = tblUserService.findByUserInternalId(userInternalId);
 			insuranceInternalId = tblUser.getInsuranceInternalId();
 		}
 		String checkRadioCompany = registerForm.getRadioCompany();
@@ -83,7 +83,7 @@ public class ValidationRegisterForm implements Validator {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceNumber", "format.insurance_number");
 		}
-		if (hasErrorFlag == false && iTblInsuranceService.isExistsTblInsurance(insuranceInternalId, insuranceNumber)) {
+		if (hasErrorFlag == false && tblInsuranceService.isExistsTblInsurance(insuranceInternalId, insuranceNumber)) {
 			errors.rejectValue("insuranceNumber", "exists.insurance_number");
 		}
 	}
@@ -191,7 +191,7 @@ public class ValidationRegisterForm implements Validator {
 			errors.rejectValue("companyName", "length_max.company_name");
 		}
 
-		if (hasErrorFlag == false && iTblCompanyService.isExistsCompanyName(companyName) == true) {
+		if (hasErrorFlag == false && tblCompanyService.isExistsCompanyName(companyName) == true) {
             errors.rejectValue("companyName", "exists_company_name.company_name");
         }
 	}

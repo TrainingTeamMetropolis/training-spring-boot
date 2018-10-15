@@ -1,6 +1,6 @@
 package com.luvina.service;
 
-public interface ITblInsuranceService {
+public interface TblInsuranceService {
 	/**
 	 * check true is exists {@Link TblInsurance}
 	 * @param insuranceInternalId

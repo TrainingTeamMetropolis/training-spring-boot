@@ -1,7 +1,7 @@
 package com.luvina.controller;
 
 import com.luvina.entities.TblCompany;
-import com.luvina.service.ITblCompanyService;
+import com.luvina.service.TblCompanyService;
 import com.luvina.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class LoadAjaxFormController {
 	
 	@Autowired
-	private ITblCompanyService iTblCompanyService;
+	private TblCompanyService tblCompanyService;
 
 	/**
 	 * load ajax for form inner
@@ -29,7 +29,7 @@ public class LoadAjaxFormController {
 		if (requestParam.get("companyInternalId") != null) {
 			companyInternalId = Integer.parseInt(requestParam.get("companyInternalId"));
 		}
-		TblCompany tblCompany = iTblCompanyService.findByCompanyInternalId(companyInternalId);
+		TblCompany tblCompany = tblCompanyService.findByCompanyInternalId(companyInternalId);
 		return tblCompany;
 	}
 

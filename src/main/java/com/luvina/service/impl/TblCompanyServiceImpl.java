@@ -1,18 +1,18 @@
 package com.luvina.service.impl;
 
 import com.luvina.entities.TblCompany;
-import com.luvina.repository.ITblCompanyRepository;
-import com.luvina.service.ITblCompanyService;
+import com.luvina.repository.TblCompanyRepository;
+import com.luvina.service.TblCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TblCompanyServiceImpl implements ITblCompanyService {
+public class TblCompanyServiceImpl implements TblCompanyService {
 	
 	@Autowired
-	ITblCompanyRepository iTblCompanyRepository;
+	TblCompanyRepository tblCompanyRepository;
 	
 	
 	/**
@@ -21,7 +21,7 @@ public class TblCompanyServiceImpl implements ITblCompanyService {
 	 */
 	@Override
 	public List<TblCompany> findAllByOrderByCompanyNameAsc() {
-		return iTblCompanyRepository.findAllByOrderByCompanyNameAsc();
+		return tblCompanyRepository.findAllByOrderByCompanyNameAsc();
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class TblCompanyServiceImpl implements ITblCompanyService {
 	 */
 	@Override
 	public TblCompany findByCompanyInternalId(int companyInternalId) {
-		return iTblCompanyRepository.findByCompanyInternalId(companyInternalId);
+		return tblCompanyRepository.findByCompanyInternalId(companyInternalId);
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class TblCompanyServiceImpl implements ITblCompanyService {
 	 */
 	@Override
 	public boolean isExistsCompanyName(String companyName) {
-	    if (iTblCompanyRepository.findByCompanyName(companyName) != null) {
+	    if (tblCompanyRepository.findByCompanyName(companyName) != null) {
             return true;
         }
 		return false;

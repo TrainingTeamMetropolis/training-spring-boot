@@ -4,7 +4,7 @@ import com.luvina.entities.TblCompany;
 
 import java.util.List;
 
-public interface ITblCompanyService {
+public interface TblCompanyService {
 
     /**
      * Find all data {@Link TblCompany} and order company name asc

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.luvina.entities.TblUser;
 
-public interface ITblUserRepositoryCustom {
+public interface TblUserRepositoryCustom {
 
 	/**
 	 * search for dashboard screen

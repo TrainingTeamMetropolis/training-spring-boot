@@ -3,8 +3,8 @@ package com.luvina.controller;
 import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblUser;
 import com.luvina.form.SearchForm;
-import com.luvina.service.ITblCompanyService;
-import com.luvina.service.ITblUserService;
+import com.luvina.service.TblCompanyService;
+import com.luvina.service.TblUserService;
 import com.luvina.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +24,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class DashBroadController {
 	
 	@Autowired
-	private ITblCompanyService iTblCompanyService;
+	private TblCompanyService tblCompanyService;
 	
 	@Autowired
-	private ITblUserService iTblUserService;
+	private TblUserService tblUserService;
 
     /**
      * method get handle search when load url dashboard
@@ -67,7 +67,7 @@ public class DashBroadController {
 		String insuranceNumber = "";
 		String placeOfRegister = "";
 		String searchFormId = "";
-		List<TblCompany> tblCompanyList = iTblCompanyService.findAllByOrderByCompanyNameAsc();
+		List<TblCompany> tblCompanyList = tblCompanyService.findAllByOrderByCompanyNameAsc();
 		if (requestParam.get("searchFormId") != null) {
 			searchFormId = requestParam.get("searchFormId");
 		} else {
@@ -111,7 +111,7 @@ public class DashBroadController {
 		typeSort = Common.handleSortType(typeSort);
 		
 		Integer totalRecord =
-				iTblUserService.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullNameEscape,
+				tblUserService.findTotalRecords(offset, limit, typeSort, companyInternalId, userFullNameEscape,
 						insuranceNumberEscape, placeOfRegisterEscape);
 		List<Integer> listPaging = Common.getListPaging(totalRecord, currentPage);
 		if (listPaging.size() != 0) {
@@ -120,7 +120,7 @@ public class DashBroadController {
 		totalPage = Common.getTotalPage(totalRecord, limit);
 		offset = Common.getOffsetPaging(currentPage, limit);
 		
-		List<TblUser> tblUserList = iTblUserService.findAndSearchListData(offset, limit, typeSort, companyInternalId,
+		List<TblUser> tblUserList = tblUserService.findAndSearchListData(offset, limit, typeSort, companyInternalId,
 				userFullNameEscape, insuranceNumberEscape, placeOfRegisterEscape);
 		session.setAttribute("typeSort", typeSort);
 		modelAndView.addObject("tblCompanyList", tblCompanyList);

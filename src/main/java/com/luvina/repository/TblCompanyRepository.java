@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface ITblCompanyRepository extends JpaRepository<TblCompany, Integer> {
+public interface TblCompanyRepository extends JpaRepository<TblCompany, Integer> {
     /**
      * Find all data {@Link TblCompany} and order company name asc
      * @return List of {@Link TblCompany} List data

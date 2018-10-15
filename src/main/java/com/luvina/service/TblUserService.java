@@ -5,7 +5,7 @@ import com.luvina.form.RegisterForm;
 
 import java.util.List;
 
-public interface ITblUserService {
+public interface TblUserService {
 	
 	/**
 	 * Find all data {@link TblUser} by companyInternalId, userFullName, insuranceNumber, placeOfRegister
