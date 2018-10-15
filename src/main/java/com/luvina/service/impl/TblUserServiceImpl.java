@@ -86,17 +86,14 @@ public class TblUserServiceImpl implements TblUserService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void insertInformationInsuranceOfUser(RegisterForm registerForm) {
 		String checkRadioCompany = registerForm.getRadioCompany();
+		int companyInternalIdInsert = registerForm.getCompanyInternalId();
 		if (checkRadioCompany.equals("new")) {
 			TblCompany tblCompany = saveTblCompany(registerForm);
-			int companyInternalIdInsert = tblCompany.getCompanyInternalId();
-			TblInsurance tblInsurance = saveTblInsurance(registerForm);
-			int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
-			saveTblUser(registerForm, companyInternalIdInsert, insuranceInternalIdInsert);
-		} else {
-			TblInsurance tblInsurance = saveTblInsurance(registerForm);
-			int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
-			saveTblUser(registerForm, registerForm.getCompanyInternalId(), insuranceInternalIdInsert);
+			companyInternalIdInsert = tblCompany.getCompanyInternalId();
 		}
+		TblInsurance tblInsurance = saveTblInsurance(registerForm);
+		int insuranceInternalIdInsert = tblInsurance.getInsuranceInternalId();
+		saveTblUser(registerForm, companyInternalIdInsert, insuranceInternalIdInsert);
 	}
 
     /**
