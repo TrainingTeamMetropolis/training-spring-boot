@@ -62,11 +62,12 @@
                             <label>Công ty đã có</label>
                         </div>
                         <div class="area-old-company">
-                            <select th:field="*{companyInternalId}">
+                            <select th:attr="data-id=${idCompanySelected}" th:field="*{companyInternalId}">
                                 <option
                                     th:each="company : ${tblCompanyList}"
                                     th:text="${company.companyName}"
-                                    th:value="${company.companyInternalId}">
+                                    th:value="${company.companyInternalId}"
+                                    th:id="'company' + ${company.companyInternalId}">
                                 </option>
                             </select>
                             <div id="form-ajax">

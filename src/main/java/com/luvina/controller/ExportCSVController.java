@@ -39,33 +39,17 @@ public class ExportCSVController {
 	@RequestMapping(value = "exportCSV", method = RequestMethod.GET)
 	public void exportCSVFile(@RequestParam Map<String, String> requestParam, HttpSession session,
 			HttpServletResponse response) {
-		String searchFormId = "";
 		int companyInternalId = 0;
-		int limit = 0;
-		int offset = 0;
-		String typeSort = "ASC";
-		String userFullName = "";
-		String insuranceNumber = "";
-		String placeOfRegister = "";
-		
-		List<TblUser> tblUserList;
-		TblCompany tblCompany;
+		SearchForm searchForm = null;
 		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
-			searchFormId = requestParam.get("searchFormId");
-			SearchForm searchForm = (SearchForm) session.getAttribute(searchFormId);
+            String searchFormId  = requestParam.get("searchFormId");
+			searchForm = (SearchForm) session.getAttribute(searchFormId);
             companyInternalId = searchForm.getSearchByCompanyInternalId();
-			userFullName = searchForm.getSearchByUserFullName();
-			insuranceNumber = searchForm.getSearchByInsuranceNumber();
-			placeOfRegister = searchForm.getSearchByPlaceOfRegister();
 		}
-		String userFullNameEscape = Common.escapeInjection(userFullName.trim());
-		String insuranceNumberEscape = Common.escapeInjection(insuranceNumber.trim());
-		String placeOfRegisterEscape = Common.escapeInjection(placeOfRegister.trim());
-		tblCompany = tblCompanyService.findByCompanyInternalId(companyInternalId);
-		tblUserList = tblUserService.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullNameEscape,
-						insuranceNumberEscape, placeOfRegisterEscape);
+        TblCompany tblCompany = tblCompanyService.findByCompanyInternalId(companyInternalId);
+        Map map = tblUserService.findAndSearchListData(searchForm, requestParam, session);
 		String header = csvFile.createHeader();
-		String body = csvFile.createBody(tblUserList);
+		String body = csvFile.createBody((List<TblUser>) map.get("tblUserList"));
 		String infoCompany = csvFile.createCompany(tblCompany);
 		csvFile.exportCSV(response, header, body, infoCompany);
 	}

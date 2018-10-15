@@ -2,7 +2,7 @@ package com.luvina.form;
 
 public class SearchForm {
 	
-	private int searchByCompanyInternalId;
+	private Integer searchByCompanyInternalId;
 	
 	private String searchByUserFullName;
 	
@@ -14,11 +14,11 @@ public class SearchForm {
 	
 	private int page;
 
-	public int getSearchByCompanyInternalId() {
+	public Integer getSearchByCompanyInternalId() {
 		return searchByCompanyInternalId;
 	}
 
-	public void setSearchByCompanyInternalId(int searchByCompanyInternalId) {
+	public void setSearchByCompanyInternalId(Integer searchByCompanyInternalId) {
 		this.searchByCompanyInternalId = searchByCompanyInternalId;
 	}
 

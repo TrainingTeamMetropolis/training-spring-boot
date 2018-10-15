@@ -1,5 +1,7 @@
 // ready function
 $(document).ready(function () {
+    var data_id = $("#companyInternalId").attr("data-id");
+    $("#company" + data_id).attr("selected", "true");
     $(".date-time-picker").datepicker({
         showOn: "button",
         buttonImage: "img/calendar.png",

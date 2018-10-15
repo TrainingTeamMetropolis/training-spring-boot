@@ -81,7 +81,7 @@ public class TblUserRepositoryCustomImpl implements TblUserRepositoryCustom {
 	@Override
 	public Integer findTotalRecords(int offset, int limit, String typeSort, int companyInternalId, String userFullName,
 			String insuranceNumber, String placeOfRegister) {
-		Integer totalUser = 0;
+
 		StringBuilder hqlCommand = new StringBuilder();
 		hqlCommand.append(" SELECT COUNT(*) FROM TblUser AS u ");
 		hqlCommand.append("WHERE companyInternalId= :companyInternalId ");
@@ -111,8 +111,7 @@ public class TblUserRepositoryCustomImpl implements TblUserRepositoryCustom {
 			query.setParameter("placeOfRegister", "%" + placeOfRegister + "%");
 		}
 		Long totalUserLong = (Long) (query.uniqueResult());
-		totalUser = (int) (long) totalUserLong;
 		session.close();
-		return totalUser;
+		return totalUserLong.intValue();
 	}
 }
