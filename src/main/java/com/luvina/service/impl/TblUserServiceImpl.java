@@ -19,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,9 @@ public class TblUserServiceImpl implements TblUserService {
 	@Autowired
 	TblCompanyService tblCompanyService;
 
+	@Autowired
+    Common common;
+
     /**
      * Find all data {@link TblUser} by companyInternalId, userFullName, insuranceNumber, placeOfRegister
      *
@@ -56,14 +60,14 @@ public class TblUserServiceImpl implements TblUserService {
 	public Map findAndSearchListData(SearchForm searchForm, @RequestParam Map<String, String> requestParam,
 			HttpSession session) {
 		int offset = 0;
-		int limit = Common.getLimit();
+		int limit = common.getLimit();
 		int endRange = 0;
 		Integer currentPage = 0;
 		String typeSort = "ASC";
 		String userFullName = "";
 		String insuranceNumber = "";
 		String placeOfRegister = "";
-		long id = Common.getMiniSecondRandom();
+		long id = new Date().getTime();
 		String searchFormId = Long.toString(id);
 		if (requestParam.get("searchFormId") != null) {
 			searchFormId = requestParam.get("searchFormId");
@@ -73,19 +77,19 @@ public class TblUserServiceImpl implements TblUserService {
 		if (companyInternalId == null) {
 			companyInternalId = tblCompanyList.get(0).getCompanyInternalId();
 		}
-		if (Common.isNullOrEmpty(searchForm.getSearchByUserFullName()) == false) {
+		if (common.isNullOrEmpty(searchForm.getSearchByUserFullName()) == false) {
 			userFullName = searchForm.getSearchByUserFullName();
 		}
-		if (Common.isNullOrEmpty(searchForm.getSearchByInsuranceNumber()) == false) {
+		if (common.isNullOrEmpty(searchForm.getSearchByInsuranceNumber()) == false) {
 			insuranceNumber = searchForm.getSearchByInsuranceNumber();
 		}
-		if (Common.isNullOrEmpty(searchForm.getSearchByPlaceOfRegister()) == false) {
+		if (common.isNullOrEmpty(searchForm.getSearchByPlaceOfRegister()) == false) {
 			placeOfRegister = searchForm.getSearchByPlaceOfRegister();
 		}
-		if (Common.isNullOrEmpty(requestParam.get("typeSort")) == false) {
+		if (common.isNullOrEmpty(requestParam.get("typeSort")) == false) {
 			typeSort = requestParam.get("typeSort");
 		}
-		if (Common.isNullOrEmpty(requestParam.get("page")) == false) {
+		if (common.isNullOrEmpty(requestParam.get("page")) == false) {
 			currentPage = Integer.parseInt(requestParam.get("page"));
 		}
 		if (session.getAttribute(searchFormId) != null) {
@@ -95,27 +99,27 @@ public class TblUserServiceImpl implements TblUserService {
             insuranceNumber = form.getSearchByInsuranceNumber();
             placeOfRegister = form.getSearchByPlaceOfRegister();
             companyInternalId = form.getSearchByCompanyInternalId();
-            if (Common.isNullOrEmpty(requestParam.get("page")) == false) {
+            if (common.isNullOrEmpty(requestParam.get("page")) == false) {
                 typeSort = form.getTypeSort();
             }
-            if (Common.isNullOrEmpty(requestParam.get("typeSort")) == false) {
+            if (common.isNullOrEmpty(requestParam.get("typeSort")) == false) {
                 currentPage = form.getPage();
             }
         }
 		if (currentPage == 0) {
 			currentPage = 1;
 		}
-		String userFullNameEscape = Common.escapeInjection(userFullName);
-		String insuranceNumberEscape = Common.escapeInjection(insuranceNumber);
-		String placeOfRegisterEscape = Common.escapeInjection(placeOfRegister);
-		typeSort = Common.handleSortType(typeSort);
+		String userFullNameEscape = common.escapeInjection(userFullName);
+		String insuranceNumberEscape = common.escapeInjection(insuranceNumber);
+		String placeOfRegisterEscape = common.escapeInjection(placeOfRegister);
+		typeSort = common.handleSortType(typeSort);
 		Integer totalRecord = findTotalRecords(offset, limit, typeSort, companyInternalId, userFullNameEscape,
 				insuranceNumberEscape, placeOfRegisterEscape);
-		List<Integer> listPaging = Common.getListPaging(totalRecord, currentPage);
+		List<Integer> listPaging = common.getListPaging(totalRecord, currentPage);
 		if (listPaging.size() != 0) {
 			endRange = listPaging.get(listPaging.size() - 1);
 		}
-		offset = Common.getOffsetPaging(currentPage, limit);
+		offset = common.getOffsetPaging(currentPage, limit);
 		List<TblUser> tblUserList =
 				tblUserRepositoryCustom.findAndSearchListData(offset, limit, typeSort, companyInternalId, userFullName,
 						insuranceNumber, placeOfRegister);
@@ -128,7 +132,7 @@ public class TblUserServiceImpl implements TblUserService {
 		
 		Map mapData = new HashMap();
 		mapData.put("tblUserList", tblUserList);
-		mapData.put("totalPage", Common.getTotalPage(totalRecord, limit));
+		mapData.put("totalPage", common.getTotalPage(totalRecord, limit));
 		mapData.put("listPaging", listPaging);
 		mapData.put("endRange", endRange);
 		mapData.put("searchFormId", searchFormId);
@@ -174,7 +178,7 @@ public class TblUserServiceImpl implements TblUserService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void insertInformationInsuranceOfUser(RegisterForm registerForm) {
+	public void insertInformationInsuranceOfUser(RegisterForm registerForm) throws NoSuchAlgorithmException {
 		String checkRadioCompany = registerForm.getRadioCompany();
 		int companyInternalIdInsert = registerForm.getCompanyInternalId();
 		if (checkRadioCompany.equals("new")) {
@@ -209,8 +213,8 @@ public class TblUserServiceImpl implements TblUserService {
 	private TblInsurance saveTblInsurance(RegisterForm registerForm) {
 		TblInsurance tblInsurance = new TblInsurance();
 		tblInsurance
-			.setInsuranceStartDate(Common.convertStringToDateSQL(registerForm.getInsuranceStartDate()));
-		tblInsurance.setInsuranceEndDate(Common.convertStringToDateSQL(registerForm.getInsuranceEndDate()));
+			.setInsuranceStartDate(common.convertStringToDateSQL(registerForm.getInsuranceStartDate()));
+		tblInsurance.setInsuranceEndDate(common.convertStringToDateSQL(registerForm.getInsuranceEndDate()));
 		tblInsurance.setPlaceOfRegister(registerForm.getPlaceOfRegister());
 		tblInsurance.setInsuranceNumber(registerForm.getInsuranceNumber());
 		return tblInsurance;
@@ -223,14 +227,14 @@ public class TblUserServiceImpl implements TblUserService {
 	 * @param insuranceInternalIdInsert
 	 */
 	private void saveTblUser(RegisterForm registerForm, int companyInternalIdInsert,
-			int insuranceInternalIdInsert) {
+			int insuranceInternalIdInsert) throws NoSuchAlgorithmException {
 		TblUser tblUser = new TblUser();
-		tblUser.setUserFullName(Common.handleString(registerForm.getUserFullName()));
+		tblUser.setUserFullName(common.handleString(registerForm.getUserFullName()));
 		tblUser.setUserName(registerForm.getUserName());
-		tblUser.setPassWord(Common.encodePassword(registerForm.getPassWord()));
+		tblUser.setPassWord(common.encodePassword(registerForm.getPassWord()));
 		tblUser.setUserSexDivision(registerForm.getRadioUserSexDivision());
 		if (registerForm.getDateBirth().length() > 0) {
-			tblUser.setBirthDate(Common.convertStringToDateSQL(registerForm.getDateBirth()));
+			tblUser.setBirthDate(common.convertStringToDateSQL(registerForm.getDateBirth()));
 		}
 		tblUser.setCompanyInternalId(companyInternalIdInsert);
 		tblUser.setInsuranceInternalId(insuranceInternalIdInsert);

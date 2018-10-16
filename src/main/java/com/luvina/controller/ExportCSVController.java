@@ -30,6 +30,9 @@ public class ExportCSVController {
 	@Autowired
 	private CSVFile csvFile;
 
+    @Autowired
+    Common common;
+
     /**
      *  handle export csv file after search
      * @param requestParam param get from screen
@@ -41,7 +44,7 @@ public class ExportCSVController {
 			HttpServletResponse response) {
 		int companyInternalId = 0;
 		SearchForm searchForm = null;
-		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
+		if (common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
             String searchFormId  = requestParam.get("searchFormId");
 			searchForm = (SearchForm) session.getAttribute(searchFormId);
             companyInternalId = searchForm.getSearchByCompanyInternalId();

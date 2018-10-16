@@ -7,6 +7,7 @@ import com.luvina.form.SearchForm;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 public interface TblUserService {
@@ -49,5 +50,5 @@ public interface TblUserService {
 	 * insert request data to data base
 	 * @param registerForm data form from request
 	 */
-	void insertInformationInsuranceOfUser(RegisterForm registerForm);
+	void insertInformationInsuranceOfUser(RegisterForm registerForm) throws NoSuchAlgorithmException;
 }

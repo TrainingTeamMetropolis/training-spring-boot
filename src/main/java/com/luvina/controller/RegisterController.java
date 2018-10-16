@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,9 @@ public class RegisterController {
 	
 	@Autowired
 	private ValidationRegisterForm validationregisterForm;
+
+    @Autowired
+    Common common;
 	
 	
 	/**
@@ -48,7 +52,7 @@ public class RegisterController {
 		setDataToView(modelAndView);
 		String searchFormId = "";
 		int idCompanySelected = tblCompanyService.findAllByOrderByCompanyNameAsc().get(0).getCompanyInternalId();
-		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
+		if (common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
 			searchFormId = requestParam.get("searchFormId");
 			SearchForm searchForm = (SearchForm) httpSession.getAttribute(searchFormId);
 			if (searchForm != null && searchForm.getSearchByCompanyInternalId() != null) {
@@ -56,7 +60,6 @@ public class RegisterController {
 			}
 		}
 		modelAndView.addObject("idCompanySelected", idCompanySelected);
-        System.out.println("idCompanySelected"+idCompanySelected);
 		modelAndView.addObject("searchFormId", searchFormId);
 		modelAndView.setViewName("register");
 		return modelAndView;
@@ -72,11 +75,11 @@ public class RegisterController {
 	@RequestMapping(value = "/register", method = POST)
 	public ModelAndView register(ModelAndView modelAndView, @RequestParam Map<String, String> requestParam,
 			@ModelAttribute("registerForm") RegisterForm registerForm,
-			BindingResult result) {
+			BindingResult result) throws NoSuchAlgorithmException {
 		String searchFormId = "";
 		setDataToView(modelAndView);
 		validationregisterForm.validate(registerForm, result);
-		if (Common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
+		if (common.isNullOrEmpty(requestParam.get("searchFormId")) == false) {
 			searchFormId = requestParam.get("searchFormId");
 		}
 		if (result.hasErrors()) {

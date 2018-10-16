@@ -18,6 +18,11 @@ public class LoadAjaxFormController {
 	@Autowired
 	private TblCompanyService tblCompanyService;
 
+	@Autowired
+	Common common;
+
+
+
 	/**
 	 * load ajax for form inner
 	 * @param requestParam param url
@@ -41,6 +46,6 @@ public class LoadAjaxFormController {
     @RequestMapping(value="/formatName", method = RequestMethod.GET)
     @ResponseBody
     public String formatName(@RequestParam(value="name", defaultValue="") String name){
-        return Common.handleString(name);
+        return common.handleString(name);
     }
 }

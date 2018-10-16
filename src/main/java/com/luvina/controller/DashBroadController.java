@@ -70,9 +70,6 @@ public class DashBroadController {
 
         session.setAttribute("typeSort", mapData.get("typeSort"));
 		session.setAttribute(searchFormId, mapData.get("searchForm"));
-
-		SearchForm searchForm1 =  (SearchForm) session.getAttribute(searchFormId);
-        System.out.println("searchForm1"+searchForm1.getSearchByCompanyInternalId());
 		modelAndView.setViewName("dashboard");
 		return modelAndView;
 	}

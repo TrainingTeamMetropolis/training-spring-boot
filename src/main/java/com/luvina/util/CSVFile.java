@@ -19,6 +19,8 @@ public class CSVFile {
 	@Autowired
 	private Environment environment;
 
+	@Autowired
+	Common common;
 	/**
 	 * create data {@Link TblCompany} csv file
 	 * @param tblCompany
@@ -28,7 +30,7 @@ public class CSVFile {
 		StringBuilder informationCompany = new StringBuilder();
 		informationCompany.append(environment.getProperty("name_company") + "," + tblCompany.getCompanyName() + "\n");
 		informationCompany.append(
-				environment.getProperty("address") + "," + Common.handleCSVFile(tblCompany.getAddressCompany())  + "\n");
+				environment.getProperty("address") + "," + common.handleCSVFile(tblCompany.getAddressCompany())  + "\n");
 		informationCompany.append(environment.getProperty("email") + "," + tblCompany.getEmailCompany() + "\n");
 		informationCompany.append(environment.getProperty("phone") + "," + "\t" + tblCompany.getPhoneCompany() + "\n");
 		return informationCompany.toString();
@@ -58,13 +60,13 @@ public class CSVFile {
 					body.append("Nữ" + ", ");
 				}
 				if (tblUser.getBirthDate() != null) {
-					body.append(Common.convertDateToString(tblUser.getBirthDate()) + ", ");
+					body.append(common.convertDateToString(tblUser.getBirthDate()) + ", ");
 				} else {
 					body.append(", ");
 				}
 				body.append("\t" + tblUser.getTblInsurance().getInsuranceNumber() + ", ");
-				body.append(Common.convertDateToString(tblUser.getTblInsurance().getInsuranceStartDate()) + ", ");
-				body.append(Common.convertDateToString(tblUser.getTblInsurance().getInsuranceEndDate()) + ", ");
+				body.append(common.convertDateToString(tblUser.getTblInsurance().getInsuranceStartDate()) + ", ");
+				body.append(common.convertDateToString(tblUser.getTblInsurance().getInsuranceEndDate()) + ", ");
 				body.append(tblUser.getTblInsurance().getPlaceOfRegister() + ", " + "\n ");
 			}
 		} else {

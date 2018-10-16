@@ -1,5 +1,7 @@
 package com.luvina.util;
 
+import org.springframework.stereotype.Component;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -10,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Component
 public class Common {
 	
 	/**
@@ -18,7 +21,7 @@ public class Common {
 	 * @param limit
 	 * @return
 	 */
-	public static int getOffsetPaging(int currentPage, int limit) {
+	public int getOffsetPaging(int currentPage, int limit) {
 		int offset = (currentPage - 1) * limit;
 		if (currentPage == 0) {
 			offset = 0;
@@ -30,7 +33,7 @@ public class Common {
 	 * getLimit get limit in Constant file
 	 * @return
 	 */
-	public static int getLimit() {
+	public int getLimit() {
 		return Constant.LIMIT;
 	}
 	
@@ -38,7 +41,7 @@ public class Common {
 	 * get range of page
 	 * @return
 	 */
-	public static int getRange() {
+	public int getRange() {
 		return Constant.RANGE_OF_PAGE;
 	}
 	
@@ -48,7 +51,7 @@ public class Common {
 	 * @param limit
 	 * @return
 	 */
-	public static int getTotalPage(int totalUser, int limit) {
+	public int getTotalPage(int totalUser, int limit) {
 		return (int) Math.ceil((double) totalUser / (double) limit);
 	}
 	
@@ -58,11 +61,12 @@ public class Common {
 	 * @param currentPage
 	 * @return
 	 */
-	public static List<Integer> getListPaging(int totalRecord, int currentPage) {
+	public List<Integer> getListPaging(int totalRecord, int currentPage) {
 		List<Integer> listPage = new ArrayList<>();
-		int limit = getLimit();
-		int totalPage = getTotalPage(totalRecord, limit);
-		int range = getRange();
+		Common common = new Common();
+		int limit = common.getLimit();
+		int totalPage = common.getTotalPage(totalRecord, limit);
+		int range = common.getRange();
 		int start = currentPage - (range / 2);
 		int end = currentPage + (range / 2);
 		if (start < 1) {
@@ -81,13 +85,13 @@ public class Common {
 		}
 		return listPage;
 	}
-	
+
 	/**
 	 * escape Injection
 	 * @param str
 	 * @return
 	 */
-	public static String escapeInjection(String str) {
+	public String escapeInjection(String str) {
 		
 		String tem = "";
 		if (str != null) {
@@ -104,18 +108,13 @@ public class Common {
 	 * @param password
 	 * @return
 	 */
-	public static String encodePassword(String password) {
+	public String encodePassword(String password) throws NoSuchAlgorithmException {
 		StringBuffer stringBuffer = new StringBuffer();
-		try {
-			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-			messageDigest.update(password.getBytes());
-			byte byteData[] = messageDigest.digest();
-			
-			for (int i = 0; i < byteData.length; i++) {
-				stringBuffer.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-			}
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Exception ocscur: " + e.getMessage());
+		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+		messageDigest.update(password.getBytes());
+		byte byteData[] = messageDigest.digest();
+		for (int i = 0; i < byteData.length; i++) {
+			stringBuffer.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
 		}
 		return stringBuffer.toString();
 	}
@@ -126,7 +125,7 @@ public class Common {
 	 * @param typeSort
 	 * @return
 	 */
-	public static String handleSortType(String typeSort) {
+	public String handleSortType(String typeSort) {
 		if (typeSort.equals("ASC")) {
 			typeSort = "ASC";
 		} else {
@@ -140,30 +139,30 @@ public class Common {
 	 * @param str
 	 * @return
 	 */
-	public static String handleCSVFile(String str) {
+	public String handleCSVFile(String str) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("\"" + str);
 		stringBuilder.append("\"");
 		return stringBuilder.toString();
 	}
-
-    /**
-     * convert date to string
-     * @param dateSql
-     * @return
-     */
-	public static String convertDateToString(java.sql.Date dateSql) {
+	
+	/**
+	 * convert date to string
+	 * @param dateSql
+	 * @return
+	 */
+	public String convertDateToString(java.sql.Date dateSql) {
 		java.util.Date utilDate = convertFromSQLDateToJAVADate(dateSql);
 		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		return df.format(utilDate);
 	}
-
-    /**
-     * convert date SQL to JAVA date
-     * @param sqlDate
-     * @return
-     */
-	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
+	
+	/**
+	 * convert date SQL to JAVA date
+	 * @param sqlDate
+	 * @return
+	 */
+	public java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
 		java.util.Date javaDate = null;
 		if (sqlDate != null) {
 			javaDate = new Date(sqlDate.getTime());
@@ -171,34 +170,27 @@ public class Common {
 		return javaDate;
 	}
 
-    /**
-     * random mini second
-     * @return
-     */
-	public static long getMiniSecondRandom() {
-		return new Date().getTime();
-	}
-
-    /**
-     * check null or empty
-     * @param stringBeforeCheck
-     * @return true when string null
-     */
-	public static boolean isNullOrEmpty(String stringBeforeCheck) {
+	/**
+	 * check null or empty
+	 * @param stringBeforeCheck
+	 * @return true when string null
+	 */
+	public boolean isNullOrEmpty(String stringBeforeCheck) {
 		if (stringBeforeCheck == null || stringBeforeCheck.trim().isEmpty()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-    /**
-     * check right format number insurance
-     * @param insuranceNumber
-     * @return
-     */
-	public static boolean isRightFormatInsuranceNumber(String insuranceNumber) {
-		if (isNullOrEmpty(insuranceNumber) == false) {
+	
+	/**
+	 * check right format number insurance
+	 * @param insuranceNumber
+	 * @return
+	 */
+	public boolean isRightFormatInsuranceNumber(String insuranceNumber) {
+		Common common =  new Common();
+		if (common.isNullOrEmpty(insuranceNumber) == false) {
 			Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_NUMBER_INSURANCE);
 			if ((pattern.matcher(insuranceNumber).matches())) {
 				return true;
@@ -207,27 +199,26 @@ public class Common {
 		return false;
 		
 	}
-
-    /**
-     * check right format date
-     * @param date
-     * @return
-     */
-	public static boolean isRightFormatDate(String date) {
-		
+	
+	/**
+	 * check right format date
+	 * @param date
+	 * @return
+	 */
+	public boolean isRightFormatDate(String date) {
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_DATE);
 		if ((pattern.matcher(date).matches())) {
 			return true;
 		}
 		return false;
 	}
-
-    /**
-     * check date if exists
-     * @param date
-     * @return
-     */
-	public static boolean isDateExists(String date) {
+	
+	/**
+	 * check date if exists
+	 * @param date
+	 * @return
+	 */
+	public boolean isDateExists(String date) {
 		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		df.setLenient(false);
 		try {
@@ -237,43 +228,43 @@ public class Common {
 		}
 		return true;
 	}
-
-    /**
-     * check fomat email
-     * @param email
-     * @return
-     */
-	public static boolean checkFormatEmail(String email) {
+	
+	/**
+	 * is fomat email
+	 * @param email
+	 * @return
+	 */
+	public boolean isFormatEmail(String email) {
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_EMAIL);
-		if (!(pattern.matcher(email).matches())) {
+		if (pattern.matcher(email).matches()) {
 			return true;
 		}
 		return false;
 	}
-
-    /**
-     * check format phone XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
-     * @param phone telephone
-     * @return true when match XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
-     */
-	public static boolean isFormatPhone(String phone) {
+	
+	/**
+	 * check format phone XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
+	 * @param phone telephone
+	 * @return true when match XX-XXXX-XXXX, XXX-XXX-XXXX, XXX-XXXX-XXX, XXXX-XX-XXXX
+	 */
+	public boolean isFormatPhone(String phone) {
 		Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_PHONE);
 		if ((pattern.matcher(phone).matches())) {
 			return true;
 		}
 		return false;
 	}
-
-    /**
-     * check is param date2 great than param date1
-     * @param date1
-     * @param date2
-     * @return true when param date2 great than param date1
-     */
-	public static boolean isParamDate2GreatThanParamDate1(String date1, String date2) {
+	
+	/**
+	 * check is param date2 great than param date1
+	 * @param date1
+	 * @param date2
+	 * @return true when param date2 great than param date1
+	 */
+	public boolean isParamDate2GreatThanParamDate1(String date1, String date2){
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
-		Date start = new Date();
-		Date end = new Date();
+		Date start = null;
+		Date end = null;
 		try {
 			start = dateFormat.parse(date1);
 			end = dateFormat.parse(date2);
@@ -287,18 +278,18 @@ public class Common {
 	 * get today and format to DDMMYYYY
 	 * @return String today format DDMMYYYY
 	 */
-	public static String getTodayDDMMYYYY() {
+	public String getTodayDDMMYYYY() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
-
-    /**
-     * convert string to date SQL
-     * @param dateString string date
-     * @return date SQL
-     */
-	public static java.sql.Date convertStringToDateSQL(String dateString) {
+	
+	/**
+	 * convert string to date SQL
+	 * @param dateString string date
+	 * @return date SQL
+	 */
+	public java.sql.Date convertStringToDateSQL(String dateString) {
 		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
 		Date date = null;
 		try {
@@ -309,13 +300,13 @@ public class Common {
 		}
 		return new java.sql.Date(date.getTime());
 	}
-
-    /**
-     * convert and format string replace vn character to latinh character
-     * @param s
-     * @return string after format
-     */
-	public static String decomposeString(String s) {
+	
+	/**
+	 * convert and format string replace vn character to latinh character
+	 * @param s
+	 * @return string after format
+	 */
+	public String decomposeString(String s) {
 		StringBuilder stringBuilder = new StringBuilder();
 		String[] aUp = {
 			"A",
@@ -427,36 +418,36 @@ public class Common {
 		}
 		return stringBuilder.toString();
 	}
-
-    /**
-     * call methods handle string
-     * @param s
-     * @return String after handle
-     */
-	public static String handleString(String s) {
+	
+	/**
+	 * call methods handle string
+	 * @param s
+	 * @return String after handle
+	 */
+	public String handleString(String s) {
 		s = decomposeString(s);
 		s = capitalizeString(s);
 		s = formatFullName(s);
 		return s;
 	}
-
-    /**
-     * format full name
-     * @param s
-     * @return string after format
-     */
-	public static String formatFullName(String s) {
+	
+	/**
+	 * format full name
+	 * @param s
+	 * @return string after format
+	 */
+	public String formatFullName(String s) {
 		s = s.replaceAll("[^a-zA-Z ]", "");
 		s = s.replaceAll(" +", " ");
 		return s;
 	}
-
-    /**
-     * capitalize string
-     * @param s
-     * @return string after capitalize
-     */
-	public static String capitalizeString(String s) {
+	
+	/**
+	 * capitalize string
+	 * @param s
+	 * @return string after capitalize
+	 */
+	public String capitalizeString(String s) {
 		char[] chars = s.toLowerCase().toCharArray();
 		boolean found = false;
 		for (int i = 0; i < chars.length; i++) {
@@ -469,13 +460,13 @@ public class Common {
 		}
 		return String.valueOf(chars);
 	}
-
-    /**
-     * convert up case to low case
-     * @param up
-     * @return String after convert
-     */
-	public static String[] convertUpCaseToLowCase(String[] up) {
+	
+	/**
+	 * convert up case to low case
+	 * @param up
+	 * @return String after convert
+	 */
+	public String[] convertUpCaseToLowCase(String[] up) {
 		String[] low = new String[up.length];
 		for (int i = 0; i < up.length; i++) {
 			String s1 = up[i];
@@ -484,15 +475,15 @@ public class Common {
 		}
 		return low;
 	}
-
-    /**
-     * replace string
-     * @param result
-     * @param up
-     * @param low
-     * @param flag
-     */
-	public static void replaceString(String[] result, String[] up, String[] low, String flag) {
+	
+	/**
+	 * replace string
+	 * @param result
+	 * @param up
+	 * @param low
+	 * @param flag
+	 */
+	public void replaceString(String[] result, String[] up, String[] low, String flag) {
 		for (int j = 0; j < result.length; j++) {
 			for (int i = 0; i < up.length; i++) {
 				if (result[j].equals(up[i])) {

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.text.ParseException;
+
 @Component
 public class ValidationRegisterForm implements Validator {
 	
@@ -22,6 +24,10 @@ public class ValidationRegisterForm implements Validator {
 
 	@Autowired
 	private TblCompanyService tblCompanyService;
+
+	@Autowired
+	Common common;
+
 	
 	
 	/**
@@ -75,11 +81,11 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateInsuranceNumber(Errors errors, int insuranceInternalId, String insuranceNumber) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(insuranceNumber) == true) {
+		if (common.isNullOrEmpty(insuranceNumber) == true) {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceNumber", "not_empty.insurance_number");
 		}
-		if (hasErrorFlag == false && Common.isRightFormatInsuranceNumber(insuranceNumber) == false) {
+		if (hasErrorFlag == false && common.isRightFormatInsuranceNumber(insuranceNumber) == false) {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceNumber", "format.insurance_number");
 		}
@@ -95,7 +101,7 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateUserFullName(Errors errors, String userFullName) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(userFullName)) {
+		if (common.isNullOrEmpty(userFullName)) {
 			hasErrorFlag = true;
 			errors.rejectValue("userFullName", "not_empty.user_full_name");
 		}
@@ -111,7 +117,7 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateUserName(Errors errors, String userName) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(userName)) {
+		if (common.isNullOrEmpty(userName)) {
 			hasErrorFlag = true;
 			errors.rejectValue("userFullName", "not_empty.user_name");
 		}
@@ -128,7 +134,7 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validatePassWord(Errors errors, String passWord, String confirmPassWord) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(passWord)) {
+		if (common.isNullOrEmpty(passWord)) {
 			hasErrorFlag = true;
 			errors.rejectValue("passWord", "not_empty.password");
 		}
@@ -159,17 +165,17 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateBirthDate(Errors errors, String dateBirth) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(dateBirth) == false && Common.isRightFormatDate(dateBirth) == false) {
+		if (common.isNullOrEmpty(dateBirth) == false && common.isRightFormatDate(dateBirth) == false) {
 			hasErrorFlag = true;
 			errors.rejectValue("dateBirth", "format.date_birth");
 		}
-		if (Common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false
-				&& Common.isDateExists(dateBirth) == false) {
+		if (common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false
+				&& common.isDateExists(dateBirth) == false) {
             hasErrorFlag = true;
 			errors.rejectValue("dateBirth", "exists_date.date_birth");
 		}
-		if (Common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false
-				&& Common.isParamDate2GreatThanParamDate1(Common
+		if (common.isNullOrEmpty(dateBirth) == false && hasErrorFlag == false
+				&& common.isParamDate2GreatThanParamDate1(common
 					.getTodayDDMMYYYY(), dateBirth)) {
             errors.rejectValue("dateBirth", "compare_date._birth_date_and_today");
 		}
@@ -182,7 +188,7 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateCompanyName(Errors errors, String companyName) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(companyName)) {
+		if (common.isNullOrEmpty(companyName)) {
 			hasErrorFlag = true;
 			errors.rejectValue("companyName", "not_empty.company_name");
 		}
@@ -202,7 +208,7 @@ public class ValidationRegisterForm implements Validator {
 	 * @param address
 	 */
 	private void validateAddressCompany(Errors errors, String address) {
-		if (Common.isNullOrEmpty(address)) {
+		if (common.isNullOrEmpty(address)) {
 			errors.rejectValue("address", "not_empty.address");
 		} else if (address.trim().length() > 100) {
 			errors.rejectValue("address", "length_max.address");
@@ -216,7 +222,7 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateEmailCompany(Errors errors, String email) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(email)) {
+		if (common.isNullOrEmpty(email)) {
 			hasErrorFlag = true;
 			errors.rejectValue("email", "not_empty.email");
 		}
@@ -224,7 +230,7 @@ public class ValidationRegisterForm implements Validator {
 			hasErrorFlag = true;
 			errors.rejectValue("email", "length_max.email");
 		}
-		if (hasErrorFlag == false && Common.checkFormatEmail(email)) {
+		if (hasErrorFlag == false && common.isFormatEmail(email) == false) {
 			errors.rejectValue("email", "format.email");
 		}
 	}
@@ -236,11 +242,11 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validatePhoneCompany(Errors errors, String telephone) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(telephone)) {
+		if (common.isNullOrEmpty(telephone)) {
 			hasErrorFlag = true;
 			errors.rejectValue("telephone", "not_empty.telephone");
 		}
-		if (hasErrorFlag == false && Common.isFormatPhone(telephone) == false) {
+		if (hasErrorFlag == false && common.isFormatPhone(telephone) == false) {
 			errors.rejectValue("telephone", "format.telephone");
 		}
 	}
@@ -252,7 +258,7 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validatePlaceOfRegister(Errors errors, String place) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(place)) {
+		if (common.isNullOrEmpty(place)) {
 			hasErrorFlag = true;
 			errors.rejectValue("placeOfRegister", "not_empty.place_of_register");
 		}
@@ -268,15 +274,15 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	private void validateStartDate(Errors errors, String startDate) {
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(startDate)) {
+		if (common.isNullOrEmpty(startDate)) {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceStartDate", "not_empty.insurance_start_date");
 		}
-		if (hasErrorFlag == false && Common.isRightFormatDate(startDate) == false) {
+		if (hasErrorFlag == false && common.isRightFormatDate(startDate) == false) {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceStartDate", "format.insurance_start_date");
 		}
-		if (hasErrorFlag == false && Common.isDateExists(startDate) == false) {
+		if (hasErrorFlag == false && common.isDateExists(startDate) == false) {
 			errors.rejectValue("insuranceStartDate", "exists_date.insurance_start_date");
 		}
 	}
@@ -287,22 +293,22 @@ public class ValidationRegisterForm implements Validator {
 	 * @param startDate
 	 * @param endDate
 	 */
-	private void validateEndDate(Errors errors, String startDate, String endDate) {
+	private void validateEndDate(Errors errors, String startDate, String endDate){
 		boolean hasErrorFlag = false;
-		if (Common.isNullOrEmpty(endDate)) {
+		if (common.isNullOrEmpty(endDate)) {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceEndDate", "not_empty.insurance_end_date");
 		}
-		if (hasErrorFlag == false && Common.isRightFormatDate(endDate) == false) {
+		if (hasErrorFlag == false && common.isRightFormatDate(endDate) == false) {
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceEndDate", "format.insurance_end_date");
 		}
-		if (hasErrorFlag == false && Common.isDateExists(endDate) == false) {
+		if (hasErrorFlag == false && common.isDateExists(endDate) == false) {
 			
 			hasErrorFlag = true;
 			errors.rejectValue("insuranceEndDate", "exists_date.insurance_end_date");
 		}
-		if (hasErrorFlag == false && Common.isParamDate2GreatThanParamDate1(startDate, endDate) == false) {
+		if (hasErrorFlag == false && common.isParamDate2GreatThanParamDate1(startDate, endDate) == false) {
 			errors.rejectValue("insuranceEndDate",
 					"compare_date.insurance_start_date_insurance_and_end_date_insurance");
 		}
