@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class Common {
 		}
 		return listPage;
 	}
-
+	
 	/**
 	 * escape Injection
 	 * @param str
@@ -169,7 +170,7 @@ public class Common {
 		}
 		return javaDate;
 	}
-
+	
 	/**
 	 * check null or empty
 	 * @param stringBeforeCheck
@@ -189,7 +190,7 @@ public class Common {
 	 * @return
 	 */
 	public boolean isRightFormatInsuranceNumber(String insuranceNumber) {
-		Common common =  new Common();
+		Common common = new Common();
 		if (common.isNullOrEmpty(insuranceNumber) == false) {
 			Pattern pattern = Pattern.compile(Constant.REGEX_FORMAT_NUMBER_INSURANCE);
 			if ((pattern.matcher(insuranceNumber).matches())) {
@@ -261,15 +262,15 @@ public class Common {
 	 * @param date2
 	 * @return true when param date2 great than param date1
 	 */
-	public boolean isParamDate2GreatThanParamDate1(String date1, String date2){
+	public boolean isParamDate2GreatThanParamDate1(String date1, String date2) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.FORMAT_DATE);
-		Date start = null;
-		Date end = null;
+		Date start;
+		Date end;
 		try {
 			start = dateFormat.parse(date1);
 			end = dateFormat.parse(date2);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			return false;
 		}
 		return end.after(start);
 	}
@@ -291,12 +292,11 @@ public class Common {
 	 */
 	public java.sql.Date convertStringToDateSQL(String dateString) {
 		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
-		Date date = null;
+		Date date;
 		try {
 			date = formatter.parse(dateString);
-			
 		} catch (ParseException e) {
-			e.printStackTrace();
+			return new java.sql.Date(3019, 10, 17);
 		}
 		return new java.sql.Date(date.getTime());
 	}
@@ -307,116 +307,9 @@ public class Common {
 	 * @return string after format
 	 */
 	public String decomposeString(String s) {
-		StringBuilder stringBuilder = new StringBuilder();
-		String[] aUp = {
-			"A",
-			"Â",
-			"Ă",
-			"Á",
-			"Ấ",
-			"Ắ",
-			"À",
-			"Ầ",
-			"Ằ",
-			"Ả",
-			"Ẩ",
-			"Ẳ",
-			"Ã",
-			"Ẫ",
-			"Ẵ",
-			"Ạ",
-			"Ậ",
-			"Ặ"
-		};
-		String[] iUp = {
-			"I",
-			"Í",
-			"Ì",
-			"Ỉ",
-			"Ĩ",
-			"Ị"
-		};
-		String[] uUp = {
-			"U",
-			"Ư",
-			"Ú",
-			"Ứ",
-			"Ù",
-			"Ừ",
-			"Ũ",
-			"Ữ",
-			"Ủ",
-			"Ử",
-			"Ụ",
-			"Ự"
-		};
-		String[] eUp = {
-			"E",
-			"Ê",
-			"É",
-			"Ế",
-			"È",
-			"Ề",
-			"Ẽ",
-			"Ễ",
-			"Ẻ",
-			"Ể",
-			"Ẹ",
-			"Ệ"
-		};
-		String[] oUp = {
-			"O",
-			"Ô",
-			"Ơ",
-			"Ó",
-			"Ố",
-			"Ớ",
-			"Ò",
-			"Ồ",
-			"Ờ",
-			"Õ",
-			"Ỗ",
-			"Ỡ",
-			"Ỏ",
-			"Ổ",
-			"Ở",
-			"Ọ",
-			"Ộ",
-			"Ợ"
-		};
-		
-		String[] dUp = {
-			"D",
-			"Đ"
-		};
-		String[] dLow = {
-			"d",
-			"đ"
-		};
-		
-		String[] aLow = convertUpCaseToLowCase(aUp);
-		
-		String[] uLow = convertUpCaseToLowCase(uUp);
-		
-		String[] iLow = convertUpCaseToLowCase(iUp);
-		
-		String[] eLow = convertUpCaseToLowCase(eUp);
-		
-		String[] oLow = convertUpCaseToLowCase(oUp);
-		
-		String result[] = s.split("");
-		
-		replaceString(result, aUp, aLow, "a");
-		replaceString(result, iUp, iLow, "i");
-		replaceString(result, uUp, uLow, "u");
-		replaceString(result, eUp, eLow, "e");
-		replaceString(result, oUp, oLow, "o");
-		replaceString(result, dUp, dLow, "d");
-		
-		for (String string : result) {
-			stringBuilder.append(string);
-		}
-		return stringBuilder.toString();
+		String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(temp).replaceAll("").replaceAll("Đ", "D").replaceAll("đ", "d");
 	}
 	
 	/**
@@ -470,32 +363,8 @@ public class Common {
 		String[] low = new String[up.length];
 		for (int i = 0; i < up.length; i++) {
 			String s1 = up[i];
-			
 			low[i] = s1.toLowerCase();
 		}
 		return low;
-	}
-	
-	/**
-	 * replace string
-	 * @param result
-	 * @param up
-	 * @param low
-	 * @param flag
-	 */
-	public void replaceString(String[] result, String[] up, String[] low, String flag) {
-		for (int j = 0; j < result.length; j++) {
-			for (int i = 0; i < up.length; i++) {
-				if (result[j].equals(up[i])) {
-					result[j] = flag;
-				}
-			}
-			for (int i = 0; i < low.length; i++) {
-				if (result[j].equals(low[i])) {
-					result[j] = flag;
-				}
-				
-			}
-		}
 	}
 }

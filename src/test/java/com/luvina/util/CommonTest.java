@@ -2,12 +2,12 @@ package com.luvina.util;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -480,12 +480,12 @@ public class CommonTest {
 		// verify
 		Assert.assertEquals(sut.isParamDate2GreatThanParamDate1(param1, param2), true);
 	}
-	
+
 	/**
 	 * test is param date2 great than param date 2
 	 */
 	@Test
-	public void testIsParamDate2GreatThanParamDate2() throws ParseException {
+	public void testIsParamDate2GreatThanParamDate2() {
 		// set up
 		String param1 = "10/10/2019";
 		String param2 = "10/12/2018";
@@ -498,7 +498,7 @@ public class CommonTest {
 	 * test is param date2 great than param date 3
 	 */
 	@Test
-	public void testIsParamDate2GreatThanParamDate3() throws ParseException {
+	public void testIsParamDate2GreatThanParamDate3() {
 		// set up
 		String param1 = "10/10/2019";
 		String param2 = "10/10/2019";
@@ -506,14 +506,27 @@ public class CommonTest {
 		// verify
 		Assert.assertEquals(sut.isParamDate2GreatThanParamDate1(param1, param2), false);
 	}
-	
+
+	/**
+	 * test is param date2 great than param date 4
+	 */
+	@Test
+	public void testIsParamDate2GreatThanParamDate4() {
+		// set up
+		String param1 = "1010/2018";
+		String param2 = "1012/2018";
+
+		// verify
+		Assert.assertEquals(sut.isParamDate2GreatThanParamDate1(param1, param2), false);
+	}
+
 	/**
 	 * test get today DDMMYYYY
 	 */
 	@Test
 	public void testGetTodayDDMMYYYY() {
 		// set up
-		String today = "16/10/2018";
+		String today = "17/10/2018";
 		
 		// verify
 		Assert.assertEquals(sut.getTodayDDMMYYYY(), today);
@@ -523,13 +536,30 @@ public class CommonTest {
 	 * test Convert String To Date SQL
 	 */
 	@Test
-	public void testConvertStringToDateSQL() {
+	public void testConvertStringToDateSQL1() {
 		// set up
 		String sDate = "16/11/3918";
 		java.sql.Date date = new java.sql.Date(2018, 10, 16);
 		
 		// verify
 		Assert.assertEquals(sut.convertStringToDateSQL(sDate), date);
+	}
+	
+	/**
+	 * test Convert String To Date SQL
+	 */
+	@Test
+	public void testConvertStringToDateSQL2() {
+		// set up
+		String sDate = "1010/2018";
+		java.sql.Date sqlDate = new java.sql.Date(3019, 10, 17);
+		
+		//exercise
+		java.sql.Date sqlDateEx = sut.convertStringToDateSQL(sDate);
+		System.out.println(sqlDateEx + "|" + sqlDate);
+		
+		// verify
+		Assert.assertEquals(sqlDateEx, sqlDate);
 	}
 	
 	/**
@@ -661,12 +691,4 @@ public class CommonTest {
 		// verify
 		Assert.assertArrayEquals(sut.convertUpCaseToLowCase(aUp), aLow);
 	}
-	
-//	public void testReplaceString(){
-//		// set up
-//		String[] aUp = {"A", "Â", "Ă", "Á", "Ấ", "Ắ", "À", "Ầ", "Ằ", "Ả", "Ẩ", "Ẳ", "Ã", "Ẫ", "Ẵ", "Ạ", "Ậ", "Ặ"};
-//		String[] aLow = {"a", "â", "ă", "á", "ấ", "ắ", "à", "ầ", "ằ", "ả", "ẩ", "ẳ", "ã", "ẫ", "ẵ", "ạ", "ậ", "ặ"};
-//		String string = "Tran Quoc Hoan";
-//		String result[] = string.split("");
-//	}
 }

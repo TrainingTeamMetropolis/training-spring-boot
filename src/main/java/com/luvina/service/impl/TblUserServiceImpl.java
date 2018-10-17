@@ -195,7 +195,7 @@ public class TblUserServiceImpl implements TblUserService {
 	 * @param registerForm
 	 * @return {@Link TblCompany}
 	 */
-	private TblCompany saveTblCompany(RegisterForm registerForm) {
+	public TblCompany saveTblCompany(RegisterForm registerForm) {
 		TblCompany tblCompany = new TblCompany();
 		tblCompany.setAddressCompany(registerForm.getAddress());
 		tblCompany.setEmailCompany(registerForm.getEmail());
@@ -210,13 +210,14 @@ public class TblUserServiceImpl implements TblUserService {
 	 * @param registerForm
 	 * @return {@Link TblInsurance}
 	 */
-	private TblInsurance saveTblInsurance(RegisterForm registerForm) {
+	public TblInsurance saveTblInsurance(RegisterForm registerForm) {
 		TblInsurance tblInsurance = new TblInsurance();
 		tblInsurance
 			.setInsuranceStartDate(common.convertStringToDateSQL(registerForm.getInsuranceStartDate()));
 		tblInsurance.setInsuranceEndDate(common.convertStringToDateSQL(registerForm.getInsuranceEndDate()));
 		tblInsurance.setPlaceOfRegister(registerForm.getPlaceOfRegister());
 		tblInsurance.setInsuranceNumber(registerForm.getInsuranceNumber());
+        tblInsuranceRepository.save(tblInsurance);
 		return tblInsurance;
 	}
 	
@@ -226,7 +227,7 @@ public class TblUserServiceImpl implements TblUserService {
 	 * @param companyInternalIdInsert id after insert
 	 * @param insuranceInternalIdInsert
 	 */
-	private void saveTblUser(RegisterForm registerForm, int companyInternalIdInsert,
+	public void saveTblUser(RegisterForm registerForm, int companyInternalIdInsert,
 			int insuranceInternalIdInsert) throws NoSuchAlgorithmException {
 		TblUser tblUser = new TblUser();
 		tblUser.setUserFullName(common.handleString(registerForm.getUserFullName()));

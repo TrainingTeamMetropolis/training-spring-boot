@@ -31,7 +31,7 @@ public class DashBroadController {
 	
 	
 	/**
-	 * method get handle search when load url dashboard
+	 * method get handle param search when load url dashboard
 	 * @param modelAndView model and view
 	 * @param requestParam param get field
 	 * @param searchForm object form
@@ -46,7 +46,7 @@ public class DashBroadController {
 	}
 	
 	/**
-	 * method post handle search when load url dashboard
+	 * method post handle param search when load url dashboard
 	 * @param modelAndView model and view
 	 * @param requestParam param get field
 	 * @param searchForm object form
