@@ -1,6 +1,9 @@
 package com.luvina.util;
 
+import com.luvina.entities.TblCompany;
+import com.luvina.form.SearchForm;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Component
@@ -86,6 +90,31 @@ public class Common {
 		}
 		return listPage;
 	}
+
+    /**
+     * get End Range
+     * @param listPaging
+     * @return
+     */
+    public int getEndRange(List<Integer> listPaging) {
+        if (listPaging.size() != 0) {
+            return listPaging.get(listPaging.size() - 1);
+        }
+        return 0;
+    }
+
+    /**
+     * get Search Form Id
+     * @param requestParam
+     * @return
+     */
+    public String getSearchFormId(@RequestParam Map<String, String> requestParam) {
+        if (requestParam.get("searchFormId") != null) {
+            return requestParam.get("searchFormId");
+        }
+        return Long.toString(new Date().getTime());
+    }
+
 	
 	/**
 	 * escape Injection
@@ -367,4 +396,35 @@ public class Common {
 		}
 		return low;
 	}
+
+    /**
+     * get Param From Form
+     * @param param
+     * @return
+     */
+	public String getParamFromFormOrRequest(String param, boolean numberFlag) {
+        if (isNullOrEmpty(param) == false) {
+            return param;
+        }
+        if (numberFlag) {
+            return "0";
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * get Company Internal Id
+     * @param searchForm
+     * @param tblCompanyList
+     * @return
+     */
+    public Integer getCompanyInternalId(SearchForm searchForm, List<TblCompany> tblCompanyList) {
+        Integer companyInternalId = searchForm.getSearchByCompanyInternalId();
+        if (companyInternalId == null) {
+            companyInternalId = tblCompanyList.get(0).getCompanyInternalId();
+        }
+        return companyInternalId;
+    }
+
 }

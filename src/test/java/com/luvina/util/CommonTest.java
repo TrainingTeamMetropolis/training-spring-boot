@@ -1,24 +1,29 @@
 package com.luvina.util;
 
+import com.luvina.entities.TblCompany;
+import com.luvina.form.SearchForm;
 import org.junit.Assert;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommonTest {
 	
 	@InjectMocks
 	private Common sut;
-	
-	
+
 	/**
 	 * test get offset paging with data setup 1
 	 */
@@ -157,7 +162,71 @@ public class CommonTest {
 		// verify
 		Assert.assertEquals(sut.getListPaging(totalRecord, currentPage), listPaging);
 	}
-	
+
+	/**
+	 * test Get End Range 1
+	 */
+	@Test
+	public void testGetEndRange1() {
+		//set up
+		List<Integer> listPaging = new ArrayList<>();
+		listPaging.add(1);
+		listPaging.add(2);
+		int endRangeExpected = 2;
+
+		//exercise
+		int actual =  sut.getEndRange(listPaging);
+
+		// verify
+		Assert.assertEquals(endRangeExpected, actual);
+	}
+	/**
+	 * test Get End Range 2
+	 */
+	@Test
+	public void testGetEndRange2() {
+		//set up
+		List<Integer> listPaging = new ArrayList<>();
+		int endRangeExpected = 0;
+
+		//exercise
+		int endRangeActual =  sut.getEndRange(listPaging);
+
+		// verify
+		Assert.assertEquals(endRangeExpected, endRangeActual);
+	}
+
+	/**
+	 * test Get Search Form Id 1
+	 */
+	@Test
+	public void testGetSearchFormId1() {
+		// set up
+		String searchFormIdExpected = "1426564878";
+		Map<String, String> requestParam = new HashMap<>();
+		requestParam.put("searchFormId", "1426564878");
+
+		// exercise
+		String searchFormIdActual =  sut.getSearchFormId(requestParam);
+
+		// verify
+		Assert.assertEquals(searchFormIdExpected, searchFormIdActual);
+	}
+	/**
+	 * test Get Search Form Id 2
+	 */
+	@Test
+	public void testGetSearchFormId2() {
+		// set up
+		Map<String, String> requestParam = new HashMap<>();
+
+		// exercise
+		String searchFormIdActual =  sut.getSearchFormId(requestParam);
+
+		// verify
+		Assert.assertEquals(Long.toString(new Date().getTime()), searchFormIdActual);
+	}
+
 	/**
 	 * test escape injection 1
 	 */
@@ -526,7 +595,7 @@ public class CommonTest {
 	@Test
 	public void testGetTodayDDMMYYYY() {
 		// set up
-		String today = "17/10/2018";
+		String today = "18/10/2018";
 		
 		// verify
 		Assert.assertEquals(sut.getTodayDDMMYYYY(), today);
@@ -556,8 +625,7 @@ public class CommonTest {
 		
 		//exercise
 		java.sql.Date sqlDateEx = sut.convertStringToDateSQL(sDate);
-		System.out.println(sqlDateEx + "|" + sqlDate);
-		
+
 		// verify
 		Assert.assertEquals(sqlDateEx, sqlDate);
 	}
@@ -691,4 +759,69 @@ public class CommonTest {
 		// verify
 		Assert.assertArrayEquals(sut.convertUpCaseToLowCase(aUp), aLow);
 	}
+
+	/**
+	 * test Get Param From Form Or Request 1
+	 */
+	@Test
+	public void testGetParamFromFormOrRequest1() {
+		// set up
+		String param = "a1";
+
+		// exercise
+        String actual = sut.getParamFromFormOrRequest(param, false);
+
+		// verify
+        Assert.assertEquals(param, actual);
+	}
+
+	/**
+	 * test Get Param From Form Or Request 2
+	 */
+	@Test
+	public void testGetParamFromFormOrRequest2() {
+		// set up
+		String param = "";
+
+		// exercise
+        String actual = sut.getParamFromFormOrRequest(param, false);
+
+		// verify
+        Assert.assertEquals(param, actual);
+	}
+
+	/**
+	 * test Get Param From Form Or Request 2
+	 */
+	@Test
+	public void testGetParamFromFormOrRequest3() {
+		// set up
+		String param = "0";
+
+		// exercise
+        String actual = sut.getParamFromFormOrRequest("", true);
+
+		// verify
+        Assert.assertEquals(param, actual);
+	}
+
+    /**
+     * test Get Company Internal Id
+     */
+	@Test
+    public void testGetCompanyInternalId() {
+        // set up
+        SearchForm searchForm = new SearchForm();
+        List<TblCompany> tblCompanyList =  new ArrayList<>();
+        TblCompany tblCompany = new TblCompany();
+        tblCompany.setCompanyInternalId(1);
+        tblCompanyList.add(tblCompany);
+        Integer expected = 1;
+
+        // exercise
+        Integer companyInternalIdActual = sut.getCompanyInternalId(searchForm, tblCompanyList);
+
+        // verify
+        Assert.assertEquals(expected, companyInternalIdActual);
+    }
 }
