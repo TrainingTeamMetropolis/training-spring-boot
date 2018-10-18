@@ -176,7 +176,7 @@ public class ValidationRegisterFormTest {
 		
 		// verify
 		verify(errors, times(1)).rejectValue(fieldCaptor.capture(), errorCodeCaptor.capture());
-		assertThat(fieldCaptor.getValue()).isEqualTo("user_name");
+		assertThat(fieldCaptor.getValue()).isEqualTo("userName");
 		assertThat(errorCodeCaptor.getValue()).isEqualTo("not_empty.user_name");
 	}
 	
@@ -197,7 +197,7 @@ public class ValidationRegisterFormTest {
 		
 		// verify
 		verify(errors, times(1)).rejectValue(fieldCaptor.capture(), errorCodeCaptor.capture());
-		assertThat(fieldCaptor.getValue()).isEqualTo("user_name");
+		assertThat(fieldCaptor.getValue()).isEqualTo("userName");
 		assertThat(errorCodeCaptor.getValue()).isEqualTo("length_max.user_name");
 	}
 	
@@ -219,7 +219,7 @@ public class ValidationRegisterFormTest {
 		
 		// verify
 		verify(errors, times(1)).rejectValue(fieldCaptor.capture(), errorCodeCaptor.capture());
-		assertThat(fieldCaptor.getValue()).isEqualTo("password");
+		assertThat(fieldCaptor.getValue()).isEqualTo("passWord");
 		assertThat(errorCodeCaptor.getValue()).isEqualTo("not_empty.password");
 	}
 	
@@ -241,7 +241,7 @@ public class ValidationRegisterFormTest {
 		
 		// verify
 		verify(errors, times(1)).rejectValue(fieldCaptor.capture(), errorCodeCaptor.capture());
-		assertThat(fieldCaptor.getValue()).isEqualTo("password");
+		assertThat(fieldCaptor.getValue()).isEqualTo("passWord");
 		assertThat(errorCodeCaptor.getValue()).isEqualTo("length_max.password");
 	}
 	
@@ -263,7 +263,7 @@ public class ValidationRegisterFormTest {
 		
 		// verify
 		verify(errors, times(1)).rejectValue(fieldCaptor.capture(), errorCodeCaptor.capture());
-		assertThat(fieldCaptor.getValue()).isEqualTo("password");
+		assertThat(fieldCaptor.getValue()).isEqualTo("passWord");
 		assertThat(errorCodeCaptor.getValue()).isEqualTo("compare_password.password_confirm_password");
 	}
 	

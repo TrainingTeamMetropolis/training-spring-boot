@@ -114,9 +114,9 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	public void validateUserName(Errors errors, String userName) {
 		if (common.isNullOrEmpty(userName)) {
-			errors.rejectValue("user_name", "not_empty.user_name");
+			errors.rejectValue("userName", "not_empty.user_name");
 		} else if (userName.trim().length() > 16) {
-			errors.rejectValue("user_name", "length_max.user_name");
+			errors.rejectValue("userName", "length_max.user_name");
 		}
 	}
 	
@@ -128,11 +128,11 @@ public class ValidationRegisterForm implements Validator {
 	 */
 	public void validatePassWord(Errors errors, String passWord, String confirmPassWord) {
 		if (common.isNullOrEmpty(passWord)) {
-			errors.rejectValue("password", "not_empty.password");
+			errors.rejectValue("passWord", "not_empty.password");
 		} else if (passWord.trim().length() > 32) {
-			errors.rejectValue("password", "length_max.password");
+			errors.rejectValue("passWord", "length_max.password");
 		} else if (confirmPassWord.equals(passWord) == false) {
-			errors.rejectValue("password", "compare_password.password_confirm_password");
+			errors.rejectValue("passWord", "compare_password.password_confirm_password");
 		}
 	}
 	
