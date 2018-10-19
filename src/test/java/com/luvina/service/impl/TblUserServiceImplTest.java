@@ -145,14 +145,14 @@ public class TblUserServiceImplTest {
         searchForm.setSearchByPlaceOfRegister(null);
         searchForm.setTypeSort(null);
         searchForm.setPage(1);
-		Map map = new HashMap();
-        map.put("searchFormId", null);
-        map.put("tblUserList", new ArrayList<TblUser>());
-        map.put("totalPage", 0);
-        map.put("typeSort", null);
-        map.put("listPaging", new ArrayList<Integer>());
-        map.put("endRange", 0);
-        map.put("currentPage", 1);
+		Map expected = new HashMap();
+        expected.put("searchFormId", null);
+        expected.put("tblUserList", new ArrayList<TblUser>());
+        expected.put("totalPage", 0);
+        expected.put("typeSort", null);
+        expected.put("listPaging", new ArrayList<Integer>());
+        expected.put("endRange", 0);
+        expected.put("currentPage", 1);
 
 		when(common.getLimit()).thenReturn(5);
 		when(common.getParamFromFormOrRequest("1", true)).thenReturn("1");
@@ -163,7 +163,7 @@ public class TblUserServiceImplTest {
 		Map actual = sut.findAndSearchListData(new SearchForm(), requestParamMap, httpSession);
 
         // verify
-        Assert.assertEquals(actual,map);
+        Assert.assertEquals(actual,expected);
 	}
 	/**
 	 * test Find And Search List Data

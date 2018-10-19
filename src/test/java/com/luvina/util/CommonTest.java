@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -25,31 +24,47 @@ public class CommonTest {
 	private Common sut;
 
 	/**
-	 * test get offset paging with data setup 1
+	 * Test get offset paging.
+     * input
+     *  currentPage = 1
+     *  limit = 5
+     * output
+     *  offset = 0
 	 */
 	@Test
 	public void testGetOffsetPaging1() {
 		//set up
 		int currentPage = 1;
 		int limit = 5;
-		int offset = 0;
+		int expected = 0;
+
+		// exercise
+		int actual = sut.getOffsetPaging(currentPage, limit);
 		
 		// verify
-		Assert.assertEquals(sut.getOffsetPaging(currentPage, limit), offset);
+		Assert.assertEquals(actual, expected);
 	}
-	
-	/**
-	 * test get offset paging with data setup 2
-	 */
+
+    /**
+     * Test get offset paging.
+     * input
+     *  currentPage = 0
+     *  limit = 5
+     * output
+     *  offset = 0
+     */
 	@Test
 	public void testGetOffsetPaging2() {
 		//set up
 		int currentPage = 0;
 		int limit = 5;
 		int offset = 0;
+
+        // exercise
+        int actual = sut.getOffsetPaging(currentPage, limit);
 		
 		// verify
-		Assert.assertEquals(sut.getOffsetPaging(currentPage, limit), offset);
+		Assert.assertEquals(actual, offset);
 	}
 	
 	/**
@@ -77,17 +92,26 @@ public class CommonTest {
 	}
 	
 	/**
-	 * test get total page
+	 * test get total page rounded
+     * input
+     *  totalUser = 9
+     *  limit = 5
+     * output
+     *  totalPage = Math.ceil(9/5) = 2
+     *
 	 */
 	@Test
 	public void testGetTotalPage() {
 		//set up
-		int totalUser = 10;
+		int totalUser = 9;
 		int limit = 5;
-		int totalPage = 2;
-		
+		int expected = 2;
+
+        // exercise
+		int actual = sut.getTotalPage(totalUser, limit);
+
 		// verify
-		Assert.assertEquals(sut.getTotalPage(totalUser, limit), totalPage);
+		Assert.assertEquals(actual, expected);
 	}
 	
 	/**
