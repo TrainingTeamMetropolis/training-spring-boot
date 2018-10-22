@@ -27,9 +27,18 @@ public class TblCompanyRepositoryTest {
     /**
      * Test Find All By Order By Company Name Asc
      * input
-     *  tblCompany1, tblCompany2
+     *  tblCompany1
+     *      address = 106 Hoang Quoc Viet
+     *      name  = FPT
+     *      email = chelsea@gmail.com
+     *      telephone = 22-3655-6985
+     *  tblCompany2
+     *      address = 106 Hoang Quoc Viet
+     *      name  = APT
+     *      email = chelsea1@gmail.com
+     *      telephone = 22-3655-6985
      * output
-     *
+     * List data or TblCompany when find data from data base
      */
 	@Test
 	public void testFindAllByOrderByCompanyNameAsc() {
@@ -43,7 +52,7 @@ public class TblCompanyRepositoryTest {
         TblCompany tblCompany2 = new TblCompany();
         tblCompany2.setAddressCompany("106 Hoang Quoc Viet");
         tblCompany2.setCompanyName("APT");
-        tblCompany2.setEmailCompany("chelsea@gmail.com");
+        tblCompany2.setEmailCompany("chelsea1@gmail.com");
         tblCompany2.setPhoneCompany("22-3655-6985");
 
 		testEntityManager.persist(tblCompany1);
@@ -60,6 +69,18 @@ public class TblCompanyRepositoryTest {
 		assertThat(actual).isEqualTo(tblCompanyList);
 	}
 
+    /**
+     * Test find by company internal id
+     * input
+     *  tblCompany1
+     *      company internal id
+     *      address = 106 Hoang Quoc Viet
+     *      name  = FPT
+     *      email = chelsea@gmail.com
+     *      telephone = 22-3655-6985
+     * output
+     *  Data TblCompany after find data base
+     */
 	@Test
     public void testFindByCompanyInternalId() {
         // set up
@@ -79,6 +100,18 @@ public class TblCompanyRepositoryTest {
         assertThat(actual).isEqualTo(tblCompany);
     }
 
+    /**
+     * Test find by company name
+     * input
+     *  tblCompany1
+     *      company name
+     *      address = 106 Hoang Quoc Viet
+     *      name  = FPT
+     *      email = chelsea@gmail.com
+     *      telephone = 22-3655-6985
+     * output
+     *  Data TblCompany after find data base
+     */
     @Test
     public void testFindByCompanyName(){
         // set up

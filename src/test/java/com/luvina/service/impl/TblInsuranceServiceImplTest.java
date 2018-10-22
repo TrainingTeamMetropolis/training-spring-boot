@@ -24,7 +24,12 @@ public class TblInsuranceServiceImplTest {
     TblInsuranceRepository tblInsuranceRepository;
 
     /**
-     * test Is Exists Tbl Insurance 1
+     * Test Is Exists Tbl Insurance
+     * input
+     *  insuranceInternalId = 1000000003
+     *  numberInsurance = 3134567534
+     * output
+     *  check exists TblInsurance when return true and not exists return false
      */
     @Test
     public void testIsExistsTblInsurance1() {
@@ -42,7 +47,12 @@ public class TblInsuranceServiceImplTest {
     }
 
     /**
-     * test Is Exists Tbl Insurance 2
+     * Test Is Exists Tbl Insurance
+     * input
+     *  insuranceInternalId = 1000000003
+     *  numberInsurance = 3134567534
+     * output
+     *  check exists TblInsurance when return true and not exists return false
      */
     @Test
     public void testIsExistsTblInsurance2() {

@@ -30,7 +30,10 @@ public class TblCompanyServiceImplTest {
     TblCompanyRepository tblCompanyRepository;
 
     /**
-     * test Find All By Order By Company Name Asc
+     * Test find all by order by company name and oder company name asc
+     * input
+     * output
+     *  List data after find from repository
      */
     @Test
     public void testFindAllByOrderByCompanyNameAsc() {
@@ -47,7 +50,11 @@ public class TblCompanyServiceImplTest {
     }
 
     /**
-     * test Find By Company Internal Id 1
+     * Test Find By Company Internal Id
+     * input
+     *  Company Internal Id = anyInt()
+     * output
+     * TblCompany data model TblCompany
      */
     @Test
     public void testFindByCompanyInternalId1() {
@@ -63,7 +70,11 @@ public class TblCompanyServiceImplTest {
     }
 
     /**
-     * test Is Exists Company Name 1
+     * Test, check Is Exists Company Name when find from data base
+     * input
+     *  company name = anyString()
+     * output
+     *  check TblCompany if Is Exists TblCompany then return true and not Exists then return false
      */
     @Test
     public void testIsExistsCompanyName1() {
@@ -78,7 +89,11 @@ public class TblCompanyServiceImplTest {
     }
 
     /**
-     * test Is Exists Company Name 2
+     * Test, check Is Exists Company Name when find from data base
+     * input
+     *  company name = anyString()
+     * output
+     *  check TblCompany if Is Exists TblCompany then return true and not Exists then return false
      */
     @Test
     public void testIsExistsCompanyName2() {

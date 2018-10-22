@@ -26,8 +26,18 @@ public class CSVFileTest {
 	
 	@Mock
 	Common common;
-	
-	
+
+	/**
+	 * Test create data string company
+	 * input
+	 * 	data company TblCompany
+	 * 	company internal id = 1
+	 * 	email = usa@usa.com
+	 * 	company name = Dell Coporation
+	 * 	address company = USA, ff
+	 * output
+	 *	String data company
+	 */
 	@Test
 	public void testCreateCompany() {
 		// set up
@@ -54,7 +64,14 @@ public class CSVFileTest {
 		// verify
 		Assert.assertEquals(dataCompanyExpected, dataCompanyActual);
 	}
-	
+
+	/**
+	 * Test Create header from properties file
+	 * input
+	 * 	data at properties file
+	 * output
+	 * String header
+	 */
 	@Test
 	public void testCreateHeader() {
 		// set up
@@ -69,6 +86,13 @@ public class CSVFileTest {
 		Assert.assertEquals(headerExpected, headerActual);
 	}
 
+	/**
+	 * Test Create Body data CSV file
+	 * input
+	 * 	data list all
+	 * output
+	 * 	String data body
+	 */
 	@Test
 	public void testCreateBody() {
 		// set up
@@ -80,8 +104,6 @@ public class CSVFileTest {
 
 		// verify
 		Assert.assertEquals(headerExpected, bodyActual);
-
-
 	}
 	
 }

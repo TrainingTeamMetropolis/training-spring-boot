@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,6 +23,14 @@ public class TblInsuranceRepositoryTest {
 
     /**
      * Test Find By Insurance InternalId Not And Insurance Number
+	 * input
+	 *	insurance internal id = 1000
+	 *  insurance number = 1234567891
+	 *  place of register = Hung Yen
+	 *  insurance start date( = 10/10/2018
+	 *  insurance end date = 10/10/2019
+	 * output
+	 * Data TblInsurance after find from data base
      */
 	@Test
 	public void testFindByInsuranceInternalIdNotAndInsuranceNumber() {
@@ -32,7 +39,7 @@ public class TblInsuranceRepositoryTest {
         tblInsurance.setInsuranceInternalId(1000);
 		tblInsurance.setInsuranceNumber("1234567891");
 		tblInsurance.setPlaceOfRegister("Hung Yen");
-		tblInsurance.setInsuranceEndDate(common.convertStringToDateSQL("10/10/2018"));
+		tblInsurance.setInsuranceStartDate(common.convertStringToDateSQL("10/10/2018"));
 		tblInsurance.setInsuranceEndDate(common.convertStringToDateSQL("10/10/2019"));
         testEntityManager.persist(tblInsurance);
         testEntityManager.flush();

@@ -1,14 +1,10 @@
 package com.luvina.service.impl;
 
-import com.luvina.entities.TblCompany;
 import com.luvina.entities.TblUser;
 import com.luvina.form.RegisterForm;
 import com.luvina.form.SearchForm;
-import com.luvina.repository.TblCompanyRepository;
-import com.luvina.repository.TblInsuranceRepository;
 import com.luvina.repository.TblUserRepository;
 import com.luvina.repository.customize.TblUserRepositoryCustom;
-import com.luvina.service.TblCompanyService;
 import com.luvina.util.Common;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,18 +12,15 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -42,28 +35,27 @@ public class TblUserServiceImplTest {
 	
 	@Mock
 	TblUserRepositoryCustom tblUserRepositoryCustom;
-	
-	@Mock
-	TblCompanyRepository tblCompanyRepository;
-	
-	@Mock
-	TblInsuranceRepository tblInsuranceRepository;
-	
-	@Mock
-	TblCompanyService tblCompanyService;
+
 	
 	@Mock
 	Common common;
-	
-	@Mock
-	RegisterForm registerForm;
-	
+
 	@Mock
 	HttpSession httpSession;
 	
 	
 	/**
-	 * test Find Total Records
+	 * Test Find Total Records when first search
+	 * input
+	 * 	offset = 1
+	 * 	limit = 5
+	 * 	typeSort = ""
+	 * 	companyInternalId = 1
+	 * 	userFullName = ""
+	 * 	insuranceNumber = ""
+	 * 	placeOfRegister = ""
+	 * output
+	 *  totalRecord = 100
 	 */
 	@Test
 	public void testFindTotalRecords() {
@@ -88,7 +80,11 @@ public class TblUserServiceImplTest {
 	}
 	
 	/**
-	 * test Find By User Internal Id
+	 * Test Find By User Internal Id with any int value of User Internal Id
+     * input
+     *  any int value of User Internal Id
+     * output
+     *  TblUser
 	 */
 	@Test
 	public void testFindByUserInternalId() {
@@ -102,7 +98,16 @@ public class TblUserServiceImplTest {
 		// verify
 		assertEquals(tblUserActual, tblUser);
 	}
-	
+
+    /**
+     * TestInsertInformationInsuranceOfUser
+     * input
+     *  data RegisterForm from request
+     *  radio button company check new
+     *  date birth input 10/10/2018 ...
+     * output
+     *  insert data success from request data to data base and throw e Exception when error
+     */
 	@Test
 	public void testInsertInformationInsuranceOfUser() {
 		// set up
@@ -119,7 +124,11 @@ public class TblUserServiceImplTest {
 	}
 	
 	/**
-	 * test Save Tbl Company
+	 * Test Save Tbl Company save data TblCompany from request data
+     * input
+     *  save request data (RegisterForm)
+     * output
+     *  insert data success
 	 */
 	@Test
 	public void testSaveTblCompany() {
@@ -133,7 +142,19 @@ public class TblUserServiceImplTest {
 	}
 	
 	/**
-	 * test Find And Search List Data
+	 * Test Find And Search List Data when load data MH02, search and show data
+     * input
+     *  request data page = 1
+     *  limit = 5
+     * output
+     *  Map data has all data
+     *  searchFormId = null (difference other tab search)
+     *  tblUserList = new ArrayList<TblUser>()
+     *  totalPage = 0
+     *  typeSort = null
+     *  listPaging = new ArrayList<Integer>()
+     *  endRange = 0
+     *  currentPage = 1
 	 */
 	@Test
 	public void testFindAndSearchListData1() {
@@ -165,9 +186,21 @@ public class TblUserServiceImplTest {
         // verify
         Assert.assertEquals(actual,expected);
 	}
-	/**
-	 * test Find And Search List Data
-	 */
+    /**
+     * Test Find And Search List Data when load data MH02, search and show data
+     * input
+     *  request data page = 1
+     *  limit = 5
+     * output
+     *  Map data has all data
+     *  searchFormId = 123456789
+     *  tblUserList = new ArrayList<TblUser>()
+     *  totalPage = 0
+     *  typeSort = null
+     *  listPaging = new ArrayList<Integer>()
+     *  endRange = 0
+     *  currentPage = 1
+     */
 	@Test
 	public void testFindAndSearchListData2() {
 		// set up
@@ -201,9 +234,22 @@ public class TblUserServiceImplTest {
         // verify
         Assert.assertEquals(actual,map);
 	}
-	/**
-	 * test Find And Search List Data 3
-	 */
+    /**
+     * Test Find And Search List Data when load data MH02, search and show data
+     * input
+     *  request data page = 0
+     *  request data Search By Company Internal Id = 0
+     *  limit = 5
+     * output
+     *  Map data has all data
+     *  searchFormId = 123456789
+     *  tblUserList = new ArrayList<TblUser>()
+     *  totalPage = 0
+     *  typeSort = null
+     *  listPaging = new ArrayList<Integer>()
+     *  endRange = 0
+     *  currentPage = 1
+     */
 	@Test
 	public void testFindAndSearchListData3() {
 		// set up

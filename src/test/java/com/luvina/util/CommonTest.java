@@ -9,9 +9,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.lang.reflect.Array;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,19 +70,30 @@ public class CommonTest {
 	}
 	
 	/**
-	 * test get limit
+	 * Test get limit get from file constant
+     * input
+     *  limit = 5
+     * output
+     *  limit = 5
 	 */
 	@Test
 	public void testGetLimit() {
 		//set up
 		int limit = 5;
-		
+
+        // exercise
+		int actual = sut.getLimit();
+
 		// verify
-		Assert.assertEquals(sut.getLimit(), limit);
+		Assert.assertEquals(actual, limit);
 	}
 	
 	/**
-	 * test get range
+	 * Test get range from file constant
+     * input
+     *  range = 5
+     * output
+     *  range = 5
 	 */
 	@Test
 	public void testGetRange() {
@@ -92,7 +105,7 @@ public class CommonTest {
 	}
 	
 	/**
-	 * test get total page rounded
+	 * Test get total page rounded
      * input
      *  totalUser = 9
      *  limit = 5
@@ -115,87 +128,101 @@ public class CommonTest {
 	}
 	
 	/**
-	 * test get list paging 1
+	 * Test get list paging from total page and current page
+     * input
+     *  totalRecord = 10
+     *  currentPage = 1
+     * output
 	 */
 	@Test
 	public void testGetListPaging1() {
 		//set up
 		int totalRecord = 10;
 		int currentPage = 1;
-		List<Integer> listPaging = new ArrayList<>();
-		listPaging.add(1);
-		listPaging.add(2);
+		List<Integer> expected = Arrays.asList(1, 2);
+
+		// exercise
+		List<Integer> actual = sut.getListPaging(totalRecord, currentPage);
 		
 		// verify
-		Assert.assertEquals(sut.getListPaging(totalRecord, currentPage), listPaging);
+		Assert.assertEquals(actual, expected);
 	}
-	
-	/**
-	 * test get list paging 1
-	 */
+
+    /**
+     * Test get list paging from total page and current page
+     * input
+     *  totalRecord = 49
+     *  currentPage = 1
+     * output
+     */
 	@Test
 	public void testGetListPaging2() {
 		//set up
-		int totalRecord = 50;
+		int totalRecord = 49;
 		int currentPage = 1;
-		List<Integer> listPaging = new ArrayList<>();
-		listPaging.add(1);
-		listPaging.add(2);
-		listPaging.add(3);
-		listPaging.add(4);
-		listPaging.add(5);
-		
+		List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5);
+
+        // exercise
+        List<Integer> actual = sut.getListPaging(totalRecord, currentPage);
+
 		// verify
-		Assert.assertEquals(sut.getListPaging(totalRecord, currentPage), listPaging);
+		Assert.assertEquals(actual, expected);
 	}
-	
-	/**
-	 * test get list paging 3
-	 */
+
+    /**
+     * Test get list paging from total page and current page
+     * input
+     *  totalRecord = 49
+     *  currentPage = 5
+     * output
+     */
 	@Test
 	public void testGetListPaging3() {
 		//set up
-		int totalRecord = 50;
+		int totalRecord = 49;
 		int currentPage = 5;
-		List<Integer> listPaging = new ArrayList<>();
-		listPaging.add(3);
-		listPaging.add(4);
-		listPaging.add(5);
-		listPaging.add(6);
-		listPaging.add(7);
+		List<Integer> expected = Arrays.asList(3, 4, 5, 6, 7);
+
+        // exercise
+        List<Integer> actual = sut.getListPaging(totalRecord, currentPage);
 		
 		// verify
-		Assert.assertEquals(sut.getListPaging(totalRecord, currentPage), listPaging);
+		Assert.assertEquals(actual, expected);
 	}
-	
-	/**
-	 * test get list paging 4
-	 */
+
+    /**
+     * Test get list paging from total page and current page
+     * input
+     *  totalRecord = 50
+     *  currentPage = 50
+     * output
+     */
 	@Test
 	public void testGetListPaging4() {
 		//set up
 		int totalRecord = 50;
 		int currentPage = 50;
-		List<Integer> listPaging = new ArrayList<>();
-		listPaging.add(6);
-		listPaging.add(7);
-		listPaging.add(8);
-		listPaging.add(9);
-		listPaging.add(10);
+		List<Integer> expected = Arrays.asList(6, 7, 8,9, 10);
+
+        // exercise
+        List<Integer> actual = sut.getListPaging(totalRecord, currentPage);
 		
 		// verify
-		Assert.assertEquals(sut.getListPaging(totalRecord, currentPage), listPaging);
+		Assert.assertEquals(actual, expected);
 	}
 
 	/**
-	 * test Get End Range 1
+	 * test Get End Range
+     * input
+     *  listPaging = 1,2
+     *  endRangeExpected = 2
+     * output
+     *  actual
 	 */
 	@Test
 	public void testGetEndRange1() {
 		//set up
-		List<Integer> listPaging = new ArrayList<>();
-		listPaging.add(1);
-		listPaging.add(2);
+		List<Integer> listPaging = Arrays.asList(1,2);
 		int endRangeExpected = 2;
 
 		//exercise
